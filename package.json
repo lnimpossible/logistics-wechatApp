@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://gitlab.com/lnimpossible/logistics-app/issues"
   },
-  "homepage": "https://gitlab.com/lnimpossible/logistics-app#readme"
+  "homepage": "https://gitlab.com/lnimpossible/logistics-app#readme",
+  "dependencies": {
+    "@dcloudio/uni-ui": "^0.0.8"
+  }
 }

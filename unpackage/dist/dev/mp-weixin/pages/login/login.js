@@ -142,8 +142,8 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
     return {
       providerList: [],
       hasProvider: false,
-      account: 'admin',
-      password: '123456',
+      account: '',
+      password: '',
       positionTop: 0 };
 
   },
@@ -247,7 +247,7 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
                              */
       if (this.forcedLogin) {
         uni.reLaunch({
-          url: '../tabbar/tabbar-1/tabbar-1' });
+          url: '../main/main' });
 
       } else {
         uni.navigateBack();

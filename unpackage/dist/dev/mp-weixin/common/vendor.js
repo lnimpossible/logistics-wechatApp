@@ -28,9 +28,9 @@ createApp(app).$mount();
 
 /***/ }),
 
-/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2FgridTabs%2FIntelligentDistribution%2FIntelligentDistribution\"}":
+/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2FgridTabs%2FintelligentDistribution%2FintelligentDistribution\"}":
 /*!****************************************************************************************************************************************!*\
-  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2FgridTabs%2FIntelligentDistribution%2FIntelligentDistribution"} ***!
+  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2FgridTabs%2FintelligentDistribution%2FintelligentDistribution"} ***!
   \****************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -39,16 +39,16 @@ createApp(app).$mount();
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _IntelligentDistribution = _interopRequireDefault(__webpack_require__(/*! ./pages/gridTabs/IntelligentDistribution/IntelligentDistribution.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/gridTabs/IntelligentDistribution/IntelligentDistribution.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_IntelligentDistribution.default);
+var _intelligentDistribution = _interopRequireDefault(__webpack_require__(/*! ./pages/gridTabs/intelligentDistribution/intelligentDistribution.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/gridTabs/intelligentDistribution/intelligentDistribution.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_intelligentDistribution.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2FgridTabs%2FintelligentDistribution%2Findex%2Findex\"}":
-/*!******************************************************************************************************************************!*\
-  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2FgridTabs%2FintelligentDistribution%2Findex%2Findex"} ***!
-  \******************************************************************************************************************************/
+/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Flogin%2Flogin\"}":
+/*!*****************************************************************************************!*\
+  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2Flogin%2Flogin"} ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -56,8 +56,42 @@ createPage(_IntelligentDistribution.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/gridTabs/intelligentDistribution/index/index.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/gridTabs/intelligentDistribution/index/index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
+var _login = _interopRequireDefault(__webpack_require__(/*! ./pages/login/login.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/login/login.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_login.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Flogin%2Freg\"}":
+/*!***************************************************************************************!*\
+  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2Flogin%2Freg"} ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _reg = _interopRequireDefault(__webpack_require__(/*! ./pages/login/reg.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/login/reg.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_reg.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Flogin%2Fuser\"}":
+/*!****************************************************************************************!*\
+  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2Flogin%2Fuser"} ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _user = _interopRequireDefault(__webpack_require__(/*! ./pages/login/user.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/login/user.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_user.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -79,6 +113,23 @@ createPage(_index.default);
 
 /***/ }),
 
+/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Ftabbar%2FpersonalCenter%2FpersonalCenter\"}":
+/*!********************************************************************************************************************!*\
+  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2Ftabbar%2FpersonalCenter%2FpersonalCenter"} ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _personalCenter = _interopRequireDefault(__webpack_require__(/*! ./pages/tabbar/personalCenter/personalCenter.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/tabbar/personalCenter/personalCenter.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_personalCenter.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Ftabbar%2Ftabbar-3%2Ftabbar-3\"}":
 /*!********************************************************************************************************!*\
   !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2Ftabbar%2Ftabbar-3%2Ftabbar-3"} ***!
@@ -91,23 +142,6 @@ createPage(_index.default);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _tabbar = _interopRequireDefault(__webpack_require__(/*! ./pages/tabbar/tabbar-3/tabbar-3.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/tabbar/tabbar-3/tabbar-3.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_tabbar.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Ftabbar%2Ftabbar-5%2Ftabbar-5\"}":
-/*!********************************************************************************************************!*\
-  !*** /Users/edz/Desktop/wwwroot/logistics-app/main.js?{"page":"pages%2Ftabbar%2Ftabbar-5%2Ftabbar-5"} ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _tabbar = _interopRequireDefault(__webpack_require__(/*! ./pages/tabbar/tabbar-5/tabbar-5.vue */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/pages/tabbar/tabbar-5/tabbar-5.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_tabbar.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
@@ -173,6 +207,43 @@ createPage(_tabbar3Video.default);
 
 "use strict";
 
+
+/***/ }),
+
+/***/ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/service.js":
+/*!***********************************************************!*\
+  !*** /Users/edz/Desktop/wwwroot/logistics-app/service.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 管理账号信息
+var USERS_KEY = 'USERS_KEY';
+var STATE_KEY = 'STATE_KEY';
+
+var getUsers = function getUsers() {
+  var ret = '';
+  ret = uni.getStorageSync(USERS_KEY);
+  if (!ret) {
+    ret = '[]';
+  }
+  return JSON.parse(ret);
+};
+
+var addUser = function addUser(userInfo) {
+  var users = getUsers();
+  users.push({
+    account: userInfo.account,
+    password: userInfo.password });
+
+  uni.setStorageSync(USERS_KEY, JSON.stringify(users));
+};var _default =
+
+{
+  getUsers: getUsers,
+  addUser: addUser };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -244,8 +315,7 @@ function request(url, method, data) {var header = arguments.length > 3 && argume
     }
   } catch (e) {
     header = {
-      'content-type': 'application/json',
-      'token': '75d5531dc5ca49da9359b1fa223ace15' };
+      'content-type': 'application/json' };
 
   }
   return new Promise(function (resolve, reject) {
@@ -255,9 +325,12 @@ function request(url, method, data) {var header = arguments.length > 3 && argume
       data: data,
       header: header,
       success: function success(res) {
-        // console.log(`${url} api success`)
         console.log(res.data);
         uni.hideLoading();
+
+        if (res.data.code === 0) {
+          resolve(res.data);
+        } else
         if (res.data.code === 1000) {
           uni.showModal({
             title: '提示',
@@ -276,9 +349,11 @@ function request(url, method, data) {var header = arguments.length > 3 && argume
               }
             } });
 
-
         } else {
-          resolve(res.data);
+          uni.showToast({
+            title: res.data.msg,
+            icon: 'none' });
+
         }
       },
       fail: function fail(res) {

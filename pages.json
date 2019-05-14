@@ -1,82 +1,45 @@
 {
-    "pages": [ //pages数组中第一项表示应用启动页,
+    "pages": [ 
 			{
-					"path": "pages/gridTabs/IntelligentDistribution/IntelligentDistribution",
-					"style": {
-						// "navigationBarTitleText": "uni-app"
-					}
-				},
-	 // {
-  //           "path": "pages/login/login",
-  //           "style": {
-  //               "navigationBarTitleText": "登录"
-  //           }
-  //       },
-		// {
-  //           "path": "pages/main/main",
-  //           "style": {
-  //               "navigationBarTitleText": "登录模板"
-  //           }
-  //       },
-	//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/tabbar/index/index",
-			"style": {
-				// "navigationBarTitleText": "uni-app"
+				"path": "pages/tabbar/index/index",
+				"style": {}
+			},
+			{
+				"path": "pages/login/login",
+				"style": {}
+			},
+			{
+				"path": "pages/login/reg",
+				"style": {}
+			},
+			{
+				"path": "pages/login/user",
+				"style": {}
+			},
+			{
+					"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution",
+					"style": {}
+			},
+			{
+				"path": "pages/tabbar/tabbar-3/tabbar-3",
+				"style": {}
+			},
+			{
+				"path": "pages/tabbar/personalCenter/personalCenter",
+				"style": {}
+			},
+			{
+				"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
+				"style": {}
+			},
+			{
+				"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
+				"style": {}
+			},
+			{
+				"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
+				"style": {}
 			}
-		},
-		// {
-		// 	"path": "pages/tabbar/tabbar-2/tabbar-2",
-		// 	"style": {}
-		// },
-		{
-			"path": "pages/tabbar/tabbar-3/tabbar-3",
-			"style": {}
-		},
-		// {
-		// 	"path": "pages/tabbar/tabbar-4/tabbar-4",
-		// 	"style": {}
-		// },
-		{
-			"path": "pages/tabbar/tabbar-5/tabbar-5",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
-			"style": {}
-		}
-        // , {
-        //     "path": "pages/reg/reg",
-        //     "style": {
-        //         "navigationBarTitleText": "注册"
-        //     }
-        // }, {
-        //     "path": "pages/pwd/pwd",
-        //     "style": {
-        //         "navigationBarTitleText": "找回密码"
-        //     }
-        // }, {
-        //     "path": "pages/user/user",
-        //     "style": {
-        //         "navigationBarTitleText": "我的"
-        //     }
-        // }
-        ,{
-            "path" : "pages/gridTabs/intelligentDistribution/index/index",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/gridTabs/IntelligentDistribution/IntelligentDistribution",
-            "style" : {}
-        }
     ],
     "tabBar": {
 		"borderStyle": "black",
@@ -89,12 +52,6 @@
 				"selectedIconPath": "static/img/tabbar/homeactive.png",
 				"text": "首页"
 			},
-			// {
-			// 	"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
-			// 	"iconPath": "static/img/tabbar/guanzhu.png",
-			// 	"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-			// 	"text": "关注"
-			// },
 			//#ifdef MP-WEIXIN
 			{
 				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
@@ -103,22 +60,8 @@
 				"text": "发布"
 			},
 			//#endif
-			//#ifndef MP-WEIXIN
 			{
-				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
-				"iconPath": "static/img/tabbar/add.png",
-				"selectedIconPath": "static/img/tabbar/addactive.png"
-				// "text":"发布"
-			},
-			//#endif
-			// {
-			// 	"pagePath": "pages/tabbar/tabbar-4/tabbar-4",
-			// 	"iconPath": "static/img/tabbar/news.png",
-			// 	"selectedIconPath": "static/img/tabbar/newsactive.png",
-			// 	"text": "消息"
-			// },
-			{
-				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
+				"pagePath": "pages/tabbar/personalCenter/personalCenter",
 				"iconPath": "static/img/tabbar/me.png",
 				"selectedIconPath": "static/img/tabbar/meactive.png",
 				"text": "我的"
@@ -129,5 +72,5 @@
     //     "navigationBarTextStyle": "white",
     //     "navigationBarBackgroundColor": "#0faeff",
     //     "backgroundColor": "#fbf9fe"
-    // }
+    // },
 }

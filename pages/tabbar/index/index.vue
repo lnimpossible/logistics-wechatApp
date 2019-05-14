@@ -28,12 +28,10 @@
 			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xunlu.png',text:'驯鹿'}]" 
 			column-num="4" @click="changeGridTab">
 		</uni-grid>
-		<!-- <APPINTRO></APPINTRO> -->
 	</view>
 </template>
 
 <script>
-import APPINTRO from '@/components/app-intro'
 import {uniGrid} from '@dcloudio/uni-ui'
 export default {
 	components:{

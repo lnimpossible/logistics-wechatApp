@@ -21,7 +21,6 @@ function request (url, method, data, header = {}) {
   } catch (e) {
     header = {
       'content-type': 'application/json',
-			'token':'75d5531dc5ca49da9359b1fa223ace15'
     }
   }
   return new Promise((resolve, reject) => {
@@ -31,10 +30,13 @@ function request (url, method, data, header = {}) {
       data: data,
       header: header,
       success: function (res) {
-        // console.log(`${url} api success`)
         console.log(res.data)
         uni.hideLoading()
-        if( res.data.code === 1000 ){
+					
+				if( res.data.code === 0 ){
+					resolve(res.data)
+				}
+        else if( res.data.code === 1000 ){
           uni.showModal({
             title: '提示',
             content: '身份过期，请重新登录',
@@ -52,9 +54,11 @@ function request (url, method, data, header = {}) {
               }
             }
           })
-
         } else {
-          resolve(res.data)
+          uni.showToast({
+          	title: res.data.msg,
+						icon: 'none'
+          })
         }
       },
       fail: function (res) {

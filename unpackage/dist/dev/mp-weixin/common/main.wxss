@@ -47,8 +47,7 @@ m-input {
 	-webkit-flex-direction: column;
 	    -ms-flex-direction: column;
 	        flex-direction: column;
-	background-color: #efeff4;
-	padding: 20rpx;
+	/* background-color: #efeff4; */
 }
 .input-group {
 	background-color: #ffffff;

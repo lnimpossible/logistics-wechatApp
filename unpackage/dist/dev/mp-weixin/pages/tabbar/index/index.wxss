@@ -1,7 +1,16 @@
-
-.content {
-	text-align: center;
-	/* height: 400upx; */
-	/* margin-top: 200upx; */
+.content.data-v-586524a9 {
+  text-align: center;
+}
+.content .header.data-v-586524a9 {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20rpx;
+}
+.content .header .uni-list.data-v-586524a9 {
+      width: 100rpx;
+      position: absolute;
+      right: 10rpx;
+      top: 18rpx;
+      z-index: 1;
 }
 

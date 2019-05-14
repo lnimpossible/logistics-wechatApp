@@ -1,23 +1,30 @@
 <template>
 	<view class="content">
-		<view class="uni-padding-wrap">
-            <view class="page-section swiper">
-                <view class="page-section-spacing">
-                    <swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-                        <swiper-item>
-                            <view class="swiper-item uni-bg-red">A</view>
-                        </swiper-item>
-                        <swiper-item>
-                            <view class="swiper-item uni-bg-green">B</view>
-                        </swiper-item>
-                        <swiper-item>
-                            <view class="swiper-item uni-bg-blue">C</view>
-                        </swiper-item>
-                    </swiper>
-                </view>
-            </view>
-        </view>
-		<uni-grid :options="gridTabsItems" 
+		<view class="header">
+			<view class="uni-list">
+				<view class="uni-list-cell">
+					<view class="uni-list-cell-db">
+						<picker @change="bindPickerChange" :value="index" :range="array">
+							<view class="uni-input">{{array[index]}}</view>
+						</picker>
+					</view>
+				</view>
+			</view>	
+			<view class="page-section swiper">
+				<view class="page-section-spacing">
+					<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+						<swiper-item>
+							<view class="swiper-item">
+								<image style="width: 100%;background-color: #eeeeee;" mode='scaleToFill' src='../../../static/img/loginBg/login_old.jpg'
+                        @error="imageError"></image>
+							</view>
+						</swiper-item>
+					</swiper>
+				</view>
+			</view>
+		</view>
+		
+		<uni-grid :options="gridTabsItems" :show-border="false"
 			column-num="4" @click="changeGridTab">
 		</uni-grid>
 	</view>
@@ -37,11 +44,13 @@ export default {
 		})
 		p.then(res => {
 			console.log(res.functionList)
-			self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
+			// self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
 		})
 	},
 	data() {
 		return {
+			array: ['货主', '车主'],
+            index: 0,
 			gridTabsItems: [
 				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shu.png',text:'圣诞树'},
 				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/lindang.png',text:'铃铛'},
@@ -79,10 +88,23 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped="">
+
 .content {
 	text-align: center;
-	/* height: 400upx; */
-	/* margin-top: 200upx; */
+	.header{
+		position: relative;
+		width: 100%;
+		// height: 400upx;
+		margin-bottom: 20upx;
+		.uni-list{
+			width: 100upx;
+			position: absolute;
+			right: 10upx;;
+			top: 18upx;
+			z-index: 1;
+			// background: rgba(255,255,255,.8);
+		}
+	}
 }
 </style>

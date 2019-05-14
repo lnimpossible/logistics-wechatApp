@@ -1,0 +1,1 @@
+<view class="content" bind:__l="__l">页面 - 发视频</view>

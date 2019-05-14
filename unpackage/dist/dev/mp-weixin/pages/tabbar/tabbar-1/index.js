@@ -1,0 +1,2 @@
+(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/tabbar/tabbar-1/index"],[],[["../../../../../../Users/edz/Desktop/wwwroot/logistics-app/main.js?{\"page\":\"pages%2Ftabbar%2Ftabbar-1%2Findex\"}","common/runtime","common/vendor"]]]);
+//# sourceMappingURL=../../../../.sourcemap/mp-weixin/pages/tabbar/tabbar-1/index.js.map

@@ -6,6 +6,7 @@
 		<view v-if="clearable_&&!displayable_&&value.length" class="m-input-icon">
 			<m-icon color="#666666" type="clear" size="20" @click="clear"></m-icon>
 		</view>
+		
 		<view v-if="displayable_" class="m-input-icon">
 			<m-icon :color="showPassword?'#666666':'#cccccc'" type="eye" size="20" @click="display"></m-icon>
 		</view>

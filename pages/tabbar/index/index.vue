@@ -17,15 +17,7 @@
                 </view>
             </view>
         </view>
-		<uni-grid :options="[
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shu.png',text:'圣诞树'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/lindang.png',text:'铃铛'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/laoren.png',text:'圣诞老人'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/liwu.png',text:'礼物'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/maozi.png',text:'帽子'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shoutao.png',text:'手套'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xueqiao.png',text:'雪橇'},
-			{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xunlu.png',text:'驯鹿'}]" 
+		<uni-grid :options="gridTabsItems" 
 			column-num="4" @click="changeGridTab">
 		</uni-grid>
 	</view>
@@ -33,21 +25,33 @@
 
 <script>
 import {uniGrid} from '@dcloudio/uni-ui'
+import { map } from 'lodash'
 export default {
 	components:{
 		uniGrid
 	},
 	mounted(){
 		let self = this
-		let p = self.$request.post({
+		let p = self.$request.get({
 			url:"/getFunctionList"
 		})
 		p.then(res => {
-			console.log(res)
+			console.log(res.functionList)
+			self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
 		})
 	},
 	data() {
 		return {
+			gridTabsItems: [
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shu.png',text:'圣诞树'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/lindang.png',text:'铃铛'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/laoren.png',text:'圣诞老人'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/liwu.png',text:'礼物'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/maozi.png',text:'帽子'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shoutao.png',text:'手套'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xueqiao.png',text:'雪橇'},
+				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xunlu.png',text:'驯鹿'},
+			],
 			title: 'Hello',
 			indicatorDots: true,
             autoplay: true,
@@ -63,7 +67,7 @@ export default {
 				case 0:
 					console.log('点击智能配送')
 					uni.navigateTo({
-						url: '../../gridTabs/IntelligentDistribution/IntelligentDistribution'
+						url: '../../gridTabs/intelligentDistribution/intelligentDistribution'
 					})
 					break;
 				default:

@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _uniGrid = function _uniGrid() {return __webpack_require__.e(/*! import() | node-modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid */ "node-modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid").then(__webpack_require__.bind(null, /*! @dcloudio/uni-ui/lib/uni-grid/uni-grid */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/node_modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -125,29 +125,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
+var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");var _uniGrid = function _uniGrid() {return __webpack_require__.e(/*! import() | node-modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid */ "node-modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid").then(__webpack_require__.bind(null, /*! @dcloudio/uni-ui/lib/uni-grid/uni-grid */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/node_modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid.vue"));};var _default =
 {
   components: {
     uniGrid: _uniGrid },
 
   mounted: function mounted() {
     var self = this;
-    var p = self.$request.post({
+    var p = self.$request.get({
       url: "/getFunctionList" });
 
     p.then(function (res) {
-      console.log(res);
+      console.log(res.functionList);
+      self.gridTabsItems = (0, _lodash.map)(res.functionList, function (item) {return { text: item.functionName, image: item.functionIconUrl };});
     });
   },
   data: function data() {
     return {
+      gridTabsItems: [
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/shu.png', text: '圣诞树' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/lindang.png', text: '铃铛' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/laoren.png', text: '圣诞老人' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/liwu.png', text: '礼物' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/maozi.png', text: '帽子' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/shoutao.png', text: '手套' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/xueqiao.png', text: '雪橇' },
+      { image: 'https://img-cdn-qiniu.dcloud.net.cn/img/xunlu.png', text: '驯鹿' }],
+
       title: 'Hello',
       indicatorDots: true,
       autoplay: true,
@@ -163,7 +167,7 @@ __webpack_require__.r(__webpack_exports__);
         case 0:
           console.log('点击智能配送');
           uni.navigateTo({
-            url: '../../gridTabs/IntelligentDistribution/IntelligentDistribution' });
+            url: '../../gridTabs/intelligentDistribution/intelligentDistribution' });
 
           break;
         default:

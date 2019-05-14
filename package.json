@@ -18,6 +18,7 @@
   },
   "homepage": "https://gitlab.com/lnimpossible/logistics-app#readme",
   "dependencies": {
-    "@dcloudio/uni-ui": "^0.0.8"
+    "@dcloudio/uni-ui": "^0.0.8",
+    "lodash": "^4.17.11"
   }
 }

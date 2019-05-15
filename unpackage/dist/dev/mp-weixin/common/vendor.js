@@ -25193,6 +25193,23 @@ createApp(app).$mount();
 
 /***/ }),
 
+/***/ "C:\\Users\\王珊黛\\Desktop\\logistics-app\\logistics-app\\main.js?{\"page\":\"pages%2FgridTabs%2Fcartlist%2Fcartlist\"}":
+/*!******************************************************************************************************************!*\
+  !*** C:/Users/王珊黛/Desktop/logistics-app/logistics-app/main.js?{"page":"pages%2FgridTabs%2Fcartlist%2Fcartlist"} ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "C:\\Users\\王珊黛\\Desktop\\logistics-app\\logistics-app\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _cartlist = _interopRequireDefault(__webpack_require__(/*! ./pages/gridTabs/cartlist/cartlist.vue */ "C:\\Users\\王珊黛\\Desktop\\logistics-app\\logistics-app\\pages\\gridTabs\\cartlist\\cartlist.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_cartlist.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "C:\\Users\\王珊黛\\Desktop\\logistics-app\\logistics-app\\main.js?{\"page\":\"pages%2FgridTabs%2FintelligentDistribution%2FintelligentDistribution\"}":
 /*!************************************************************************************************************************************************!*\
   !*** C:/Users/王珊黛/Desktop/logistics-app/logistics-app/main.js?{"page":"pages%2FgridTabs%2FintelligentDistribution%2FintelligentDistribution"} ***!

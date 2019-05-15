@@ -2,7 +2,6 @@
   "pages": [
     "pages/gridTabs/intelligentDistribution/intelligentDistribution",
     
-
     "pages/tabbar/index/index",
     "pages/login/login",
     "pages/login/reg",
@@ -45,6 +44,5 @@
       "desc": "展示您的位置"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

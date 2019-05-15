@@ -69,4 +69,18 @@
       display: -ms-flexbox;
       display: flex;
 }
+#app .wait.data-v-5ec47cc4 {
+    width: 690rpx;
+    height: 400rpx;
+    back: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 22;
+    -webkit-box-shadow: 0 0 6rpx 0.2rpx #666;
+            box-shadow: 0 0 6rpx 0.2rpx #666;
+    padding-top: 20rpx;
+}
 

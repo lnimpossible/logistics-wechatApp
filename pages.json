@@ -40,6 +40,10 @@
 				"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
 				"style": {}
 			}
+        ,{
+            "path" : "pages/gridTabs/cartlist/cartlist",
+            "style" : {}
+        }
     ],
     "tabBar": {
 		"borderStyle": "black",

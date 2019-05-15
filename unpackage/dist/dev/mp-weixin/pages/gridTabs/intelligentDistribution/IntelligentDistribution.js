@@ -8,42 +8,59 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ "C:\\Users\\王珊黛\\Desktop\\logistics-app\\logistics-app\\components\\uni-popup\\uni-popup.vue"));};var cmdProgress = function cmdProgress() {return __webpack_require__.e(/*! import() | components/cmd-progress/cmd-progress */ "components/cmd-progress/cmd-progress").then(__webpack_require__.bind(null, /*! @/components/cmd-progress/cmd-progress.vue */ "C:\\Users\\王珊黛\\Desktop\\logistics-app\\logistics-app\\components\\cmd-progress\\cmd-progress.vue"));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
+  components: {
+    uniPopup: uniPopup,
+    cmdProgress: cmdProgress },
+
+  mounted: function mounted() {
+    var self = this;
+    self.nowTimes();
+  },
   data: function data() {
     return {
+      schedule: '80',
+      poputs: false,
+      nowTime: '',
       orderType: '2',
       goodsCommentData: '',
       goodsBulkData: '',
@@ -52,16 +69,45 @@ var _default =
       address: {
         start: '',
         end: '',
-        startLongitude: '117.20',
-        startLatitude: '39.12',
-        endLongitude: '120.58',
-        endLatitude: '31.30' },
+        startLongitude: '120.583190',
+        startLatitude: '31.298340',
+        endLongitude: '121.473700',
+        endLatitude: '31.230370' },
 
       chooseStartAddressData: '' };
 
   },
   methods: {
-    submitMessage: function submitMessage(e) {
+    // 货主单击弹出层邀请
+    satisfaction: function satisfaction(e) {
+      uni.navigateTo({
+        url: '../cartlist/cartlist' });
+
+    },
+    // 货主单击弹出层取消
+    nosatisfaction: function nosatisfaction(e) {
+      var self = this;
+      self.poputs = false;
+    },
+    // 获取当前时间
+    timeFormate: function timeFormate(timeStamp) {
+      var self = this;
+      var year = new Date(timeStamp).getFullYear();
+      var month = new Date(timeStamp).getMonth() + 1 < 10 ? "0" + (new Date(timeStamp).getMonth() + 1) : new Date(timeStamp).getMonth() + 1;
+      var date = new Date(timeStamp).getDate() < 10 ? "0" + new Date(timeStamp).getDate() : new Date(timeStamp).getDate();
+      var hh = new Date(timeStamp).getHours() < 10 ? "0" + new Date(timeStamp).getHours() : new Date(timeStamp).getHours();
+      var mm = new Date(timeStamp).getMinutes() < 10 ? "0" + new Date(timeStamp).getMinutes() : new Date(timeStamp).getMinutes();
+      var ss = new Date(timeStamp).getSeconds() < 10 ? "0" + new Date(timeStamp).getSeconds() : new Date(timeStamp).getSeconds();
+      self.nowTime = year + "-" + month + "-" + date + " " + hh + ":" + mm + ":" + ss;
+    },
+    //定时器
+    nowTimes: function nowTimes() {
+      var self = this;
+      self.timeFormate(new Date());
+      setInterval(self.nowTimes, 30 * 1000);
+    },
+    //单击确定按钮
+    submitMessage: function submitMessage(e) {var _this = this;
       var self = this;
       var p = self.$request.post({
         url: "/orderLogistics/add",
@@ -70,15 +116,19 @@ var _default =
           cargoVolume: self.goodsBulkData,
           cargoWeight: self.goodsWeightData,
           remark: self.goodsCommentData,
-          startLongitude: self.startLongitude,
-          startLatitude: self.startLatitude,
-          endLongitude: self.endLongitude,
-          endLatitude: self.endLatitude,
-          orderType: '2' } });
+          startLongitude: self.address.startLongitude,
+          startLatitude: self.address.startLatitude,
+          endLongitude: self.address.endLongitude,
+          endLatitude: self.address.endLatitude,
+          orderType: '2',
+          loadDate: self.nowTime } });
 
 
       p.then(function (res) {
         console.log(res);
+        var self = _this;
+        // self.poputs=true
+        //
       });
     },
     goodsComment: function goodsComment(e) {
@@ -107,6 +157,7 @@ var _default =
       var address = e.detail.value;
       self.address.end = address[1];
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

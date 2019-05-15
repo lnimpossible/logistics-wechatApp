@@ -11,7 +11,7 @@
 			{"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"},
-			{"path" : "pages/gridTabs/cartlist/cartlist"}
+			{"path": "pages/tabbar/issue/issue"}
     ],
     "tabBar": {
 		"borderStyle": "black",
@@ -26,7 +26,7 @@
 			},
 			//#ifdef MP-WEIXIN
 			{
-				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
+				"pagePath": "pages/tabbar/issue/issue",
 				"iconPath": "static/img/tabbar/add.png",
 				"selectedIconPath": "static/img/tabbar/addactive.png",
 				"text": "发布"

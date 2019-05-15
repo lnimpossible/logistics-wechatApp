@@ -25,9 +25,10 @@
 			<button type="primary" @click="nosatisfaction">取消</button>
 			<button type="primary" @click="satisfaction">邀请</button>
 		</uni-popup>
-		<div class="wait">
-			<cmd-progress :percent="schedule" status="active" stroke-width="30"></cmd-progress>
-			
+		<div class="wait" :style="styles">
+			<h1>正在拼命匹配中 ...</h1>
+			<cmd-progress percent="100" status="active" :show-info="false" stroke-width="15"></cmd-progress>
+			<button type="default" @click="cancellation"  >取消订单</button>
 		</div>
 		
 	</view>
@@ -47,6 +48,8 @@
 		},
 		data() {
 			return {
+				
+				styles:'display:none',
 				schedule:'80',
 				poputs:false,
 				nowTime:'',
@@ -67,6 +70,14 @@
 			};
 		},
 		methods:{
+			// 货主点击取消订单
+			cancellation(e){
+				let self=this
+				self.styles="display:none"
+				self.$request.delete({
+					// url:/orderLogistics/cancelorder/{ordernumber}'
+				})
+			},
 			// 货主单击弹出层邀请
 			satisfaction(e){
 				uni.navigateTo({
@@ -116,8 +127,18 @@
 				p.then(res=>{
 					console.log(res)
 					let self=this
-					// self.poputs=true
-					//
+					self.styles="display:block"
+					let pm=self.$request.post({
+						url:"",
+						data:{
+							
+						}
+					})
+					pm.then(pmres=>{
+						console.log(pmres)
+						// self.poputs=true
+						
+					})
 				})
 			},
 			goodsComment(e){
@@ -181,11 +202,24 @@
 			}
 			.con{
 				display: flex;
+				margin: 24upx 0;
+				font-size: 24upx;
+				input{
+					border-bottom: #afafaf 1upx solid;
+					margin-right: 20upx;
+				}
+			}
+			button{
+				width: 320upx;
+				height: 70upx;
+				line-height: 70upx;
+				border-radius: 50upx;
+				
 			}
 		}
 		.wait{
 			width: 690upx;
-			height: 400upx;
+			height: 300upx;
 			back: #fff;
 			position:fixed;
 			left: 0;
@@ -194,7 +228,20 @@
 			margin: auto;
 			z-index: 22;
 			box-shadow: 0 0 6upx .2upx #666;
-			padding-top: 20upx;
+			padding: 30upx 40upx 0;
+			h1{
+				font-size: 34upx;
+				color: #333;
+				text-align: center;
+				margin-bottom: 10upx;
+			}
+			button{
+				height: 120upx;
+				width: 100%;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+			}
 		}
 	}
 	

@@ -58,8 +58,7 @@ export default {
 			url:"/getFunctionList"
 		})
 		p.then(res => {
-			console.log(res.functionList)
-			// self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
+			self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
 		})
 	},
 	data() {

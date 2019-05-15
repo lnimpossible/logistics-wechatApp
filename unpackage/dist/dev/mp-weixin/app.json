@@ -1,10 +1,12 @@
 {
   "pages": [
+    "pages/gridTabs/intelligentDistribution/intelligentDistribution",
+    
+
     "pages/tabbar/index/index",
     "pages/login/login",
     "pages/login/reg",
     "pages/login/user",
-    "pages/gridTabs/intelligentDistribution/intelligentDistribution",
     "pages/tabbar/tabbar-3/tabbar-3",
     "pages/tabbar/personalCenter/personalCenter",
     "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
@@ -43,5 +45,6 @@
       "desc": "展示您的位置"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

@@ -7,7 +7,6 @@
 					<view class="picker">{{address.start || '请输入起始地'}}</view>
 					<!-- <input type="text" :value="address.start" placeholder="请输入起始地" disabled /> -->
 				</picker>
-				
 				<image class="replace" src="../../../static/img/icon/chongzhi.png"></image>
 				<image src="../../../static/img/icon/weizhi.png"></image>
 				<picker mode="region" @change="chooseEndAddress">

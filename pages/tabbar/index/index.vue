@@ -55,7 +55,7 @@ export default {
 	mounted(){
 		let self = this
 		let p = self.$request.get({
-			url:"/getFunctionList"
+			url:"/getFunctionList/1",
 		})
 		p.then(res => {
 			self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})

@@ -1,5 +1,6 @@
 {
     "pages": [
+			{"path": "pages/tabbar/issue/issue"},
 			{"path": "pages/tabbar/index/index"},
 			{"path": "pages/redictUrl/search/search"},
 			{"path": "pages/login/login"},
@@ -10,8 +11,7 @@
 			{"path": "pages/tabbar/personalCenter/personalCenter"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video"},
-			{"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"},
-			{"path": "pages/tabbar/issue/issue"}
+			{"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"}
     ],
     "tabBar": {
 		"borderStyle": "black",

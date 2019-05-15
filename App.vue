@@ -19,6 +19,9 @@
 	page {
 		min-height: 100%;
 		display: flex;
+		background: #eef2fb;
+		-webkit-font-smoothing: antialiased;
+		font-family: 'PingFang SC', Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, Arial, sans-serif;
 	}
 
 	/* #ifdef MP-BAIDU */

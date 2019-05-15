@@ -1,45 +1,16 @@
 {
-    "pages": [ 
-			{
-				"path": "pages/tabbar/index/index",
-				"style": {}
-			},
-			{
-				"path": "pages/login/login",
-				"style": {}
-			},
-			{
-				"path": "pages/login/reg",
-				"style": {}
-			},
-			{
-				"path": "pages/login/user",
-				"style": {}
-			},
-			{
-					"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution",
-					"style": {}
-			},
-			{
-				"path": "pages/tabbar/tabbar-3/tabbar-3",
-				"style": {}
-			},
-			{
-				"path": "pages/tabbar/personalCenter/personalCenter",
-				"style": {}
-			},
-			{
-				"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
-				"style": {}
-			},
-			{
-				"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
-				"style": {}
-			},
-			{
-				"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
-				"style": {}
-			}
+    "pages": [
+			{"path": "pages/tabbar/index/index","style": {}},
+			{"path": "pages/redictUrl/search/search","style": {}},
+			{"path": "pages/login/login","style": {}},
+			{"path": "pages/login/reg","style": {}},
+			{"path": "pages/login/user","style": {}},
+			{"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution","style": {}},
+			{"path": "pages/tabbar/tabbar-3/tabbar-3","style": {}},
+			{"path": "pages/tabbar/personalCenter/personalCenter","style": {}},
+			{"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release","style": {}},
+			{"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video","style": {}},
+			{"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa","style": {}}
     ],
     "tabBar": {
 		"borderStyle": "black",
@@ -67,10 +38,17 @@
 				"text": "我的"
 			}
 		]
-	}
-    // "globalStyle": {
-    //     "navigationBarTextStyle": "white",
-    //     "navigationBarBackgroundColor": "#0faeff",
-    //     "backgroundColor": "#fbf9fe"
-    // },
+	},
+    "globalStyle": {
+        "navigationBarTextStyle": "white",
+        "navigationBarBackgroundColor": "#0faeff",
+        "backgroundColor": "#fbf9fe",
+		"usingComponents": {
+			"van-card": "/wxcomponents/vant/card/index",
+			"van-row": "/wxcomponents/vant/row/index",
+			"van-col": "/wxcomponents/vant/col/index",
+			"van-icon": "/wxcomponents/vant/icon/index",
+			"van-button": "/wxcomponents/vant/button/index"
+		}
+    }
 }

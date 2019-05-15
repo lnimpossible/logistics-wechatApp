@@ -327,7 +327,6 @@ function request(url, method, data) {var header = arguments.length > 3 && argume
       success: function success(res) {
         console.log(res.data);
         uni.hideLoading();
-
         if (res.data.code === 0) {
           resolve(res.data);
         } else
@@ -351,7 +350,7 @@ function request(url, method, data) {var header = arguments.length > 3 && argume
 
         } else {
           uni.showToast({
-            title: res.data.msg,
+            title: res.data.msg || '502 Bad Gateway !',
             icon: 'none' });
 
         }

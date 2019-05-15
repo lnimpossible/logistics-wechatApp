@@ -132,7 +132,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");var _uniGrid = function _uniGrid() {return __webpack_require__.e(/*! import() | node-modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid */ "node-modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid").then(__webpack_require__.bind(null, /*! @dcloudio/uni-ui/lib/uni-grid/uni-grid */ "../../../../../../Users/edz/Desktop/wwwroot/logistics-app/node_modules/_@dcloudio_uni-ui@0.0.8@@dcloudio/uni-ui/lib/uni-grid/uni-grid.vue"));};var _default =
+
 {
   components: {
     uniGrid: _uniGrid },
@@ -149,6 +162,7 @@ var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js
   },
   data: function data() {
     return {
+      address: { start: '', end: '' },
       array: ['货主', '车主'],
       index: 0,
       gridTabsItems: [
@@ -170,6 +184,12 @@ var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js
   },
   onLoad: function onLoad() {},
   methods: {
+    chooseStartAddress: function chooseStartAddress(e) {
+      var self = this;
+      console.log(e);
+      var address = e.detail.value;
+      self.address.start = address[1];
+    },
     changeGridTab: function changeGridTab(row) {
       var index = row.index;
       switch (index) {

@@ -23,7 +23,19 @@
 				</view>
 			</view>
 		</view>
-		
+		<view class="searchLineWrap">
+			<picker class="pickerWrap" mode="region" @change="chooseStartAddress">
+				<!-- <view class="pickerAdrress">{{address.start || '请选择始发地'}}</view> -->
+				<input type="text" :value="address.start" disabled placeholder="请选择始发点" >		
+				<!-- <view class="pickerAdrress">{{address.end || '请选择目的地'}}</view> -->
+			</picker>
+			<image src='../../../static/img/icon/'></image>
+			<picker class="pickerWrap" mode="region" @change="chooseStartAddress">
+				<!-- <view class="pickerAdrress">{{address.start || '请选择始发地'}}</view> -->
+				<input type="text" :value="address.end" disabled placeholder="请选择目的地" >	
+				<!-- <view class="pickerAdrress">{{address.end || '请选择目的地'}}</view> -->
+			</picker>
+		</view>
 		<uni-grid :options="gridTabsItems" :show-border="false"
 			column-num="4" @click="changeGridTab">
 		</uni-grid>
@@ -33,6 +45,7 @@
 <script>
 import {uniGrid} from '@dcloudio/uni-ui'
 import { map } from 'lodash'
+
 export default {
 	components:{
 		uniGrid
@@ -49,6 +62,7 @@ export default {
 	},
 	data() {
 		return {
+			address: {start: '',end: ''},
 			array: ['货主', '车主'],
             index: 0,
 			gridTabsItems: [
@@ -70,6 +84,12 @@ export default {
 	},
 	onLoad() {},
 	methods: {
+		chooseStartAddress(e){
+			let self = this
+			console.log(e)
+			let address = e.detail.value
+			self.address.start = address[1]
+		},
 		changeGridTab(row){
 			let index = row.index
 			switch (index){
@@ -104,6 +124,23 @@ export default {
 			top: 18upx;
 			z-index: 1;
 			// background: rgba(255,255,255,.8);
+		}
+	}
+	.searchLineWrap{
+		background: #fff;
+		width: 80%;
+		border-radius: 20upx;
+		padding: 10upx;
+		display: flex;
+			flex-wrap: nowrap;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+		.pickerWrap{
+			flex-grow: 1;
+			// .pickerAdrress{
+			// 	font-size: 38upx;
+			// }	
 		}
 	}
 }

@@ -32,7 +32,6 @@ function request (url, method, data, header = {}) {
       success: function (res) {
         console.log(res.data)
         uni.hideLoading()
-					
 				if( res.data.code === 0 ){
 					resolve(res.data)
 				}
@@ -56,7 +55,7 @@ function request (url, method, data, header = {}) {
           })
         } else {
           uni.showToast({
-          	title: res.data.msg,
+          	title: res.data.msg || '502 Bad Gateway !',
 						icon: 'none'
           })
         }

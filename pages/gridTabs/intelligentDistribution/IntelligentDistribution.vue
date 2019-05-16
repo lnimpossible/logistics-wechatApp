@@ -30,7 +30,6 @@
 			<cmd-progress percent="100" status="active" :show-info="false" stroke-width="15"></cmd-progress>
 			<button type="default" @click="cancellation"  >取消订单</button>
 		</div>
-		
 	</view>
 </template>
 
@@ -48,7 +47,8 @@
 		},
 		data() {
 			return {
-				
+				orderNumber: '',
+				show:false,
 				styles:'display:none',
 				schedule:'80',
 				poputs:false,
@@ -74,8 +74,8 @@
 			cancellation(e){
 				let self=this
 				self.styles="display:none"
-				self.$request.delete({
-					// url:/orderLogistics/cancelorder/{ordernumber}'
+				self.$request.get({
+					url:`/orderLogistics/cancelorder/${ordernumber}`
 				})
 			},
 			// 货主单击弹出层邀请
@@ -127,18 +127,19 @@
 				p.then(res=>{
 					console.log(res)
 					let self=this
-					self.styles="display:block"
-					let pm=self.$request.post({
-						url:"",
-						data:{
-							
-						}
-					})
-					pm.then(pmres=>{
-						console.log(pmres)
-						// self.poputs=true
-						
-					})
+					// self.orderNumber = res.
+					if(res.matchOrderBeans && res.matchOrderBeans.length > 0){
+						console.log(res.matchOrderBeans)
+						self.styles="display:block"
+					}else{
+						uni.showToast({
+							title: '没有匹配到车辆,请稍后重试',
+							icon: 'none',
+							duration: 2500
+						})
+					}
+					
+					
 				})
 			},
 			goodsComment(e){

@@ -37,27 +37,8 @@
 					</van-col>
 				</van-row>
 			</div>
-			<div class="baseInfor">基础信息</div>
-			<!-- <div class="con">
-				<h2>装货时间</h2>
-				<picker mode="region" @change="chooseStartTime" >
-					<view class="picker">{{times.start || '请选择'}}</view>
-				</picker>
-			</div> -->
-			<!-- <div class="top">
-				<h1>*卸货地</h1>
-				<picker mode="region" @change="chooseEndAddress" >
-					<view class="picker">{{address.end || '选择省|市|区'}}</view>
-				</picker>
-				<input type="text" placeholder="填写详细地址可帮您更快的找到司机">
-			</div> -->
-			<!-- <div class="con">
-				<h2>卸货时间</h2>
-				<picker mode="region" @change="chooseEndTime" >
-					<view class="picker">{{times.end || '请选择'}}</view>
-				</picker>
-			</div> -->
 		</div>
+		<div class="baseInfor">基础信息</div>
 		<div class="message">
 			<var-row>
 				<van-col :span="12">*选择车型</van-col>
@@ -68,12 +49,59 @@
 				</van-col>
 			</var-row>
 			<var-row>
-				<van-col :span="12">*货物重量/体积至少填写一项</van-col>
+				<van-col :span="12">*货物重量</van-col>
 				<van-col :span="12">
-					<input type="text">吨
+					<input type="text">千克
+				</van-col>
+			</var-row>
+			<var-row>
+				<van-col :span="12">*货物体积</van-col>
+				<van-col :span="12">
+					<input type="text">m3
 				</van-col>
 			</var-row>
 		</div>
+		<div class="baseInfor">货物信息</div>
+		<div class="cargo">
+			<van-row>
+				<van-col :span="12">*货物名称</van-col>
+				<van-col :span="12"><input type="text" placeholder="必填货物名称" ></van-col>
+			</van-row>
+			<van-row>
+				<van-col :span="12">*包装方式</van-col>
+				<van-col :span="12"><view class="picker">{{address.start || '请选择'}}</view></van-col>
+			</van-row>
+		</div>
+		<div class="baseInfor">装卸信息</div>
+		<div class="handling">
+			<van-row>
+				<van-col :span="12">*几装几卸</van-col>
+				<van-col :span="12"><view class="picker">{{address.start || '请选择'}}</view></van-col>
+			</van-row>
+			<van-row>
+				<van-col :span="12">*装货时间</van-col>
+				<van-col :span="12"><view class="picker">{{address.start || '请选择'}}</view></van-col>
+			</van-row>
+			<van-row>
+				<van-col :span="12">*卸货时间</van-col>
+				<van-col :span="12"><view class="picker">{{address.start || '请选择'}}</view></van-col>
+			</van-row>
+		</div>
+		<div class="baseInfor">支付信息</div>
+		<div class="pay">
+			<van-row>
+				<van-col :span="12">*卸货时间</van-col>
+				<van-col :span="12"><view class="picker">{{address.start || '请选择'}}</view></van-col>
+			</van-row>
+			<van-row>
+				<van-col :span="12">*卸货时间</van-col>
+				<van-col :span="12"><view class="picker">{{address.start || '请选择'}}</view></van-col>
+			</van-row>
+			
+			
+		</div>
+		
+		
 	</view>
 </template>
 
@@ -151,16 +179,20 @@
 		.address{
 			background-color: #fff;
 			width: 100%;
+			padding: 30upx 30upx 0;
 			.top{
 				width: 100%;
-				
-			}
-			.baseInfor{
-				width: 100%;
-				background: #333;
-				border-left:1px solid lightgreen;
 			}
 		}
-			
+		.baseInfor{
+			margin-left: 30upx;
+			width: 100%;
+			background: #f2f2f2;
+			border-left:2upx solid lightgreen;
+		}
+		.message,.cargo,.handling{
+			background-color: #fff;
+			padding: 30upx 30upx 0;
+		}
 	}
 </style>

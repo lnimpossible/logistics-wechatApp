@@ -1,8 +1,10 @@
 {
     "pages": [
-			{"path": "pages/tabbar/issue/issue"},
 			{"path": "pages/tabbar/index/index"},
+			{"path": "pages/tabbar/issue/issue"},
 			{"path": "pages/redictUrl/search/search"},
+			{"path": "pages/redictUrl/landing/landing"},
+			{"path": "pages/redictUrl/news/news"},
 			{"path": "pages/login/login"},
 			{"path": "pages/login/reg"},
 			{"path": "pages/login/user"},
@@ -49,7 +51,8 @@
 			"van-row": "/wxcomponents/vant/row/index",
 			"van-col": "/wxcomponents/vant/col/index",
 			"van-icon": "/wxcomponents/vant/icon/index",
-			"van-button": "/wxcomponents/vant/button/index"
+			"van-button": "/wxcomponents/vant/button/index",
+			"van-notice-bar": "/wxcomponents/vant/notice-bar/index"
 		}
     }
 }

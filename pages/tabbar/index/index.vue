@@ -1,5 +1,8 @@
 <template>
 	<view class="content">
+		<button open-type="share" class="gotoShare">
+			去分享
+		</button>
 		<view class="header">
 			<view class="uni-list">
 				<view class="uni-list-cell">
@@ -15,19 +18,27 @@
 					<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 						<swiper-item>
 							<view class="swiper-item">
-								<image style="width: 100%;background-color: #eeeeee;" mode='scaleToFill' src='../../../static/img/loginBg/login_old.jpg'
+								<image style="width: 100%;background-color: #eeeeee;" mode='aspectFill' src='../../../static/img/loginBg/login_old.jpg'
                         @error="imageError"></image>
 							</view>
 						</swiper-item>
 					</swiper>
 				</view>
 			</view>
+			<!-- link 模式，在右侧显示链接箭头 -->
+			<van-notice-bar mode="link"
+			speed="30"
+			color="#ed6a0c"
+			backgroundColor	="#fafafa"
+			:text="newsList[0].title"
+			@click="gotoNewsPage"
+			/>
 			<view class="searchLineWrap">
 				<view class="chooseWrap">
 					<picker class="pickerWrap" mode="region" @change="chooseStartAddress">
 						<input type="text" :value="address.startCity" disabled placeholder="始发市" >		
 					</picker>
-					<image class="exchange-icon" src='../../../static/img/icon/chongzhi.png' mode="aspectFit" ></image>
+					<image class="exchange-icon" src='../../../static/img/icon/chongzhi.png' mode="aspectFit" @click="exchangeAddressOrigin"></image>
 					<picker class="pickerWrap" mode="region" @change="chooseEndAddress">
 						<input type="text" :value="address.endCity" disabled placeholder="目的市" >	
 					</picker>
@@ -41,6 +52,36 @@
 				column-num="4" @click="changeGridTab">
 			</uni-grid>
 		</view>
+		
+		<div class="cardList">
+			<div class="cardItem" v-for="(item,index) in itmes" :key="index">
+				<van-card
+					tag="优质"
+					:desc="item.intro"
+					:title="item.compName"
+					:thumb="item.imageUrl"
+				>
+					<view slot="tags">
+						<van-row style="margin: 5px 0 10px 0;">
+							<van-col :span="7"><div style="text-align:left;font-size: 14px;">{{item.startCity}} </div></van-col>
+							<van-col :span="3"><div style="text-align:center;font-size: 14px;"><van-icon custom-style="padding-top:0x;" name="exchange" /> </div></van-col>
+							<van-col :span="7"><div style="text-align:right;font-size: 14px;">{{item.endCity}}  </div></van-col>
+						</van-row>
+					</view>
+					<view slot="tags">
+						<van-row>
+							<van-col :span="16"><div class="price">重 ￥ {{item.heavyCargoFreightRate || 0}}/m³ </div></van-col>
+						</van-row>
+					</view>
+					<view slot="tags">
+						<van-row>
+							<van-col :span="16"><div class="price">轻 ￥ {{item.lightCargoFreightRate || 0}}/m³ </div></van-col>
+							<van-col :span="8"><van-button size="mini" type="info" @click="makePhoneCall(item.compTelephone)"><van-icon name="phone" color="#fff" size="18px" /></van-button></van-col>
+						</van-row>
+					</view>
+				</van-card>
+			</div>
+		</div>
 	</view>
 </template>
 
@@ -54,15 +95,35 @@ export default {
 	},
 	mounted(){
 		let self = this
-		let p = self.$request.get({
+		self.$request.get({
 			url:"/getFunctionList/1",
-		})
-		p.then(res => {
+		}).then(res => {
 			self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
+		})
+		self.$request.post({
+			url:'/logistics/driverDirectLine/cargoQuery',
+			data:{
+				"startCity":'',
+				"endCity":'',
+				"currPage": 1,
+				"pageSize": 20
+			}
+		}).then(res => {
+			self.itmes = res.page.list
+		})
+		self.$request.post({
+			url: '/getNewsBriefList',
+			data: {
+				"newsType": 1
+			}
+		}).then(res => {
+			self.newsList = res.newsBriefList
 		})
 	},
 	data() {
 		return {
+			newsList:[{title: ''}],
+			itmes: [],
 			address: {
 			  "currPage": 1,
 			  "endAreaCode": "",
@@ -94,13 +155,31 @@ export default {
 	},
 	onLoad() {},
 	methods: {
+		exchangeAddressOrigin(){
+			let self = this
+			let temp_startCity = self.address.startCity
+			let temp_startCityCode = self.address.startCityCode
+			let temp_startAreaCode = self.address.startAreaCode
+			
+			self.address.startCity = self.address.endCity
+			self.address.startCityCode = self.address.endCityCode
+			self.address.startAreaCode = self.address.endAreaCode
+			
+			self.address.endCity = temp_startCity
+			self.address.endCityCode = temp_startCityCode
+			self.address.endAreaCode = temp_startAreaCode
+		},
+		gotoNewsPage() {
+			wx.navigateTo({
+				url: '../../redictUrl/news/news'
+			})
+		},
 		submitForSearchLines(){
 			let self = this
 			let address = ''
 			forEach(self.address, (value, key) => {
-				address += `&${key} = ${value}`
+				address += `&${key}=${value}`
 			})
-			console.log(address)
 			const url = `../../redictUrl/search/search?${address}`;
 			wx.navigateTo({ url})
 		},
@@ -139,6 +218,23 @@ export default {
 <style lang="scss" scoped>
 
 .content {
+	.gotoShare{
+		margin-top: 10upx;
+		width: 150upx;
+		height: 150upx;
+		position: fixed;
+		bottom: 30upx;
+		right: 10upx;
+		background: #fff;
+		border: 2upx solid orange;
+		color: orange;
+		border-radius: 75upx;
+		text-align: center;
+		line-height: 150upx;
+		z-index: 3;
+		font-size: 28upx;
+		opacity: .9;
+	}
 	.header{
 		position: relative;
 		width: 100%;
@@ -148,7 +244,6 @@ export default {
 			right: 10upx;;
 			top: 18upx;
 			z-index: 1;
-			// background: rgba(255,255,255,.8);
 		}
 		.searchLineWrap{
 			background: #fff;
@@ -157,11 +252,6 @@ export default {
 			padding: 60upx 0;
 			box-sizing: border-box;
 			margin: 20upx auto;
-			// position: relative;
-			// top: -80upx;
-			// left: 50%;
-			// transform: translateX(-50%);
-			// z-index: 1;
 			.chooseWrap{
 				display: flex;
 				flex-wrap: nowrap;
@@ -187,8 +277,16 @@ export default {
 		}
 	}
 	.navTabs{
-		// margin-top: 30upx;
-		// margin-top: - 100upx;
+		width: 96%;
+		background: #fff;
+		margin: 0 auto;
+	}
+	.cardList{
+		width: 96%;
+		margin: 0 auto;
+		.cardItem{
+			margin: 20upx 0;
+		}
 	}
 }
 </style>

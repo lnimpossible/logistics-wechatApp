@@ -1,0 +1,19 @@
+{
+    "usingComponents": {
+        "van-button": "/static/vant/button/index",
+        "van-icon": "/static/vant/icon/index",
+        "van-cell": "/static/vant/cell/index",
+        "van-cell-group": "/static/vant/cell-group/index",
+        "van-popup": "/static/vant/popup/index",
+        "van-datetime-picker": "/static/vant/datetime-picker/index",
+        "van-field": "/static/vant/field/index",
+        "van-picker": "/static/vant/field/index",
+        "van-dialog": "/static/vant/dialog/index",
+        "van-toast": "/static/vant/toast/index",
+        "van-area": "/static/vant/area/index",
+        "van-row": "/static/vant/row/index",
+        "van-col": "/static/vant/col/index",
+		"van-card": "/static/vant/card/index",
+		"van-notice-bar": "/static/vant/notice-bar/index"
+    }
+}

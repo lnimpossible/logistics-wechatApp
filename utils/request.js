@@ -43,12 +43,12 @@ function request (url, method, data, header = {}) {
               if (res.confirm) {
                 console.log('用户点击确定')
                 uni.navigateTo({
-                  url: '../landing/main',
+                  url: "../../redictUrl/landing/landing",
                 })
               } else if (res.cancel) {
                 console.log('用户点击取消')
 								uni.reLaunch({
-									url: '../index/main'
+									url: '../../tarbar/index/index'
 								})
               }
             }

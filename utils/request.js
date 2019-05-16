@@ -15,7 +15,6 @@ function request (url, method, data, header = {}) {
     }else{
 			header = {
 				'content-type': 'application/json',
-				'token':'429cbadf6b244d82ab639fe268d56418'
 			}
 		}
   } catch (e) {

@@ -1,6 +1,7 @@
 {
     "pages": [
 			{"path": "pages/tabbar/index/index"},
+			{"path": "pages/tabbar/personalCenter/personalCenter"},
 			{"path": "pages/tabbar/issue/issue"},
 			{"path": "pages/tabbar/news/news"},
 			{"path": "pages/redictUrl/search/search"},
@@ -10,14 +11,13 @@
 			{"path": "pages/login/user"},
 			{"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution"},
 			{"path": "pages/tabbar/tabbar-3/tabbar-3"},
-			{"path": "pages/tabbar/personalCenter/personalCenter"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video"},
 			{"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"}
     ],
     "tabBar": {
 		"borderStyle": "black",
-		"backgroundColor": "#333",
+		"backgroundColor": "#fff",
 		"color": "#8F8F94",
 		"selectedColor": "#f33e54",
 		"list": [{
@@ -26,14 +26,12 @@
 				"selectedIconPath": "static/img/tabbar/homeactive.png",
 				"text": "首页"
 			},
-			//#ifdef MP-WEIXIN
 			{
 				"pagePath": "pages/tabbar/issue/issue",
 				"iconPath": "static/img/tabbar/add.png",
 				"selectedIconPath": "static/img/tabbar/addactive.png",
 				"text": "发布"
 			},
-			//#endif
 			{
 				"pagePath": "pages/tabbar/news/news",
 				"iconPath": "static/img/tabbar/news.png",

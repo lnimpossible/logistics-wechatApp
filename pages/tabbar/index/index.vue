@@ -122,9 +122,9 @@ export default {
 					longitude: res.longitude,
 					iconPath: '../../../static/img/icon/location.png'
 				})
-				for(let i=0; i< 20; i++){
+				for(let i=0; i< 15; i++){
 					let delta = 0.005
-					var animationDelta = 0.0008
+					var animationDelta = 0.001
 					let longitude = self.map.longitude+random(-delta,delta)
 					let latitude = self.map.latitude+random(-delta,delta)
 					self.map.covers.push({
@@ -133,9 +133,9 @@ export default {
 						height: 40,
 						latitude: latitude,
 						longitude: longitude,
-						iconPath: `../../../static/img/map/bigCar${random(2,4)}.png`
+						iconPath: `../../../static/img/map/bigCar${random(2,3)}.png`
 					})
-					self.mapMarkersAnimation(i,longitude,latitude,animationDelta)
+					self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
 				}
 			}
 		});
@@ -212,19 +212,20 @@ export default {
 		};
 	},
 	methods: {
-		mapMarkersAnimation(markerId,longitude,latitude,animationDelta){
+		mapMarkersAnimation(markerId,longitude,latitude,rotate,animationDelta){
 			let self = this
 			let new_longitude = longitude+random(-animationDelta,animationDelta)
 			let new_latitude = latitude+random(-animationDelta,animationDelta)
+			rotate = rotate+random(-90,90)
 			self.amapInstance.translateMarker({
 				markerId:markerId,
 				destination: {latitude: latitude,longitude: longitude},
 				// autoRotate: true,
-				rotate: random(-30,30),
+				rotate: rotate,
 				duration:random(1000,5000),
 				animationEnd: ()=>{
 					delay(()=>{
-						self.mapMarkersAnimation(markerId,new_longitude,new_latitude,animationDelta)
+						self.mapMarkersAnimation(markerId,new_longitude,new_latitude,rotate,animationDelta)
 					},1000)
 				}
 			})
@@ -247,8 +248,8 @@ export default {
 			self.address.endAreaCode = temp_startAreaCode
 		},
 		gotoNewsPage() {
-			wx.navigateTo({
-				url: '../../redictUrl/news/news'
+			wx.switchTab({
+				url: '../../tabbar/news/news'
 			})
 		},
 		submitForSearchLines(){

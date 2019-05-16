@@ -2,9 +2,9 @@
     "pages": [
 			{"path": "pages/tabbar/index/index"},
 			{"path": "pages/tabbar/issue/issue"},
+			{"path": "pages/tabbar/news/news"},
 			{"path": "pages/redictUrl/search/search"},
 			{"path": "pages/redictUrl/landing/landing"},
-			{"path": "pages/redictUrl/news/news"},
 			{"path": "pages/login/login"},
 			{"path": "pages/login/reg"},
 			{"path": "pages/login/user"},
@@ -34,6 +34,12 @@
 				"text": "发布"
 			},
 			//#endif
+			{
+				"pagePath": "pages/tabbar/news/news",
+				"iconPath": "static/img/tabbar/news.png",
+				"selectedIconPath": "static/img/tabbar/newsactive.png",
+				"text": "资讯"
+			},
 			{
 				"pagePath": "pages/tabbar/personalCenter/personalCenter",
 				"iconPath": "static/img/tabbar/me.png",

@@ -8,7 +8,7 @@
 				<view class="uni-list-cell">
 					<view class="uni-list-cell-db">
 						<picker @change="bindPickerChange" :value="index" :range="array">
-							<view class="uni-input">{{array[index]}}</view>
+							<view class="uni-input">{{userType}}</view>
 						</picker>
 					</view>
 				</view>
@@ -25,7 +25,7 @@
 					</swiper>
 				</view>
 			</view>
-			<!-- link 模式，在右侧显示链接箭头 -->
+			<!-- 公告 -->
 			<van-notice-bar mode="link"
 			speed="30"
 			color="#ed6a0c"
@@ -33,6 +33,22 @@
 			:text="newsList[0].title"
 			@click="gotoNewsPage"
 			/>
+			<!-- // 导航栏 -->
+			<view class="navTabs">
+				<uni-grid :options="gridTabsItems" :show-border="false"
+					column-num="4" @click="changeGridTab">
+				</uni-grid>
+			</view>
+			<!-- // map 地图 -->
+			<view class="map_container" >
+                <map id="mapInstance" 
+				:latitude="map.latitude" 
+				:longitude="map.longitude" 
+				:markers="map.covers"
+				:show-location="true">
+                </map>
+            </view>
+			<!-- // 搜索框 -->
 			<view class="searchLineWrap">
 				<view class="chooseWrap">
 					<picker class="pickerWrap" mode="region" @change="chooseStartAddress">
@@ -47,12 +63,7 @@
 			</view>
 		</view>
 		
-		<view class="navTabs">
-			<uni-grid :options="gridTabsItems" :show-border="false"
-				column-num="4" @click="changeGridTab">
-			</uni-grid>
-		</view>
-		
+		<!-- 专线列表 -->
 		<div class="cardList">
 			<div class="cardItem" v-for="(item,index) in itmes" :key="index">
 				<van-card
@@ -87,18 +98,54 @@
 
 <script>
 import {uniGrid} from '@dcloudio/uni-ui'
-import { map, forEach } from 'lodash'
-
+import { map, forEach, random, delay } from 'lodash'
+// const amapFile = require('@/common/amap-wx.js');
 export default {
 	components:{
 		uniGrid
 	},
+	onLoad() {
+		let self = this
+	},
 	mounted(){
 		let self = this
+		uni.getLocation({
+			type: 'gcj02',
+			success: function (res) {
+				console.log(res)
+				self.map.longitude = res.longitude
+				self.map.latitude = res.latitude
+				self.map.covers.push({
+					width : 40,
+					height: 40,
+					latitude: res.latitude,
+					longitude: res.longitude,
+					iconPath: '../../../static/img/icon/location.png'
+				})
+				for(let i=0; i< 20; i++){
+					let delta = 0.005
+					var animationDelta = 0.0008
+					let longitude = self.map.longitude+random(-delta,delta)
+					let latitude = self.map.latitude+random(-delta,delta)
+					self.map.covers.push({
+						id: i,
+						width : 40,
+						height: 40,
+						latitude: latitude,
+						longitude: longitude,
+						iconPath: `../../../static/img/map/bigCar${random(2,4)}.png`
+					})
+					self.mapMarkersAnimation(i,longitude,latitude,animationDelta)
+				}
+			}
+		});
 		self.$request.get({
 			url:"/getFunctionList/1",
 		}).then(res => {
-			self.gridTabsItems = map(res.functionList, item => { return {text:item.functionName,image:item.functionIconUrl}})
+			self.gridTabsItems = map(res.functionList, item => { return {
+				text:item.functionName,image:item.functionIconUrl,
+				linkUrl: item.linkUrl
+			}})
 		})
 		self.$request.post({
 			url:'/logistics/driverDirectLine/cargoQuery',
@@ -119,9 +166,19 @@ export default {
 		}).then(res => {
 			self.newsList = res.newsBriefList
 		})
+		self.amapInstance = uni.createMapContext("mapInstance")
 	},
 	data() {
 		return {
+			amapInstance: '',
+			markAnimation:[],
+			map:{
+				title: 'map',
+				latitude: 31.29579,
+				longitude: 120.57186,
+				covers: []
+			},
+			amapUrl: '',
 			newsList:[{title: ''}],
 			itmes: [],
 			address: {
@@ -135,6 +192,7 @@ export default {
 			  "startCityCode": "",
 		    },
 			array: ['货主', '车主'],
+			userType: '货主',
             index: 0,
 			gridTabsItems: [
 				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shu.png',text:'圣诞树'},
@@ -153,8 +211,27 @@ export default {
             duration: 500
 		};
 	},
-	onLoad() {},
 	methods: {
+		mapMarkersAnimation(markerId,longitude,latitude,animationDelta){
+			let self = this
+			let new_longitude = longitude+random(-animationDelta,animationDelta)
+			let new_latitude = latitude+random(-animationDelta,animationDelta)
+			self.amapInstance.translateMarker({
+				markerId:markerId,
+				destination: {latitude: latitude,longitude: longitude},
+				// autoRotate: true,
+				rotate: random(-30,30),
+				duration:random(1000,5000),
+				animationEnd: ()=>{
+					delay(()=>{
+						self.mapMarkersAnimation(markerId,new_longitude,new_latitude,animationDelta)
+					},1000)
+				}
+			})
+		},
+		bindPickerChange(e){
+			this.userType = this.array[e.detail.value]
+		},
 		exchangeAddressOrigin(){
 			let self = this
 			let temp_startCity = self.address.startCity
@@ -198,17 +275,19 @@ export default {
 			this.address.endAreaCode = code[2] // 区 code
 		},
 		changeGridTab(row){
+			let self = this
 			let index = row.index
-			switch (index){
-				case 0:
-					console.log('点击智能配送')
-					uni.navigateTo({
-						url: '../../gridTabs/intelligentDistribution/intelligentDistribution'
-					})
-					break;
-				default:
-					
-					break;
+			let current = self.gridTabsItems[index]
+			if(current.linkUrl){
+				uni.navigateTo({
+					url: current.linkUrl
+				})
+			}else{
+				uni.showToast({
+					title: '敬请期待',
+					icon: 'none',
+					duration: 2000
+				})
 			}
 		}
 	}
@@ -216,7 +295,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .content {
 	.gotoShare{
 		margin-top: 10upx;
@@ -244,14 +322,32 @@ export default {
 			right: 10upx;;
 			top: 18upx;
 			z-index: 1;
+			.uni-input{
+				color:#555;
+				font-size: 40upx;
+			}
+		}
+		.navTabs{
+			width: 100%;
+			background: #fff;
+			margin: 10upx auto;
+		}
+		.map_container{
+			width:  100%;
+			height: 500upx;
+			map{
+				width: 100%;
+				height: 100%;
+			}
 		}
 		.searchLineWrap{
 			background: #fff;
 			width: 96%;
 			border-radius:20upx;
-			padding: 60upx 0;
+			// border-bottom-right-radius:20upx;
+			padding: 20upx 0;
 			box-sizing: border-box;
-			margin: 20upx auto;
+			margin: 10upx auto;
 			.chooseWrap{
 				display: flex;
 				flex-wrap: nowrap;
@@ -276,16 +372,11 @@ export default {
 			}
 		}
 	}
-	.navTabs{
-		width: 96%;
-		background: #fff;
-		margin: 0 auto;
-	}
 	.cardList{
 		width: 96%;
 		margin: 0 auto;
 		.cardItem{
-			margin: 20upx 0;
+			margin: 10upx 0;
 		}
 	}
 }

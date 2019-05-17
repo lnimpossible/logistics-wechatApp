@@ -45,7 +45,7 @@
 		},
 		mounted() {
 			let self = this
-			self.nowTimes()
+			// self.nowTimes()
 		},
 		data() {
 			return {
@@ -93,31 +93,26 @@
 				self.poputs = false
 			},
 			// 获取当前时间
-			timeFormate(timeStamp) {
+			timeFormate() {
 				let self = this
-				let newDate = new Date(timeStamp)
+				let newDate = new Date()
 				let month = newDate.getMonth()
 				let date = newDate.getDate()
 				let hh = newDate.getHours()
 				let mm = newDate.getMinutes()
 				let ss = newDate.getSeconds()
-				let year = new Date(timeStamp).getFullYear();
+				let year = newDate.getFullYear()
 				month = month + 1 < 10 ? "0" + (month + 1) : month + 1;
 				date = date < 10 ? "0" + date : date;
 				hh = hh < 10 ? "0" + hh : hh;
 				mm = mm < 10 ? "0" +mm : mm;
 				ss = ss < 10 ? "0" + ss : ss
-				self.nowTime = year + "-" + month + "-" + date + " " + hh + ":" + mm + ":" + ss;
-			},
-			//定时器
-			nowTimes() {
-				let self = this
-				self.timeFormate(new Date());
-				setInterval(self.nowTimes, 30 * 1000);
+				return year + "-" + month + "-" + date + " " + hh + ":" + mm + ":" + ss;
 			},
 			//单击确定按钮
 			submitMessage(e) {
 				let self = this
+				self.nowTime = self.timeFormate()
 				let p = self.$request.post({
 					url: "/orderLogistics/add",
 					data: {
@@ -145,6 +140,8 @@
 							duration: 2500
 						})
 					}
+
+
 				})
 			},
 			goodsComment(e) {

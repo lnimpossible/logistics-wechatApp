@@ -3,11 +3,9 @@
 		<div class="address">
 			<div class="top">
 				<van-row>
-					<van-col :span="12">*装货地</van-col>
-					<van-col :span="12">
-						<picker mode="region" @change="chooseStartCity" >
-							<view class="picker" >{{startAreaCode || '选择省 | 市 | 区'}}</view>
-						</picker>
+					<van-col :span="11">*装货地</van-col>
+					<van-col :span="13">
+							<view  @click="chooseStartNode">{{startname || '选择装货地'}}</view>
 					</van-col>
 				</van-row>
 				<van-row>
@@ -16,24 +14,22 @@
 					</van-col>
 				</van-row>
 				<van-row>
-					<van-col :span="12">装货时间</van-col>
+					<van-col :span="11">装货时间</van-col>
 					<van-col :span="6">
 						<picker mode="date" @change="chooseLoadDate" >
 							<view class="date">{{loadDate || '年月日'}}</view>
 						</picker>
 					</van-col>
-					<van-col :span="6">
+					<van-col :span="7">
 						<picker mode="time" @change="chooseLoadTime" >
 							<view class="date">{{loadTime || '时分'}}</view>
 						</picker>
 					</van-col>
 				</van-row>
 				<van-row>
-					<van-col :span="12">*卸货地</van-col>
-					<van-col :span="12">
-						<picker mode="region" @change="chooseEndCity" >
-							<view class="picker" >{{endAreaCode || '选择省 | 市 | 区'}}</view>
-						</picker>
+					<van-col :span="11">*卸货地</van-col>
+					<van-col :span="13">
+							<view @click="chooseEndNode" >{{endname || '选择卸货地'}}</view>
 					</van-col>
 				</van-row>
 				<van-row>
@@ -42,13 +38,13 @@
 					</van-col>
 				</van-row>
 				<van-row>
-					<van-col :span="12">卸货时间</van-col>
+					<van-col :span="11">卸货时间</van-col>
 					<van-col :span="6">
 						<picker mode="date" @change="chooseDischargeDate" >
 							<view class="date">{{dischargeDate || '年月日'}}</view>
 						</picker>
 					</van-col>
-					<van-col :span="6">
+					<van-col :span="7">
 						<picker mode="time" @change="chooseDischargeTime" >
 							<view class="date">{{dischargeTime || '时分'}}</view>
 						</picker>
@@ -81,9 +77,9 @@
 			<van-row>
 				<van-col :span="12">*是否三超</van-col>
 				<van-col :span="12">
-					 <van-radio-group :value="isOverspeedOvermanTransfinite" @change="chooseIsOverspeedOvermanTransfinite">
-					 	<van-radio name="0" >是</van-radio>
-					 	<van-radio name="1" >否</van-radio>
+					 <van-radio-group custom-class="vantRadioType" :value="isOverspeedOvermanTransfinite" @change="chooseIsOverspeedOvermanTransfinite">
+						<van-radio  name="0" >是</van-radio>
+					 	<van-radio  name="1" >否</van-radio>
 					 </van-radio-group>
 				</van-col>
 			</van-row>
@@ -91,8 +87,8 @@
 				<van-col :span="12">*是否常发货源</van-col>
 				<van-col :span="12">
 					<van-radio-group :value="isRegularCargoOrigin" @change="chooseIsRegularCargoOrigin">
-						<van-radio name="0" >是</van-radio>
-						<van-radio name="1" >否</van-radio>
+						<van-radio custom-class="vantRadioType" name="0" >是</van-radio>
+						<van-radio custom-class="vantRadioType" name="1" >否</van-radio>
 					</van-radio-group>
 				</van-col>
 			</van-row>
@@ -152,6 +148,7 @@
 </template>
 
 <script>
+	import Checker from '@/common/graceChecker.js'
 	export default {
 		mounted(){
 			let self=this
@@ -184,6 +181,7 @@
 		},
 		data() {
 			return {
+				originNodeName:'',
 				
 				billing:[],
 				handlingList:[],
@@ -196,6 +194,8 @@
 				lastdischargeDate:"",
 				dischargeTime:"",
 				dischargeDate: "",
+				//卸货地名字
+				endname:"",
 				endAddr: "",
 				endAreaCode: "",
 				endCityCode: "",
@@ -214,17 +214,41 @@
 				receipt: "",
 				remark: "",
 				specificRequirement: "",
+				//始发地名字
+				startname:"",
 				startAddr: "",
 				startAreaCode: "",
 				startCityCode: "",
-				startLatitude: "31.2311513192",
-				startLongitude: "121.4627838344",
+				startLatitude: "",
+				startLongitude: "",
 				startProvinceCode: "",
 				vehicleSize: "124",
 				vehicleType: ""
 			}
 		},
 		methods: {
+			// 卸货地
+			chooseEndNode(e){
+				let self=this
+				uni.chooseLocation({
+					success(res) {
+						self.endLongitude=res.longitude
+						self.endLatitude=res.latitude
+						self.endname=res.name
+					}	
+				})
+			},
+			// 装货地
+			 chooseStartNode(e){
+			    let self = this
+			    uni.chooseLocation({
+			        success: res => {
+					self.startLongitude=res.longitude
+					self.startLatitude=res.latitude
+					self.startname=res.name
+			        }
+			    })
+			},
 			// 单击发布按钮
 			issueList(e){
 				let self=this
@@ -233,7 +257,26 @@
 				self.lastLoadDate=lastLoadDate
 				let lastdischargeDate=`${self.dischargeDate} ${self.dischargeTime}:00`
 				self.lastdischargeDate=lastdischargeDate
-				self.$request.post({
+				let tempRuleObject = {
+					cargoName: self.cargoName,
+					cargoWeight: self.cargoWeight,
+					cargoVolume: self.cargoVolume
+				}
+				let rule = [
+					{ name: "cargoName", checkType: "notnull" , errorMsg: "货源名称不能为空" },
+					{ name: "cargoWeight", checkType: "notnull", errorMsg: "货源重量不能为空" },
+				    { name: "cargoVolume", checkType: "notnull", errorMsg: "货源体积不能为空" }
+				]
+				let isPass = Checker.check(tempRuleObject, rule)
+				if(Checker.error){
+					uni.showToast({
+						title: Checker.error,
+						icon: 'none'
+					})
+					return false
+				}
+				
+				let p=self.$request.post({
 					url:'/logistics/shipperGoodsReleased/add',
 					data:{
 						cargoName:self.cargoName,
@@ -262,6 +305,11 @@
 						startProvinceCode:self.startProvinceCode,
 						vehicleType:self.vehicleType
 					}
+				})
+				p.then(res=>{
+					uni.redirectTo({
+						url:'../../ordergoods/ordergoods'
+					})
 				})
 			},
 			// 是否常发货源
@@ -375,13 +423,13 @@
 				self.startAddr=startAddr
 			},
 			// 选择装货城市
-			chooseStartCity(e){
-				let self=this
-				let val=e.detail.value
-				self.startProvinceCode=val[0]
-				self.startCityCode=val[1]
-				self.startAreaCode=val[2]
-			}
+			// chooseStartCity(e){
+			// 	let self=this
+			// 	let val=e.detail.value
+			// 	self.startProvinceCode=val[0]
+			// 	self.startCityCode=val[1]
+			// 	self.startAreaCode=val[2]
+			// }
 		}
 	}
 </script>
@@ -389,12 +437,21 @@
 <style lang="scss" scoped>
 	.content {
 		background-color: #f2f2f2;
+		width: 100%;
 		.address{
 			background-color: #fff;
 			width: 100%;
 			padding: 30upx 30upx 0;
 			.top{
 				width: 100%;
+				van-cell-group{
+					width: 100%;
+					height: 300upx;
+					van-field{
+						width: 100%;
+						height: 50upx;
+					}
+				}
 			}
 		}
 		van-row{
@@ -426,6 +483,11 @@
 		.message,.cargo,.handling,.pay,.comment{
 			background-color: #fff;
 			padding: 0upx 30upx;
+		}
+		.message{
+			.vantRadioType{
+				font-size: 20upx;
+			}
 		}
 		button{
 			width: 70%;

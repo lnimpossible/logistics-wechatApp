@@ -145,8 +145,6 @@
 							duration: 2500
 						})
 					}
-
-
 				})
 			},
 			goodsComment(e) {

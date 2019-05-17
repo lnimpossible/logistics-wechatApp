@@ -274,7 +274,7 @@ export default {
 		submitForSearchLines(){
 			let self = this
 			let address = ''
-			forEach(self.address, (value, key) => {
+			_.forEach(self.address, (value, key) => {
 				address += `&${key}=${value}`
 			})
 			const url = `../../redictUrl/search/search?${address}`;

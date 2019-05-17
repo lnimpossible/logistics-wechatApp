@@ -12,7 +12,7 @@
 				</van-row>
 				<van-row>
 					<van-col :span="24">
-						<input type="text" placeholder="填写详细地址可帮您更快的找到司机" :value="startAddr" @change="chooseStartAddr">
+						<input type="text" placeholder="填写详细地址可帮您更快的找到司机" :value="startAddr" @change="chooseStartAddr" >
 					</van-col>
 				</van-row>
 				<van-row>
@@ -69,13 +69,31 @@
 			<van-row>
 				<van-col :span="12">*货物重量</van-col>
 				<van-col :span="12">
-					<input type="text" :value="cargoWeight" @change="chooseCargoWeight">千克
+					<input type="number" :value="cargoWeight" @change="chooseCargoWeight" placeholder="千克">
 				</van-col>
 			</van-row>
 			<van-row>
 				<van-col :span="12">*货物体积</van-col>
 				<van-col :span="12">
-					<input type="text" :value="cargoVolume" @change="chooseCargoVolume">m3
+					<input type="number" :value="cargoVolume" @change="chooseCargoVolume" placeholder="m3">
+				</van-col>
+			</van-row>
+			<van-row>
+				<van-col :span="12">*是否三超</van-col>
+				<van-col :span="12">
+					 <van-radio-group :value="isOverspeedOvermanTransfinite" @change="chooseIsOverspeedOvermanTransfinite">
+					 	<van-radio name="0" >是</van-radio>
+					 	<van-radio name="1" >否</van-radio>
+					 </van-radio-group>
+				</van-col>
+			</van-row>
+			<van-row>
+				<van-col :span="12">*是否常发货源</van-col>
+				<van-col :span="12">
+					<van-radio-group :value="isRegularCargoOrigin" @change="chooseIsRegularCargoOrigin">
+						<van-radio name="0" >是</van-radio>
+						<van-radio name="1" >否</van-radio>
+					</van-radio-group>
 				</van-col>
 			</van-row>
 		</div>
@@ -101,7 +119,7 @@
 		<div class="pay">
 			<van-row>
 				<van-col :span="12">*预期运价</van-col>
-				<van-col :span="12"><input type="text" :value="expectFreightRate" @change="chooseExpectFreightRate" placeholder="请合理填写运费 元/趟" /></van-col>
+				<van-col :span="12"><input type="number" :value="expectFreightRate" @change="chooseExpectFreightRate" placeholder="请合理填写运费 元/趟" /></van-col>
 			</van-row>
 			<van-row>
 				<van-col :span="12">*支付方式</van-col>
@@ -117,10 +135,10 @@
 			<van-row>
 				<van-col :span="12">回单</van-col>
 				<van-col :span="12">
-					<!-- <van-radio-group v-model="radio">
-					  <van-radio name="1">单选框 1</van-radio>
-					  <van-radio name="2">单选框 2</van-radio>
-					</van-radio-group> -->
+					<van-radio-group :value="receipt" @change="chooseReceipt">
+						<van-radio name="0" >是</van-radio>
+						<van-radio name="1" >否</van-radio>
+					</van-radio-group>
 				</van-col>
 			</van-row>
 			<van-row>
@@ -166,6 +184,7 @@
 		},
 		data() {
 			return {
+				
 				billing:[],
 				handlingList:[],
 				money:[],
@@ -184,15 +203,15 @@
 				endLongitude: "120.5771827698",
 				endProvinceCode: "",
 				expectFreightRate: "",
-				isOverspeedOvermanTransfinite: "0",
-				isRegularCargoOrigin: "1",
+				isOverspeedOvermanTransfinite: "",
+				isRegularCargoOrigin: "",
 				//最终装货时间
 				lastLoadDate:"",
 				loadTime:"",
 				loadDate: "",
-				loadNumAndDischargeNum: "1",
+				loadNumAndDischargeNum: "",
 				payMode: "",
-				receipt: "0",
+				receipt: "",
 				remark: "",
 				specificRequirement: "",
 				startAddr: "",
@@ -209,40 +228,59 @@
 			// 单击发布按钮
 			issueList(e){
 				let self=this
-				console.log(e)
+				//时间拼接
+				let lastLoadDate=`${self.loadDate} ${self.loadTime}:00`
+				self.lastLoadDate=lastLoadDate
+				let lastdischargeDate=`${self.dischargeDate} ${self.dischargeTime}:00`
+				self.lastdischargeDate=lastdischargeDate
 				self.$request.post({
 					url:'/logistics/shipperGoodsReleased/add',
 					data:{
 						cargoName:self.cargoName,
 						cargoVolume:self.cargoVolume,
 						cargoWeight:self.cargoWeight,
-						dischargeDate: "卸货时间(yyyy-MM-dd HH:mm:ss)",
+						dischargeDate:self.lastdischargeDate,
 						endAddr:self.endAddr,
 						endAreaCode:self.endAreaCode,
 						endCityCode:self.endCityCode,
 						endProvinceCode:self.endProvinceCode,
-						  "endLatitude": "*目的定位纬度",
-						  "endLongitude": "*目的定位经度",
+						endLatitude:self.endLatitude,
+						endLongitude:self.endLongitude,
 						expectFreightRate:self.expectFreightRate,
-						  "id": "编号(新增为null 修改时传值)",
-						  "isOverspeedOvermanTransfinite": "是否三超(0 否 1 是)",
-						  "isRegularCargoOrigin": "是否常发货源(0 否 1 是)",
-						  "loadDate": "装货时间(yyyy-MM-dd HH:mm:ss)",
-						  "loadNumAndDischargeNum": "几装几卸",
-						  "payMode": "支付方式",
-						  "receipt": "是否需要回单(0 否 1 是)",
-						  "remark": "备注",
-						  "specificRequirement": "特殊要求",
-						  "startAddr": "装货地详细地址",
-						  "startAreaCode": "*始发区",
-						  "startCityCode": "*始发市",
-						  "startLatitude": "*始发定位纬度",
-						  "startLongitude": "始发定位经度",
-						  "startProvinceCode": "*始发省",
-						  "vehicleSize": "车长",
-						  "vehicleType": "车型"
+						isOverspeedOvermanTransfinite:self.isOverspeedOvermanTransfinite,
+						isRegularCargoOrigin:self.isRegularCargoOrigin,
+						loadDate:self.lastLoadDate,
+						loadNumAndDischargeNum:self.loadNumAndDischargeNum,
+						payMode:self.payMode,
+						receipt:self.receipt,
+						remark:self.remark,
+						startAddr:self.startAddr,
+						startAreaCode:self.startAreaCode,
+						startCityCode:self.startCityCode,
+						startLatitude:self.startLatitude,
+						startLongitude:self.startLongitude,
+						startProvinceCode:self.startProvinceCode,
+						vehicleType:self.vehicleType
 					}
 				})
+			},
+			// 是否常发货源
+			chooseIsRegularCargoOrigin(e){
+				let self=this
+				let isRegularCargoOrigin=e.detail
+				self.isRegularCargoOrigin=isRegularCargoOrigin
+			},
+			// 是否三超
+			chooseIsOverspeedOvermanTransfinite(e){
+				let self=this
+				let isOverspeedOvermanTransfinite=e.detail
+				self.isOverspeedOvermanTransfinite=isOverspeedOvermanTransfinite
+			},
+			// 是否回单
+			chooseReceipt(e){
+				let self=this
+				let receipt=e.detail
+				self.receipt=receipt
 			},
 			// 装卸方式
 			chooseLoadNumAndDischargeNum(e){
@@ -359,15 +397,40 @@
 				width: 100%;
 			}
 		}
+		van-row{
+			border-bottom: #f2f2f2 solid 1upx;
+			display: block;
+			padding: 20upx 0;
+		}
+		van-col{
+			color: #111;
+			font-size: 28upx;
+		}
+		van-radio-group{
+			display: flex;
+		}
+		input{
+			color: #333;
+			font-size: 24upx;
+		}
+		.line{
+			border-bottom: #333 solid 4upx;
+		}
 		.baseInfor{
-			margin-left: 30upx;
 			width: 100%;
 			background: #f2f2f2;
-			border-left:2upx solid lightgreen;
+			color: #333;
+			font-size: 28upx;
+			padding: 20upx 30upx;
 		}
 		.message,.cargo,.handling,.pay,.comment{
 			background-color: #fff;
-			padding: 30upx 30upx 0;
+			padding: 0upx 30upx;
+		}
+		button{
+			width: 70%;
+			margin: 30upx auto;
+			border-radius: 50upx;
 		}
 	}
 </style>

@@ -121,7 +121,6 @@ export default {
 		uni.getLocation({
 			type: 'gcj02',
 			success: function (res) {
-				console.log(res)
 				self.map.longitude = res.longitude
 				self.map.latitude = res.latitude
 					
@@ -131,7 +130,6 @@ export default {
 				})
 				// 获取城市信息
 				loadCity(res.longitude, res.latitude).then(res => {
-					console.log(res)
 					self.cityData = res.regeocode.addressComponent
 					self.address.startCity = self.cityData.city
 					self.address.startCityCode = self.cityData.cityCode
@@ -245,7 +243,6 @@ export default {
 	},
 	methods: {
 		controltap(e){
-			console.log(e)
 			this.amapInstance.moveToLocation()
 		},
 		mapMarkersAnimation(markerId,longitude,latitude,rotate,animationDelta){

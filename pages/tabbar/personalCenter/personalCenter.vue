@@ -111,26 +111,25 @@
 							// })
 						// }
 					})
-					
 				}
 					
 				
 			},
 			//用户点击订单类型
 			toOrderType(index){
-				console.log(index)
-				// uni.showToast({title: this.orderTypeLise[index].name});
 				switch (index){
 					case 0:
+						uni.navigateTo({
+							url: '../../redictUrl/ordergoods/ordergoods'
+						})
 						break;
 					case 1:
 						uni.navigateTo({
 							url: '../../redictUrl/dailySOD/dailySOD'
 						})
 						break;
-					case 2:
-						break;
 					default:
+						uni.showToast({title: this.orderTypeLise[index].name});
 						break;
 				}
 				

@@ -77,9 +77,9 @@
 			<van-row>
 				<van-col :span="12">*是否三超</van-col>
 				<van-col :span="12">
-					 <van-radio-group :value="isOverspeedOvermanTransfinite" @change="chooseIsOverspeedOvermanTransfinite">
-					 	<van-radio name="0" >是</van-radio>
-					 	<van-radio name="1" >否</van-radio>
+					 <van-radio-group custom-class="vantRadioType" :value="isOverspeedOvermanTransfinite" @change="chooseIsOverspeedOvermanTransfinite">
+						<van-radio  name="0" >是</van-radio>
+					 	<van-radio  name="1" >否</van-radio>
 					 </van-radio-group>
 				</van-col>
 			</van-row>
@@ -87,8 +87,8 @@
 				<van-col :span="12">*是否常发货源</van-col>
 				<van-col :span="12">
 					<van-radio-group :value="isRegularCargoOrigin" @change="chooseIsRegularCargoOrigin">
-						<van-radio name="0" >是</van-radio>
-						<van-radio name="1" >否</van-radio>
+						<van-radio custom-class="vantRadioType" name="0" >是</van-radio>
+						<van-radio custom-class="vantRadioType" name="1" >否</van-radio>
 					</van-radio-group>
 				</van-col>
 			</van-row>
@@ -148,6 +148,7 @@
 </template>
 
 <script>
+	import Checker from '@/common/graceChecker.js'
 	export default {
 		mounted(){
 			let self=this
@@ -254,15 +255,24 @@
 				self.lastLoadDate=lastLoadDate
 				let lastdischargeDate=`${self.dischargeDate} ${self.dischargeTime}:00`
 				self.lastdischargeDate=lastdischargeDate
-				
-				if(!self.cargoName){
-					uni.showToast({
-						title:'货源名称不能为空',
-						icon:'none'
-					})
-					return
+				let tempRuleObject = {
+					cargoName: self.cargoName,
+					cargoWeight: self.cargoWeight,
+					cargoVolume: self.cargoVolume
 				}
-					
+				let rule = [
+					{ name: "cargoName", checkType: "notnull" , errorMsg: "货源名称不能为空" },
+					{ name: "cargoWeight", checkType: "notnull", errorMsg: "货源重量不能为空" },
+				    { name: "cargoVolume", checkType: "notnull", errorMsg: "货源体积不能为空" }
+				]
+				let isPass = Checker.check(tempRuleObject, rule)
+				if(Checker.error){
+					uni.showToast({
+						title: Checker.error,
+						icon: 'none'
+					})
+					return false
+				}
 				
 				let p=self.$request.post({
 					url:'/logistics/shipperGoodsReleased/add',
@@ -472,6 +482,11 @@
 		.message,.cargo,.handling,.pay,.comment{
 			background-color: #fff;
 			padding: 0upx 30upx;
+		}
+		.message{
+			.vantRadioType{
+				font-size: 20upx;
+			}
 		}
 		button{
 			width: 70%;

@@ -70,7 +70,8 @@ function request (url, method, data, header = {}) {
         } else {
           uni.showToast({
           	title: res.data.msg || '502 Bad Gateway !',
-						icon: 'none'
+						icon: 'none',
+						duration: 2000
           })
         }
       },

@@ -43,6 +43,8 @@
 				:latitude="map.latitude" 
 				:longitude="map.longitude" 
 				:markers="map.covers"
+				:controls="map.controls"
+				@controltap="controltap"
 				:show-location="true">
                 </map>
             </view>
@@ -122,6 +124,11 @@ export default {
 				console.log(res)
 				self.map.longitude = res.longitude
 				self.map.latitude = res.latitude
+					
+				self.$log.set('location',{
+					longitude: self.map.longitude,
+					latitude: self.map.longitude
+				})
 				// 获取城市信息
 				loadCity(res.longitude, res.latitude).then(res => {
 					console.log(res)
@@ -129,16 +136,9 @@ export default {
 					self.address.startCity = self.cityData.city
 					self.address.startCityCode = self.cityData.cityCode
 				})
-				self.map.covers.push({
-					width : 40,
-					height: 40,
-					latitude: res.latitude,
-					longitude: res.longitude,
-					iconPath: '../../../static/img/icon/location.png'
-				})
 				for(let i=0; i< 8; i++){
-					let delta = 0.005
-					var animationDelta = 0.001
+					let delta = 0.004
+					var animationDelta = 0.0005
 					let longitude = self.map.longitude+_.random(-delta,delta)
 					let latitude = self.map.latitude+_.random(-delta,delta)
 					self.map.covers.push({
@@ -149,7 +149,9 @@ export default {
 						longitude: longitude,
 						iconPath: `../../../static/img/map/bigCar${_.random(2,3)}.png`
 					})
-					self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
+					_.delay(()=>{
+						self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
+					},2000)
 				}
 			}
 		})
@@ -199,7 +201,18 @@ export default {
 				title: 'map',
 				latitude: 31.29579,
 				longitude: 120.57186,
-				covers: []
+				covers: [],
+				controls: [{
+					id: 0,
+					iconPath: '../../../static/img/map/location.png',
+					clickable: true,
+					position: {
+						left: 10,
+						top: 10,
+						width: 20,
+						height: 20
+					}
+				}]
 			},
 			amapUrl: '',
 			newsList:[{title: ''}],
@@ -231,6 +244,10 @@ export default {
 		}
 	},
 	methods: {
+		controltap(e){
+			console.log(e)
+			this.amapInstance.moveToLocation()
+		},
 		mapMarkersAnimation(markerId,longitude,latitude,rotate,animationDelta){
 			let self = this
 			let new_longitude = longitude+_.random(-animationDelta,animationDelta)
@@ -329,7 +346,7 @@ export default {
 		border-radius: 75upx;
 		text-align: center;
 		line-height: 150upx;
-		z-index: 3;
+		z-index: 99999;
 		font-size: 28upx;
 		opacity: .9;
 	}
@@ -354,7 +371,7 @@ export default {
 		}
 		.map_container{
 			width: 100%;
-			height: 500upx;
+			height: 300upx;
 			map{
 				width: 100%;
 				height: 100%;

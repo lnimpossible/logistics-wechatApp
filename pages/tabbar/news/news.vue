@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-		<div class="title"> <span>最新资讯</span> </div>
+		<PageTitle :title="currentTile"></PageTitle>
 		<ul class="newsList">
 			<li class="newWrap" v-for="(item,index) in newsList" :key="index">
 				<div class="newsTitle"><van-icon name="fire" /> <span>{{item.title}}</span> <span class="newsTime">{{item.publishTime}}</span></div>
@@ -10,7 +10,11 @@
   </div>
 </template>
 <script>
+	import PageTitle from '@/components/pageTitle.vue'
 export default {
+	components: {
+		PageTitle
+	},
   mounted(){
 		let self = this
 		self.$request.post({
@@ -25,10 +29,11 @@ export default {
 
   data () {
     return {
-			newsList:[
-					{title: '专线小程序上线了',time:'2019-2-1',content:'的撒艰苦奋斗比大姐大姐啊晒偶发，，fail打，较方便的监控设备开发不都是开会吧。'},
-					{title: '大萨达撒大萨达撒大萨达撒大萨达撒',time:'2019-2-1',content:'的撒艰苦奋斗比大姐大姐啊晒偶的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发发，，fail打，较方便的监控设备开发不都是开会吧。'}
-				],
+		currentTile:'最新资讯',
+		newsList:[
+			{title: '专线小程序上线了',time:'2019-2-1',content:'的撒艰苦奋斗比大姐大姐啊晒偶发，，fail打，较方便的监控设备开发不都是开会吧。'},
+			{title: '大萨达撒大萨达撒大萨达撒大萨达撒',time:'2019-2-1',content:'的撒艰苦奋斗比大姐大姐啊晒偶的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发的撒艰苦奋斗比大姐大姐啊晒偶发发，，fail打，较方便的监控设备开发不都是开会吧。'}
+		],
     }
   },
   methods: {
@@ -43,14 +48,6 @@ export default {
 		height: 100%;
 		padding-bottom: 30upx;
 		background: #efefef;
-		.title{
-			padding: 20upx;
-			color: orange;
-			span{
-				border-bottom: 1upx solid;
-				padding: 20upx;
-			}
-		}
 		.newsList{
 			width: 90%;
 			font-size: 38upx;

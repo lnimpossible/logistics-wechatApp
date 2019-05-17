@@ -43,18 +43,18 @@
 				userinfo:{},
 				orderTypeLise:[
 					//name-标题 icon-图标 badge-角标
-					{name:'我的订单',icon:'l1.png',badge:1},
-					{name:'常发货源',icon:'l2.png',badge:2},
-					{name:'运输中',icon:'l3.png',badge:6},
-					{name:'待评价',icon:'l4.png',badge:9},
+					{name:'我的订单',icon:'l1.png',badge:0},
+					{name:'常发货源',icon:'l2.png',badge:0},
+					{name:'运输中',icon:'l3.png',badge:0},
+					{name:'待评价',icon:'l4.png',badge:0},
 					{name:'意见反馈',icon:'l5.png',badge:0}
 				],
 				severList:[
 					[
 						// {name:'我的货源',icon:'point.png'},
 						// {name:'意见反馈',icon:'kefu.png'},
-						{name:'在线客服',icon:'kefu.png'},
-						{name:'设置',icon:'addr.png'}
+						{name:'在线客服',icon:'kefu.png'}
+						// {name:'设置',icon:'addr.png'}
 						// {name:'优惠券',icon:'quan.png'},
 						// {name:'红包',icon:'momey.png'}
 						// {name:'任务',icon:'renw.png'},
@@ -118,7 +118,22 @@
 			},
 			//用户点击订单类型
 			toOrderType(index){
-				uni.showToast({title: this.orderTypeLise[index].name});
+				console.log(index)
+				// uni.showToast({title: this.orderTypeLise[index].name});
+				switch (index){
+					case 0:
+						break;
+					case 1:
+						uni.navigateTo({
+							url: '../../redictUrl/dailySOD/dailySOD'
+						})
+						break;
+					case 2:
+						break;
+					default:
+						break;
+				}
+				
 			},
 			//用户点击列表项
 			toPage(list_i,li_i){
@@ -131,7 +146,10 @@
 <style lang="scss" scoped>
 .header{
 	&.status{padding-top:var(--status-bar-height);}
-	background-color:#ff6364;width:92%;height:30vw;padding:0 4%;display:flex;align-items:center;
+	// background-color:#ff6364;
+	// background: linear-gradient(to right, #ff9569 0%, #e92758 100%);
+	background: linear-gradient(-90deg, #29bdd9 0%, #276ace 100%);
+	width:92%;height:25vw;padding:0 4%;display:flex;align-items:center;
 	.userinfo{
 		width:90%;display:flex;
 		.face{flex-shrink:0;width:15vw;height:15vw;
@@ -148,9 +166,12 @@
 		image{width:100%;height:100%}
 	}
 }
-.hover{background-color:#eee}
+.hover{background-color:#fefefe}
 .orders{
-	background-color:#ff6364;width:92%;height:11vw;padding:0 4%;margin-bottom:calc(11vw + 40upx);display:flex;align-items:flex-start;border-radius:0 0 100% 100%;margin-top: -1upx;
+	// background-color:#ff6364;
+	// background: linear-gradient(to right, #ff9569 0%, #e92758 100%);
+	background: linear-gradient(-90deg, #29bdd9 0%, #276ace 100%);
+	width:92%;height:11vw;padding:0 4%;margin-bottom:calc(11vw + 40upx);display:flex;align-items:flex-start;border-radius:0 0 100% 100%;margin-top: -1upx;
 	.box{
 		width:98%;padding:0 1%;height:22vw;background-color:#fefefe;border-radius:24upx;box-shadow:0 0 20upx rgba(0,0,0,0.15);margin-bottom:40upx;display:flex;align-items:center;justify-content:center;
 		.label{

@@ -180,8 +180,6 @@
 		},
 		data() {
 			return {
-				originNodeName:'',
-				
 				billing:[],
 				handlingList:[],
 				money:[],
@@ -202,15 +200,15 @@
 				endLongitude: "120.5771827698",
 				endProvinceCode: "",
 				expectFreightRate: "",
-				isOverspeedOvermanTransfinite: "",
-				isRegularCargoOrigin: "",
+				isOverspeedOvermanTransfinite: "1",
+				isRegularCargoOrigin: "1",
 				//最终装货时间
 				lastLoadDate:"",
 				loadTime:"",
 				loadDate: "",
 				loadNumAndDischargeNum: "",
 				payMode: "",
-				receipt: "",
+				receipt: "1",
 				remark: "",
 				specificRequirement: "",
 				//始发地名字
@@ -428,6 +426,7 @@
 	.content {
 		background-color: #f2f2f2;
 		width: 100%;
+		overflow: hidden;
 		.address{
 			background-color: #fff;
 			width: 100%;

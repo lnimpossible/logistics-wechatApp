@@ -53,7 +53,9 @@
 			"van-col": "/wxcomponents/vant/col/index",
 			"van-icon": "/wxcomponents/vant/icon/index",
 			"van-button": "/wxcomponents/vant/button/index",
-			"van-notice-bar": "/wxcomponents/vant/notice-bar/index"
+			"van-notice-bar": "/wxcomponents/vant/notice-bar/index",
+			"van-radio": "/wxcomponents/vant/radio/index",
+			"van-radio-group": "/wxcomponents/vant/radio-group/index"
 		}
     }
 }

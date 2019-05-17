@@ -1,8 +1,6 @@
 <template>
 	<view class="content">
-		<button open-type="share" class="gotoShare">
-			去分享
-		</button>
+		<button open-type="share" class="gotoShare">去分享</button>
 		<view class="header">
 			<view class="uni-list">
 				<view class="uni-list-cell">
@@ -15,11 +13,11 @@
 			</view>	
 			<view class="page-section swiper">
 				<view class="page-section-spacing">
-					<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-						<swiper-item>
+					<swiper class="swiper" indicator-active-color="#fff" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+						<swiper-item v-for="(banner,index) in bannerList" :key="index">
 							<view class="swiper-item">
-								<image style="width: 100%;background-color: #eeeeee;" mode='aspectFill' src='../../../static/img/loginBg/login_old.jpg'
-                        @error="imageError"></image>
+								<image style="width: 100%;background-color: #eeeeee;" mode='aspectFill' :src='banner.bannerUrl'
+								@error="imageError"></image>
 							</view>
 						</swiper-item>
 					</swiper>
@@ -98,7 +96,8 @@
 
 <script>
 import {uniGrid} from '@dcloudio/uni-ui'
-import { map, forEach, random, delay } from 'lodash'
+const _ = require('@/components/lodash/lodash.js')
+import loadCity from '@/utils/loadCity.js'
 // const amapFile = require('@/common/amap-wx.js');
 export default {
 	components:{
@@ -109,12 +108,27 @@ export default {
 	},
 	mounted(){
 		let self = this
+		self.$request.post({
+			url: '/getBannerList',
+			data: {
+				platformType: 0
+			}
+		}).then(res => {
+			self.bannerList = res.BannerList
+		})
 		uni.getLocation({
 			type: 'gcj02',
 			success: function (res) {
 				console.log(res)
 				self.map.longitude = res.longitude
 				self.map.latitude = res.latitude
+				// 获取城市信息
+				loadCity(res.longitude, res.latitude).then(res => {
+					console.log(res)
+					self.cityData = res.regeocode.addressComponent
+					self.address.startCity = self.cityData.city
+					self.address.startCityCode = self.cityData.cityCode
+				})
 				self.map.covers.push({
 					width : 40,
 					height: 40,
@@ -122,30 +136,31 @@ export default {
 					longitude: res.longitude,
 					iconPath: '../../../static/img/icon/location.png'
 				})
-				for(let i=0; i< 15; i++){
+				for(let i=0; i< 8; i++){
 					let delta = 0.005
 					var animationDelta = 0.001
-					let longitude = self.map.longitude+random(-delta,delta)
-					let latitude = self.map.latitude+random(-delta,delta)
+					let longitude = self.map.longitude+_.random(-delta,delta)
+					let latitude = self.map.latitude+_.random(-delta,delta)
 					self.map.covers.push({
 						id: i,
 						width : 40,
 						height: 40,
 						latitude: latitude,
 						longitude: longitude,
-						iconPath: `../../../static/img/map/bigCar${random(2,3)}.png`
+						iconPath: `../../../static/img/map/bigCar${_.random(2,3)}.png`
 					})
 					self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
 				}
 			}
-		});
+		})
 		self.$request.get({
 			url:"/getFunctionList/1",
 		}).then(res => {
-			self.gridTabsItems = map(res.functionList, item => { return {
-				text:item.functionName,image:item.functionIconUrl,
-				linkUrl: item.linkUrl
-			}})
+			self.gridTabsItems = _.map(res.functionList, item => { 
+				return {
+					text:item.functionName,image:item.functionIconUrl,
+					linkUrl: item.linkUrl
+				}})
 		})
 		self.$request.post({
 			url:'/logistics/driverDirectLine/cargoQuery',
@@ -170,6 +185,14 @@ export default {
 	},
 	data() {
 		return {
+			cityData: {},
+			bannerList: [{
+					bannerUrl:"https://img.ky7777t.com/20190517/ed54746f6f154bd8b2ec2dbb4a5f932f.jpg",
+					content:"<p>我是banner</p>",
+					linkUrl:"dsa",
+					orderNo:1,
+					tiitle:"小程序banner1"
+			}],
 			amapInstance: '',
 			markAnimation:[],
 			map:{
@@ -204,27 +227,23 @@ export default {
 				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xueqiao.png',text:'雪橇'},
 				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xunlu.png',text:'驯鹿'},
 			],
-			title: 'Hello',
-			indicatorDots: true,
-            autoplay: true,
-            interval: 2000,
-            duration: 500
-		};
+			title: 'Hello'
+		}
 	},
 	methods: {
 		mapMarkersAnimation(markerId,longitude,latitude,rotate,animationDelta){
 			let self = this
-			let new_longitude = longitude+random(-animationDelta,animationDelta)
-			let new_latitude = latitude+random(-animationDelta,animationDelta)
-			rotate = rotate+random(-90,90)
+			let new_longitude = longitude+_.random(-animationDelta,animationDelta)
+			let new_latitude = latitude+_.random(-animationDelta,animationDelta)
+			rotate = rotate+_.random(-90,90)
 			self.amapInstance.translateMarker({
 				markerId:markerId,
 				destination: {latitude: latitude,longitude: longitude},
 				// autoRotate: true,
 				rotate: rotate,
-				duration:random(1000,5000),
+				duration: _.random(1000,5000),
 				animationEnd: ()=>{
-					delay(()=>{
+					_.delay(()=>{
 						self.mapMarkersAnimation(markerId,new_longitude,new_latitude,rotate,animationDelta)
 					},1000)
 				}
@@ -292,7 +311,7 @@ export default {
 			}
 		}
 	}
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -320,7 +339,7 @@ export default {
 		.uni-list{
 			width: 100upx;
 			position: absolute;
-			right: 10upx;;
+			right: 10upx;
 			top: 18upx;
 			z-index: 1;
 			.uni-input{
@@ -334,7 +353,7 @@ export default {
 			margin: 10upx auto;
 		}
 		.map_container{
-			width:  100%;
+			width: 100%;
 			height: 500upx;
 			map{
 				width: 100%;
@@ -345,7 +364,6 @@ export default {
 			background: #fff;
 			width: 96%;
 			border-radius:20upx;
-			// border-bottom-right-radius:20upx;
 			padding: 20upx 0;
 			box-sizing: border-box;
 			margin: 10upx auto;

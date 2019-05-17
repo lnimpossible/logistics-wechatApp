@@ -112,8 +112,13 @@
 			//定时器
 			nowTimes() {
 				let self = this
-				self.timeFormate(new Date());
-				setInterval(self.nowTimes, 30 * 1000);
+				self.timeFormate(new Date())
+				setInterval(self.nowTimes, 30 * 1000)
+				this.clear()
+			},
+			// 清除定时器
+			clear(){
+				clearInterval(this.nowTimes)
 			},
 			//单击确定按钮
 			submitMessage(e) {
@@ -145,6 +150,8 @@
 							duration: 2500
 						})
 					}
+
+
 				})
 			},
 			goodsComment(e) {

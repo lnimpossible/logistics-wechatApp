@@ -15,7 +15,6 @@ function request (url, method, data, header = {}) {
     }else{
 			header = {
 				'content-type': 'application/json',
-				'token':'429cbadf6b244d82ab639fe268d56418'
 			}
 		}
   } catch (e) {
@@ -35,18 +34,33 @@ function request (url, method, data, header = {}) {
 				if( res.data.code === 0 ){
 					resolve(res.data)
 				}
+				else if( res.data.code === 1001 ){
+					uni.showModal({
+            title: '提示',
+            content: '您未登录，请先登录',
+            success(res) {
+              if (res.confirm) {
+                uni.navigateTo({
+                  url: "../../redictUrl/landing/landing",
+                })
+              } else if (res.cancel) {
+								uni.reLaunch({
+									url: '../../tarbar/index/index'
+								})
+              }
+            }
+          })
+				}
         else if( res.data.code === 1000 ){
           uni.showModal({
             title: '提示',
             content: '身份过期，请重新登录',
             success(res) {
               if (res.confirm) {
-                console.log('用户点击确定')
                 uni.navigateTo({
                   url: "../../redictUrl/landing/landing",
                 })
               } else if (res.cancel) {
-                console.log('用户点击取消')
 								uni.reLaunch({
 									url: '../../tarbar/index/index'
 								})

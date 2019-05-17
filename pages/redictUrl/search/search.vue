@@ -150,7 +150,7 @@
 	background: #fff;
 	width: 96%;
 	border-radius:20upx;
-	padding: 60upx 0;
+	padding: 40upx 0;
 	box-sizing: border-box;
 	margin: 20upx auto;
 	.chooseWrap{

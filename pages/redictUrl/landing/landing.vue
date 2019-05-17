@@ -162,12 +162,17 @@
 						"password": "wxPhoneLogin"
 					}
 				}).then((userRes) => {
+					uni.showToast({
+						title: '登录成功',
+						mask: false,
+						duration: 1500
+					})
 					self.$log.set('userInfo', {
-						phone: phoneNumber,
+						phoneNumber: userRes.phoneNumber,
 						token: userRes.token
 					})
 					let url = '../../tabbar/index/index'
-					wx.reLaunch({url})
+					uni.reLaunch({url:url})
 				})
 			}
         }

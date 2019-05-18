@@ -53,9 +53,9 @@
 		mounted(){
 			//订单状态( orderStatus ：null 全部 0 待接单 1 已接单 2 运输中 3 运输完成 4 已完成 )
 			let self=this
-			let oderStatus=self.status.orderStatus
-			self.$request.post({
-				url:'/orderLogistics/shipperorderlist/' + orderStatus,
+			// let oderStatus=self.status.orderStatus || ''
+			self.$request.get({
+				url:'/orderLogistics/shipperOrderList/null',
 			}).then(res=>{
 				
 			})
@@ -82,26 +82,27 @@
 			chooseStatus(e) {
 				console.log(e)
 				let self=this
-				switch(e){
-					case 0:
-						self.orderStatus=e
-						break;
-					case 1:
-						self.orderStatus=e
-						break;
-					case 2:
-						self.orderStatus=e
-						break;
-					case 3:
-						self.orderStatus=e
-						break;
-					case 4:
-						self.orderStatus=e
-						break;
-					case 5:
-						self.orderStatus=e
-						break;
-				}
+				self.status.orderStatus = e
+				// switch(e){
+				// 	case 0:
+				// 		self.orderStatus=e
+				// 		break;
+				// 	case 1:
+				// 		self.orderStatus=e
+				// 		break;
+				// 	case 2:
+				// 		self.orderStatus=e
+				// 		break;
+				// 	case 3:
+				// 		self.orderStatus=e
+				// 		break;
+				// 	case 4:
+				// 		self.orderStatus=e
+				// 		break;
+				// 	case 5:
+				// 		self.orderStatus=e
+				// 		break;
+				// }
 				console.log(self.current)
 				// if (self.current !== index) {
 				// 	this.current = index;

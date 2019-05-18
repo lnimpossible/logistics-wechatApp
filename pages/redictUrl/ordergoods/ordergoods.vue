@@ -1,147 +1,249 @@
 <template>
 	<view class="content">
-		<uni-segmented-control :current="status.current" :values="status.items" @clickItem="chooseStatus" style-type="button" active-color="#007aff"></uni-segmented-control>
-		<view class="chooseBottonDad">
-			<view class="chooseBotton" v-show="current === 0">
-				<div class="matter">
+		<ul class="tabs">
+			<li class="tabsLi" v-for="(statusList,index) in statusList" :key="index" @click="toggleTabs(index)" >
+				{{statusList}}
+			</li>
+		</ul>
+		<div class="tabson">
+			<div class="matter" v-for="(order,index) in orderList" :key="index">
+				<van-row>
+					<van-col :span="10">{{order.startCity}}</van-col>
+					<van-col :span="4">
+						<image mode="aspectFit" src="../../../static/img/icon/chongzhi.png"></image>
+					</van-col>
+					<van-col :span="10">{{order.endCity}}</van-col>
+				</van-row>
+				<van-row>
+					<van-col :span="6">货物重量:</van-col>
+					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+					<van-col :span="6">货物体积: </van-col>
+					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+				</van-row>
+				<van-row>
+					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+				</van-row>
+			</div>
+		</div>
+			<div class="matter"   v-for="(order,index) in orderList" :key="index">
+				<van-row>
+					<van-col :span="10">{{order.startCity}}</van-col>
+					<van-col :span="4">
+						<image src="../../../static/img/icon/chongzhi.png"></image>
+					</van-col>
+					<van-col :span="10">{{order.endCity}}</van-col>
+				</van-row>
+				<van-row>
+					<van-col :span="6">货物重量:</van-col>
+					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+					<van-col :span="6">货物体积: </van-col>
+					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+				</van-row>
+				<van-row>
+					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+				</van-row>
+			</div>
+			<view class="chooseBotton" v-show="status.current === 0">
+				<div class="matter"   v-for="(order,index) in orderList" :key="index">
 					<van-row>
-						<van-col :span="10">{{goods.startCityCode}}</van-col>
-						<van-col :span="4"><image src="../../../static/img/icon/chongzhi.png"></image></van-col>
-						<van-col :span="10">{{goods.endCityCode}}</van-col>
+						<van-col :span="10">{{order.startCity}}</van-col>
+						<van-col :span="4">
+							<image src="../../../static/img/icon/chongzhi.png"></image>
+						</van-col>
+						<van-col :span="10">{{order.endCity}}</van-col>
 					</van-row>
 					<van-row>
-						<van-col :span="12">货物重量{{goods.cargoWeight}}</van-col>
-						<van-col :span="12">货物体积{{goods.cargoVolume}}</van-col>
-					</van-row>
-				</div>	
-			</view>
-			<view  class="chooseBotton" v-show="current === 1">
-				<div class="matter">
-					<van-row>
-						<van-col :span="10">{{goods.startCityCode}}</van-col>
-						<van-col :span="4"><image src="../../../static/img/icon/chongzhi.png"></image></van-col>
-						<van-col :span="10">{{goods.endCityCode}}</van-col>
+						<van-col :span="6">货物重量:</van-col>
+						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+						<van-col :span="6">货物体积: </van-col>
+						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
 					</van-row>
 					<van-row>
-						<van-col :span="12">货物重量{{goods.cargoWeight}}</van-col>
-						<van-col :span="12">货物体积{{goods.cargoVolume}}</van-col>
+						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
 					</van-row>
-				</div>	
+				</div>
 			</view>
-			<view  class="chooseBotton" v-show="current === 2">
-				选项卡3的内容
+			<view class="chooseBotton" v-show="status.current === 1">
+				<div class="matter"   v-for="(order,index) in orderList" :key="index">
+					<van-row>
+						<van-col :span="10">{{order.startCity}}</van-col>
+						<van-col :span="4">
+							<image src="../../../static/img/icon/chongzhi.png"></image>
+						</van-col>
+						<van-col :span="10">{{order.endCity}}</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="6">货物重量:</van-col>
+						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+						<van-col :span="6">货物体积: </van-col>
+						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+					</van-row>
+				</div>
 			</view>
-			<view  class="chooseBotton" v-show="current ===3">
-				
+			<view class="chooseBotton" v-show="status.current === 2">
+				<div class="matter"   v-for="(order,index) in orderList" :key="index">
+					<van-row>
+						<van-col :span="10">{{order.startCity}}</van-col>
+						<van-col :span="4">
+							<image src="../../../static/img/icon/chongzhi.png"></image>
+						</van-col>
+						<van-col :span="10">{{order.endCity}}</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="6">货物重量:</van-col>
+						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+						<van-col :span="6">货物体积: </van-col>
+						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+					</van-row>
+				</div>
 			</view>
-			<view  class="chooseBotton" v-show="current ===4">
-				
+			<view class="chooseBotton" v-show="status.current ===3">
+				<div class="matter"   v-for="(order,index) in orderList" :key="index">
+					<van-row>
+						<van-col :span="10">{{order.startCity}}</van-col>
+						<van-col :span="4">
+							<image src="../../../static/img/icon/chongzhi.png"></image>
+						</van-col>
+						<van-col :span="10">{{order.endCity}}</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="6">货物重量:</van-col>
+						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+						<van-col :span="6">货物体积: </van-col>
+						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+					</van-row>
+				</div>
 			</view>
-			<view  class="chooseBotton" v-show="current ===5">
-				
+			<view class="chooseBotton" v-show="status.current ===4">
+				<div class="matter"   v-for="(order,index) in orderList" :key="index">
+					<van-row>
+						<van-col :span="10">{{order.startCity}}</van-col>
+						<van-col :span="4">
+							<image src="../../../static/img/icon/chongzhi.png"></image>
+						</van-col>
+						<van-col :span="10">{{order.endCity}}</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="6">货物重量:</van-col>
+						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+						<van-col :span="6">货物体积: </van-col>
+						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+					</van-row>
+				</div>
+			</view>
+			<view class="chooseBotton" v-show="status.current ===5">
+				<div class="matter"   v-for="(order,index) in orderList" :key="index">
+					<van-row>
+						<van-col :span="10">{{order.startCity}}</van-col>
+						<van-col :span="4">
+							<image src="../../../static/img/icon/chongzhi.png"></image>
+						</van-col>
+						<van-col :span="10">{{order.endCity}}</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="6">货物重量:</van-col>
+						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
+						<van-col :span="6">货物体积: </van-col>
+						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
+					</van-row>
+					<van-row>
+						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
+					</van-row>
+				</div>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import uniSegmentedControl from "@/components/uni-segmented-control/uni-segmented-control.vue"
 	export default {
-		components: {
-			uniSegmentedControl
-		},
-		mounted(){
-			//订单状态( orderStatus ：null 全部 0 待接单 1 已接单 2 运输中 3 运输完成 4 已完成 )
-			let self=this
-			// let oderStatus=self.status.orderStatus || ''
+		mounted() {
+			//订单状态( orderStatus ：-2 全部 -1已取消 0 待接单 1 已接单 2 运输中 3 运输完成 4 已完成 )
+			let self = this
 			self.$request.get({
-				url:'/orderLogistics/shipperOrderList/null',
-			}).then(res=>{
-				
+				url: '/orderLogistics/shipperOrderList/-2',
+			}).then(res => {
+				self.orderList=res.orderList
 			})
 		},
 		data() {
 			return {
-				// 货源
-				goods:{
-					cargoVolume:'',
-					cargoWeight:'',
-					startCityCode:'',
-					endCityCode:''
+				// 货物
+				orderList:[],
+				goods: {
+					endCity:'',
+					startCity:'',
+					orderNumber: '',
+					cargoVolume: '',
+					cargoWeight: '',
+					startCityCode: '',
+					endCityCode: ''
 				},
-				// 状态
-				status:{
-					items: ['全部', '待接单', '已接单','运输中','运输完成','已完成'],
-					current: 0,
-					orderStatus:''
-				}
-				
+				statusList:['全部', '待接单', '已接单', '运输中', '运输完成', '已完成']
 			}
 		},
 		methods: {
-			chooseStatus(e) {
-				console.log(e)
+			toggleTabs(index){
 				let self=this
-				self.status.orderStatus = e
-				// switch(e){
-				// 	case 0:
-				// 		self.orderStatus=e
-				// 		break;
-				// 	case 1:
-				// 		self.orderStatus=e
-				// 		break;
-				// 	case 2:
-				// 		self.orderStatus=e
-				// 		break;
-				// 	case 3:
-				// 		self.orderStatus=e
-				// 		break;
-				// 	case 4:
-				// 		self.orderStatus=e
-				// 		break;
-				// 	case 5:
-				// 		self.orderStatus=e
-				// 		break;
-				// }
-				console.log(self.current)
-				// if (self.current !== index) {
-				// 	this.current = index;
-				// }
-				// if(index == 0){
-				// 	this.getOrderList(null);
-				// } else if (index == 2) {
-				// 	this.getOrderList(1);
-				// }
+				let sourceIndex = index === 0 ? '-2' : index - 1
+				self.getOrderList(sourceIndex)
 			},
-			//订单状态( orderStatus ：null 全部 0 待接单 1 已接单 2 运输中 3 运输完成 4 已完成 )
-			// getOrderList(orderStatus) {
-			// 	self.$request.post({
-			// 		url: 'orderLogistics/shipperorderlist/' + orderStatus,
-			// 	}).then(res => {})
-			// }
-
+			getOrderList(orderStatus) {
+				let self=this
+				self.$request.get({
+					url: '/orderLogistics/shipperOrderList/' + orderStatus,
+				}).then(res => {
+					self.orderList=res.orderList
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.content{
+	.content {
 		width: 100%;
-		.chooseBottonDad{
-			width: 750upx;
-			.chooseBotton{
-				width: 60upx;
-				height: 30upx;
-				padding:0 30upx;
-				.matter{
-					width:"100%";
-					background-color: #fff;
+		.tabs{
+			height: 100upx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #fff;
+			padding: 0 30upx;
+			.tabsLi{
+				color: #333;
+				font-size: 26upx;
+			}
+		}
+		.tabson{
+			background: #fff;
+			margin: 6upx 0;
+			.matter{
+				padding:20upx 30upx;
+				border-radius: 20upx;
+				van-row{
+					color: #333;
+					font-size: 24upx;
+					display: block;
+					padding:10upx 0;
+					image{
+						width: 34upx;
+						height: 34upx;
+					}
 				}
 			}
-			
 		}
 	}
-	
-
-
 </style>

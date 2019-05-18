@@ -306,7 +306,7 @@
 				})
 				p.then(res=>{
 					uni.redirectTo({
-						url:'../../ordergoods/ordergoods'
+						url:'../personalCenter/personalCenter'
 					})
 				})
 			},
@@ -420,14 +420,6 @@
 				let startAddr=e.detail.value
 				self.startAddr=startAddr
 			},
-			// 选择装货城市
-			// chooseStartCity(e){
-			// 	let self=this
-			// 	let val=e.detail.value
-			// 	self.startProvinceCode=val[0]
-			// 	self.startCityCode=val[1]
-			// 	self.startAreaCode=val[2]
-			// }
 		}
 	}
 </script>

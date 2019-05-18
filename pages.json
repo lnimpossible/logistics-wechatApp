@@ -1,8 +1,13 @@
 {
     "pages": [
-			{"path": "pages/tabbar/index/index","style":{
+		{"path": "pages/tabbar/index/index","style":{
 				"navigationBarTitleText": "首页"
 			}},
+		{"path": "pages/redictUrl/company/company","style":{
+				"navigationBarTitleText": "公司信息"
+			}},
+			
+			
 			{"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution","style":{
 				"navigationBarTitleText": "智能供配"
 			}},
@@ -77,7 +82,9 @@
 			"van-notice-bar": "/wxcomponents/vant/notice-bar/index",
 			"van-radio": "/wxcomponents/vant/radio/index",
 			"van-radio-group": "/wxcomponents/vant/radio-group/index",
-			 "van-field": "/wxcomponents/vant/field/index"
+			"van-field": "/wxcomponents/vant/field/index",
+			"van-tabs": "/wxcomponents/vant/tabs/index",
+			"van-tab": "/wxcomponents/vant/tab/index"
 		}
     }
 }

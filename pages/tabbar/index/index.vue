@@ -71,6 +71,8 @@
 					:desc="item.intro"
 					:title="item.compName"
 					:thumb="item.imageUrl"
+					link-type="navigateTo"
+					:thumb-link="`../../redictUrl/company/company?compId=${item.compId}`"
 				>
 					<view slot="tags">
 						<van-row style="margin: 5px 0 10px 0;">
@@ -242,6 +244,16 @@ export default {
 		}
 	},
 	methods: {
+		checkCompInfo(compId){
+			uni.navigateTo({
+				url: `../../redictUrl/company/company?compId=${compId}`
+			})
+		},
+		makePhoneCall(phone){
+			uni.makePhoneCall({
+				phoneNumber: phone
+			})
+		},
 		controltap(e){
 			this.amapInstance.moveToLocation()
 		},

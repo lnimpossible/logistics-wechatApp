@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<ul class="tabs">
-			<li class="tabsLi" v-for="(statusList,index) in statusList" :key="index" @click="toggleTabs(index)" >
+			<li class="tabsLi" :class="{'active': index == currentLiItem? true:false}" v-for="(statusList,index) in statusList" :key="index" @click="toggleTabs(index)" >
 				{{statusList}}
 			</li>
 		</ul>
@@ -182,6 +182,7 @@
 			return {
 				// 货物
 				orderList:[],
+				currentLiItem: 0,
 				goods: {
 					endCity:'',
 					startCity:'',
@@ -197,6 +198,7 @@
 		methods: {
 			toggleTabs(index){
 				let self=this
+				self.currentLiItem = index
 				let sourceIndex = index === 0 ? '-2' : index - 1
 				self.getOrderList(sourceIndex)
 			},
@@ -225,6 +227,9 @@
 			.tabsLi{
 				color: #333;
 				font-size: 26upx;
+			}
+			.tabsLi.active{
+				color: orangered;
 			}
 		}
 		.tabson{

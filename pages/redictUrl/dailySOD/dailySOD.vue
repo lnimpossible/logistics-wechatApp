@@ -23,7 +23,7 @@
 					<view slot="tags">
 						<van-row>
 							<van-col :span="16"><div class="price">体积 {{item.vargoVolume || 0}} m³ </div></van-col>
-							<van-col :span="8"><van-button size="mini" type="info" @click="makePhoneCall(item.compTelephone)"><van-icon name="phone" color="#fff" size="18px" /></van-button></van-col>
+							<!-- <van-col :span="8"><van-button size="mini" type="info" @click="makePhoneCall(item.compTelephone)"><van-icon name="phone" color="#fff" size="18px" /></van-button></van-col> -->
 						</van-row>
 					</view>
 				</van-card>

@@ -276,7 +276,16 @@ export default {
 			})
 		},
 		bindPickerChange(e){
-			this.userType = this.array[e.detail.value]
+			let userType = this.array[e.detail.value]
+			if(userType == '车主'){
+				uni.showToast({
+					title: '敬请期待',
+					icon: 'none',
+					duration:1500
+				})
+			}else{
+				this.userType = userType
+			}
 		},
 		exchangeAddressOrigin(){
 			let self = this

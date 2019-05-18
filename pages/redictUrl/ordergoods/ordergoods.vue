@@ -84,22 +84,22 @@
 				let self=this
 				switch(e){
 					case 0:
-						self.orderStatus=e
+						self.status.orderStatus=e
 						break;
 					case 1:
-						self.orderStatus=e
+						self.status.orderStatus=e
 						break;
 					case 2:
-						self.orderStatus=e
+						self.status.orderStatus=e
 						break;
 					case 3:
-						self.orderStatus=e
+						self.status.orderStatus=e
 						break;
 					case 4:
-						self.orderStatus=e
+						self.status.orderStatus=e
 						break;
 					case 5:
-						self.orderStatus=e
+						self.status.orderStatus=e
 						break;
 				}
 				console.log(self.current)

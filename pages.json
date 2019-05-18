@@ -75,7 +75,7 @@
 			"van-notice-bar": "/wxcomponents/vant/notice-bar/index",
 			"van-radio": "/wxcomponents/vant/radio/index",
 			"van-radio-group": "/wxcomponents/vant/radio-group/index",
-			 "van-field": "/wxcomponents/vant/field/index"
+			"van-field": "/wxcomponents/vant/field/index"
 		}
     }
 }

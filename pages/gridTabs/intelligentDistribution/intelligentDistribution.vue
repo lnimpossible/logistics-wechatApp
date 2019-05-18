@@ -293,25 +293,22 @@
 		.map_container{
 			width: 100%;
 			height: 100%;
-			position: relative;
-			top:0;
-			left: 0;
-			z-index: 0;
+			// position: relative;
+			// top:0;
+			// left: 0;
+			// z-index: 0;
 			map{
 				width: 100%;
 				height: 100%;
 			}
 		}
 		.message {
-			width: 96%;
+			width: 99%;
+			margin: 0 auto;
 			height: 270upx;
+			margin-top:5upx;
 			background-color: #fff;
 			border-radius: 20upx;
-			position: fixed;
-			top:10upx;
-			left: 50%;
-			transform: translateX(-50%);
-			z-index: 1;
 			padding: 30upx 10upx;
 			box-sizing: border-box;
 			border: 1upx solid #0faeff;

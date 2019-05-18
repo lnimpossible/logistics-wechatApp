@@ -389,7 +389,7 @@ export default {
 		}
 		.map_container{
 			width: 100%;
-			height: 300upx;
+			height: 450upx;
 			map{
 				width: 100%;
 				height: 100%;

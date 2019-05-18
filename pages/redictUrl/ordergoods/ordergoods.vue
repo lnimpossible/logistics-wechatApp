@@ -313,6 +313,7 @@
 <style lang="scss" scoped>
 	.content {
 		width: 100%;
+		overflow: hidden;
 		.tabs{
 			height: 100upx;
 			display: flex;

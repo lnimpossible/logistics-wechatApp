@@ -145,7 +145,7 @@ export default {
 						height: 40,
 						latitude: latitude,
 						longitude: longitude,
-						iconPath: `../../../static/img/map/bigCar${_.random(2,3)}.png`
+						iconPath: `../../../static/img/map/bigCar${_.random(1,5)}.png`
 					})
 					_.delay(()=>{
 						self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)

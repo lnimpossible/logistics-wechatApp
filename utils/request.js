@@ -45,7 +45,7 @@ function request (url, method, data, header = {}) {
                 })
               } else if (res.cancel) {
 								uni.reLaunch({
-									url: '../../tarbar/index/index'
+									url: '../../tabbar/index/index'
 								})
               }
             }
@@ -62,7 +62,7 @@ function request (url, method, data, header = {}) {
                 })
               } else if (res.cancel) {
 								uni.reLaunch({
-									url: '../../tarbar/index/index'
+									url: '../../tabbar/index/index'
 								})
               }
             }

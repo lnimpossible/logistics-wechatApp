@@ -399,9 +399,10 @@ export default {
 			}
 			.searchBtn{
 				width: 90%;
-				height: 70upx;
-				line-height: 70upx;
+				height: 60upx;
+				line-height: 60upx;
 				border-radius: 80upx;
+				background: #0faeff;
 			}
 		}
 	}

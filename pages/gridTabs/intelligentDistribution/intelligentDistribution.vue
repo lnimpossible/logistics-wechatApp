@@ -3,15 +3,10 @@
 		<div class="message">
 			<div class="top">
 				<image src="../../../static/img/icon/weizhi.png"></image>
-				<picker mode="region" @change="chooseStartAddress">
-					<view class="picker">{{address.start || '请输入起始地'}}</view>
-					<!-- <input type="text" :value="address.start" placeholder="请输入起始地" disabled /> -->
-				</picker>
+				<view class="picker" @click="chooseStartNode">{{address.start || '请输入起始地'}}</view>
 				<image class="replace" src="../../../static/img/icon/chongzhi.png"></image>
 				<image src="../../../static/img/icon/weizhi.png"></image>
-				<picker mode="region" @change="chooseEndAddress">
-					<view class="picker">{{address.end ||'请输入目的地'}}</view>
-				</picker>
+				<view class="picker" @click="chooseEndNode">{{address.end ||'请输入目的地'}}</view>
 			</div>
 			<div class="con">
 				<input type="text" :value="goodsDescriptionData" placeholder="货物名称" placeholder-style="color:#afafaf" @change="goodsDescription" />
@@ -19,8 +14,20 @@
 				<input type="number" :value="goodsBulkData" placeholder="m3" placeholder-style="color:#afafaf" @change="goodsBulk" />
 				<input type="text" :value="goodsCommentData" placeholder="备注" placeholder-style="color:#afafaf" @change="goodsComment" />
 			</div>
-			<button type="primary" @click="submitMessage">确定</button>
+			
+			<button type="primary" class="searchBtn" @click="submitMessage">确定</button>
 		</div>
+		<!-- // map 地图 -->
+		<view class="map_container" >
+			<map id="mapInstance" 
+			:latitude="map.latitude" 
+			:longitude="map.longitude" 
+			:markers="map.covers"
+			:controls="map.controls"
+			@controltap="controltap"
+			:show-location="true">
+			</map>
+		</view>
 		<uni-popup :show="poputs" position="middle" mode="fixed" msg="车辆匹配成功">
 			<button type="primary" @click="nosatisfaction">取消</button>
 			<button type="primary" @click="satisfaction">邀请</button>
@@ -34,10 +41,10 @@
 </template>
 
 <script>
-	import {
-		uniPopup
-	} from "@/components/uni-popup/uni-popup.vue"
+	import {uniPopup} from "@/components/uni-popup/uni-popup.vue"
 	import cmdProgress from "@/components/cmd-progress/cmd-progress.vue"
+	const _ = require('@/components/lodash/lodash.js')
+	import loadCity from '@/utils/loadCity.js'
 	export default {
 		components: {
 			uniPopup,
@@ -45,7 +52,41 @@
 		},
 		mounted() {
 			let self = this
-			// self.nowTimes()
+			uni.getLocation({
+				type: 'gcj02',
+				success: function (res) {
+					self.map.longitude = res.longitude
+					self.map.latitude = res.latitude
+						
+					self.$log.set('location',{
+						longitude: self.map.longitude,
+						latitude: self.map.longitude
+					})
+					
+					for(let i=0; i< 10; i++){
+						let delta = 0.004
+						var animationDelta = 0.0005
+						let longitude = self.map.longitude+_.random(-delta,delta)
+						let latitude = self.map.latitude+_.random(-delta,delta)
+						self.map.covers.push({
+							id: i,
+							width : 40,
+							height: 40,
+							latitude: latitude,
+							longitude: longitude,
+							iconPath: `../../../static/img/map/bigCar${_.random(1,5)}.png`
+						})
+						_.delay(()=>{
+							self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
+						},2000)
+					}
+					// 获取城市信息
+					loadCity(res.longitude, res.latitude).then(res => {
+						self.$emit('showCityInfo',res)
+					})
+				}
+			})
+			self.amapInstance = uni.createMapContext("mapInstance")
 		},
 		data() {
 			return {
@@ -60,6 +101,25 @@
 				goodsBulkData: '',
 				goodsWeightData: '',
 				goodsDescriptionData: '',
+				amapInstance: '',
+				markAnimation:[],
+				map:{
+					title: 'map',
+					latitude: 31.29579,
+					longitude: 120.57186,
+					covers: [],
+					controls: [{
+						id: 0,
+						iconPath: '../../../static/img/map/location.png',
+						clickable: true,
+						position: {
+							left: 10,
+							top: 10,
+							width: 20,
+							height: 20
+						}
+					}]
+				},
 				address: {
 					start: '',
 					end: '',
@@ -72,12 +132,75 @@
 			};
 		},
 		methods: {
+			controltap(e){
+				this.amapInstance.moveToLocation()
+			},
+			mapMarkersAnimation(markerId,longitude,latitude,rotate,animationDelta){
+				let self = this
+				let new_longitude = longitude+_.random(-animationDelta,animationDelta)
+				let new_latitude = latitude+_.random(-animationDelta,animationDelta)
+				rotate = rotate+_.random(-30,30)
+				self.amapInstance.translateMarker({
+					markerId:markerId,
+					destination: {latitude: latitude,longitude: longitude},
+					// autoRotate: true,
+					rotate: rotate,
+					duration: _.random(1000,5000),
+					animationEnd: ()=>{
+						_.delay(()=>{
+							self.mapMarkersAnimation(markerId,new_longitude,new_latitude,rotate,animationDelta)
+						},1000)
+					}
+				})
+			},
+			// 卸货地
+			chooseEndNode(e){
+				let self=this
+				uni.chooseLocation({
+					success(res) {
+						self.address.endLongitude=res.longitude
+						self.address.endLatitude=res.latitude
+						if(res.name){
+							self.address.end= res.name
+						} else {
+							loadCity(res.longitude,res.latitude).then(ret=>{
+								console.log(ret.regeocode.addressComponent.district)
+								self.address.end = ret.regeocode.addressComponent.district
+							})
+						}
+					}	
+				})
+			},
+			// 装货地
+			 chooseStartNode(e){
+			    let self = this
+			    uni.chooseLocation({
+			        success: res => {
+						self.address.startLongitude=res.longitude
+						self.address.startLatitude=res.latitude
+						if(res.name){
+							self.address.start= res.name
+						} else {
+							loadCity(res.longitude,res.latitude).then(ret=>{
+								console.log(ret.regeocode.addressComponent.district)
+								self.address.start = ret.regeocode.addressComponent.district
+							})
+						}
+			        }
+			    })
+			},
+			showCityInfo(cityInfo){
+				console.log(cityInfo)
+				this.address.start = cityInfo.regeocode.addressComponent.district
+				let location = cityInfo.regeocode.addressComponent.streetNumber.location
+				this.address.startLongitude = location.split(',')[0]
+				this.address.startLatitude = location.split(',')[1]
+			},
 			// 货主点击取消订单
 			cancellation(e) {
-				let self = this
-				self.styles = "display:none"
+				this.styles = "display:none"
 				let ordernumber=self.orderNumber
-				self.$request.get({
+				this.$request.get({
 					url: `/orderLogistics/cancelorder/${ordernumber}`
 				})
 			},
@@ -110,6 +233,7 @@
 				return year + "-" + month + "-" + date + " " + hh + ":" + mm + ":" + ss;
 			},
 			//单击确定按钮
+			
 			submitMessage(e) {
 				let self = this
 				self.nowTime = self.timeFormate()
@@ -129,19 +253,8 @@
 					}
 				})
 				p.then(res => {
-					console.log(self)
 					self.orderNumber = res.matchOrderBean.orderNumber
-					if (res.matchOrderBean.vehicleList && res.matchOrderBean.vehicleList.length > 0) {
-						self.styles = "display:block"
-					} else {
-						uni.showToast({
-							title: '没有匹配到车辆,请稍后重试',
-							icon: 'none',
-							duration: 2500
-						})
-					}
-
-
+					self.styles = "display:block"
 				})
 			},
 			goodsComment(e) {
@@ -177,58 +290,72 @@
 <style lang="scss" scoped>
 	#app {
 		width: 100%;
-
+		.map_container{
+			width: 100%;
+			height: 100%;
+			position: relative;
+			top:0;
+			left: 0;
+			z-index: 0;
+			map{
+				width: 100%;
+				height: 100%;
+			}
+		}
 		.message {
-			width: 690upx;
-			height: 234upx;
+			width: 96%;
+			height: 270upx;
 			background-color: #fff;
-			box-shadow: 0 0 6upx .2upx #666;
-			margin: 10upx auto;
-			display: block;
-			padding: 20upx;
-
+			border-radius: 20upx;
+			position: fixed;
+			top:10upx;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 1;
+			padding: 30upx 10upx;
+			box-sizing: border-box;
+			border: 1upx solid #0faeff;
+			.searchBtn{
+				width: 90%;
+				height: 60upx;
+				line-height: 60upx;
+				border-radius: 80upx;
+				background: #0faeff;
+			}
 			.top {
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
-
 				picker {
 					color: #333;
 					font-size: 26upx;
 				}
-
 				image {
 					width: 26upx;
 					height: 32upx;
 					margin-right: 10upx;
 				}
-
 				.replace {
 					width: 42upx;
 					height: 42upx;
 				}
 			}
-
 			.con {
 				display: flex;
-				margin: 24upx 0;
+				margin: 24upx auto;
 				font-size: 24upx;
-
+				width: 96%;
 				input {
 					border-bottom: #afafaf 1upx solid;
-					margin-right: 20upx;
 				}
 			}
-
 			button {
 				width: 320upx;
 				height: 70upx;
 				line-height: 70upx;
 				border-radius: 50upx;
-
 			}
 		}
-
 		.wait {
 			width: 690upx;
 			height: 300upx;
@@ -241,14 +368,12 @@
 			z-index: 22;
 			box-shadow: 0 0 6upx .2upx #666;
 			padding: 30upx 40upx 0;
-
 			h1 {
 				font-size: 34upx;
 				color: #333;
 				text-align: center;
 				margin-bottom: 10upx;
 			}
-
 			button {
 				height: 120upx;
 				width: 100%;

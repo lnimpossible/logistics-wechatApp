@@ -35,44 +35,45 @@ function request (url, method, data, header = {}) {
 					resolve(res.data)
 				}
 				else if( res.data.code === 1001 ){
-					uni.showModal({
-            title: '提示',
-            content: '您未登录，请先登录',
-            success(res) {
-              if (res.confirm) {
-                uni.navigateTo({
-                  url: "../../redictUrl/landing/landing",
-                })
-              } else if (res.cancel) {
-								uni.reLaunch({
-									url: '../../tabbar/index/index'
-								})
-              }
-            }
-          })
+					_showModel(
+						'提示','您未登录，请先登录',
+						()=>{
+							uni.navigateTo({
+								url: "../../redictUrl/landing/landing",
+							})
+						},
+						()=>{
+							uni.reLaunch({
+								url: '../../tabbar/index/index'
+							})
+						}
+					)
 				}
         else if( res.data.code === 1000 ){
-          uni.showModal({
-            title: '提示',
-            content: '身份过期，请重新登录',
-            success(res) {
-              if (res.confirm) {
-                uni.navigateTo({
-                  url: "../../redictUrl/landing/landing",
-                })
-              } else if (res.cancel) {
-								uni.reLaunch({
+					_showModel(
+						'提示','认证信息失效，请重新登录',
+						()=>{
+							uni.navigateTo({
+								url: "../../redictUrl/landing/landing",
+							})
+						},
+						()=>{
+							uni.reLaunch({
 									url: '../../tabbar/index/index'
 								})
-              }
-            }
-          })
+						}
+					)
+        } else if( res.data.code === 2000 ){
+					_showModel(
+						'提示','已经存在一笔订单，点击查看',
+						()=>{
+							uni.navigateTo({
+								url: "../../redictUrl/ordergoods/ordergoods",
+							})
+						}
+					)
         } else {
-          uni.showToast({
-          	title: res.data.msg || '502 Bad Gateway !',
-						icon: 'none',
-						duration: 2000
-          })
+					_showToast(res.data.msg)
         }
       },
       fail: function (res) {
@@ -84,6 +85,27 @@ function request (url, method, data, header = {}) {
       }
     })
   })
+}
+
+function _showModel(title,content,Redict,cacelRedict) {
+	uni.showModal({
+		title: title,
+		content: content,
+		success(res) {
+			if (res.confirm) {
+				Redict && Redict()
+			} else if (res.cancel) {
+				cacelRedict && cacelRedict()
+			}
+		}
+	})
+}
+function _showToast(msg){
+	uni.showToast({
+		title: msg || '502 Bad Gateway !',
+		icon: 'none',
+		duration: 2000
+	})
 }
  
 function get (obj) {

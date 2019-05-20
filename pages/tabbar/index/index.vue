@@ -31,23 +31,6 @@
 			:text="newsList[0].title"
 			@click="gotoNewsPage"
 			/>
-			<!-- // 导航栏 -->
-			<view class="navTabs">
-				<uni-grid :options="gridTabsItems" :show-border="false"
-					column-num="4" @click="changeGridTab">
-				</uni-grid>
-			</view>
-			<!-- // map 地图 -->
-			<view class="map_container" >
-                <map id="mapInstance" 
-				:latitude="map.latitude" 
-				:longitude="map.longitude" 
-				:markers="map.covers"
-				:controls="map.controls"
-				@controltap="controltap"
-				:show-location="true">
-                </map>
-            </view>
 			<!-- // 搜索框 -->
 			<view class="searchLineWrap">
 				<view class="chooseWrap">
@@ -61,6 +44,25 @@
 				</view>
 				<button type="primary" class='searchBtn' @click="submitForSearchLines">查询</button>
 			</view>
+			<!-- // 导航栏 -->
+			<view class="navTabs">
+				<uni-grid :options="gridTabsItems" :show-border="false"
+					column-num="4" @click="changeGridTab">
+				</uni-grid>
+			</view>
+			
+			<!-- // map 地图 -->
+			<view class="map_container" >
+                <map id="mapInstance" 
+				:latitude="map.latitude" 
+				:longitude="map.longitude" 
+				:markers="map.covers"
+				:controls="map.controls"
+				@controltap="controltap"
+				:show-location="true">
+                </map>
+            </view>
+			
 		</view>
 		
 		<!-- 专线列表 -->
@@ -101,8 +103,8 @@
 <script>
 import {uniGrid} from '@dcloudio/uni-ui'
 const _ = require('@/components/lodash/lodash.js')
-import loadCity from '@/utils/loadCity.js'
-// const amapFile = require('@/common/amap-wx.js');
+import location from '@/utils/location.js'
+import loadCity from '@/utils/loadCity'
 export default {
 	components:{
 		uniGrid
@@ -111,79 +113,7 @@ export default {
 		let self = this
 	},
 	mounted(){
-		let self = this
-		self.$request.post({
-			url: '/getBannerList',
-			data: {
-				platformType: 0
-			}
-		}).then(res => {
-			self.bannerList = res.BannerList
-		})
-		uni.getLocation({
-			type: 'gcj02',
-			success: function (res) {
-				self.map.longitude = res.longitude
-				self.map.latitude = res.latitude
-					
-				self.$log.set('location',{
-					longitude: self.map.longitude,
-					latitude: self.map.longitude
-				})
-				// 获取城市信息
-				loadCity(res.longitude, res.latitude).then(res => {
-					self.cityData = res.regeocode.addressComponent
-					self.address.startCity = self.cityData.city
-					self.address.startCityCode = self.cityData.cityCode
-				})
-				for(let i=0; i< 8; i++){
-					let delta = 0.004
-					var animationDelta = 0.0005
-					let longitude = self.map.longitude+_.random(-delta,delta)
-					let latitude = self.map.latitude+_.random(-delta,delta)
-					self.map.covers.push({
-						id: i,
-						width : 40,
-						height: 40,
-						latitude: latitude,
-						longitude: longitude,
-						iconPath: `../../../static/img/map/bigCar${_.random(1,5)}.png`
-					})
-					_.delay(()=>{
-						self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
-					},2000)
-				}
-			}
-		})
-		self.$request.get({
-			url:"/getFunctionList/1",
-		}).then(res => {
-			self.gridTabsItems = _.map(res.functionList, item => { 
-				return {
-					text:item.functionName,image:item.functionIconUrl,
-					linkUrl: item.linkUrl
-				}})
-		})
-		self.$request.post({
-			url:'/logistics/driverDirectLine/cargoQuery',
-			data:{
-				"startCity":'',
-				"endCity":'',
-				"currPage": 1,
-				"pageSize": 20
-			}
-		}).then(res => {
-			self.itmes = res.page.list
-		})
-		self.$request.post({
-			url: '/getNewsBriefList',
-			data: {
-				"newsType": 1
-			}
-		}).then(res => {
-			self.newsList = res.newsBriefList
-		})
-		self.amapInstance = uni.createMapContext("mapInstance")
+		this.init()
 	},
 	data() {
 		return {
@@ -231,19 +161,169 @@ export default {
 			userType: '货主',
             index: 0,
 			gridTabsItems: [
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shu.png',text:'圣诞树'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/lindang.png',text:'铃铛'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/laoren.png',text:'圣诞老人'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/liwu.png',text:'礼物'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/maozi.png',text:'帽子'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/shoutao.png',text:'手套'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xueqiao.png',text:'雪橇'},
-				{image:'https://img-cdn-qiniu.dcloud.net.cn/img/xunlu.png',text:'驯鹿'},
+				{image:'',text:''}
 			],
 			title: 'Hello'
 		}
 	},
 	methods: {
+		init(){
+			let self = this
+			self.getBannerList()
+			self.getFunctionList()
+			self.getNews()
+			self.getLines()
+			self.getLocation()
+			setInterval(()=>{
+				self.getLocation()
+			},60000)
+			// self.getNearbyCar()
+			self.amapInstance = uni.createMapContext("mapInstance")
+			_.delay(()=>{
+				for(let i=0; i< 10; i++){
+					let delta = 0.004
+					var animationDelta = 0.0005
+					let longitude = self.map.longitude+_.random(-delta,delta)
+					let latitude = self.map.latitude+_.random(-delta,delta)
+					self.map.covers.push({
+						id: i,
+						width : 40,
+						height: 40,
+						latitude: latitude,
+						longitude: longitude,
+						iconPath: `../../../static/img/map/bigCar${_.random(1,5)}.png`
+					})
+					_.delay(()=>{
+						self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
+					},2000)
+				}
+			},2000)
+		},
+		getNearbyCar(){
+			let self = this
+			let nearDistance = 100
+			this.$request.get({
+				url: `/logistics/queryRoundVehicle/${nearDistance}`
+			}).then(res => {
+				let driberList = res.driberList
+				if(res.driberList.length > 0){
+					let points = []
+					for(let i=0;i<driberList.length;i++){
+						let driber = driberList[i]
+						let index = _.findIndex(self.map.covers, function(o) { return o.id == driber.id; });
+						if(index !== -1){
+							console.log(index)
+							console.log(`已经存在id为${index}的地图marker!`)
+							self.map.covers[index].longitude = driber.driverlongitude
+							self.map.covers[index].latitude = driber.driverLatitude
+						}else{
+							self.map.covers.push({
+								id: driber.id,
+								width : 100,
+								height: 100,
+								latitude: driber.driverLatitude,
+								longitude: driber.driverlongitude,
+								iconPath: `../../../static/img/map/bigCar${_.random(1,5)}.png`
+							})
+						}
+						points.push({latitude:driber.driverLatitude, longitude:driber.driverlongitude})
+					}
+					self.amapInstance.includePoints({
+						points: points
+					})
+				}
+				// let delta = 0.004
+				// var animationDelta = 0.0005
+				// let longitude = self.map.longitude+_.random(-delta,delta)
+				// let latitude = self.map.latitude+_.random(-delta,delta)
+				// 
+				// _.delay(()=>{
+				// 	self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
+				// },2000)
+			})
+		},
+		getNews(){
+			let self = this
+			self.$request.post({
+				url: '/getNewsBriefList',
+				data: {
+					"newsType": 1
+				}
+			}).then(res => {
+				self.newsList = res.newsBriefList
+			})
+		},
+		getLines(){
+			let self = this
+			self.$request.post({
+				url:'/logistics/driverDirectLine/cargoQuery',
+				data:{
+					"startCity":'',
+					"endCity":'',
+					"currPage": 1,
+					"pageSize": 20
+				}
+			}).then(res => {
+				self.itmes = res.page.list
+			})
+		},
+		getFunctionList(){
+			let self = this
+			self.$request.get({
+				url:"/getFunctionList/1",
+			}).then(res => {
+				self.gridTabsItems = _.map(res.functionList, item => { 
+					return {
+						text:item.functionName,image:item.functionIconUrl,
+						linkUrl: item.linkUrl
+					}
+				})
+			})
+		},
+		getBannerList(){
+			let self = this
+			self.$request.post({
+				url: '/getBannerList',
+				data: {
+					platformType: 0
+				}
+			}).then(res => {
+				self.bannerList = res.BannerList
+			})
+		},
+		getLocation(){
+			let self = this
+			location.getLocation().then(res => {
+				self.map.longitude = res.longitude
+				self.map.latitude = res.latitude
+				self.loadCity(res.longitude,res.latitude)
+			})
+		},
+		sendLocation(){
+			let self = this
+			this.$request.post({
+				url: '/user/locate',
+				data: {
+				  "latitude": self.map.latitude,
+				  "locateAreaCode": self.cityData.adcode,
+				  "locateAreaName": self.cityData.district,
+				  "locateCityCode": self.cityData.citycode,
+				  "locateCityName": self.cityData.city,
+				  "locateProvinceName": self.cityData.province,
+				  "locationInfo": "实时位置信息",
+				  "longitude": self.map.longitude
+				}
+			})
+		},
+		loadCity(longitude,latitude){
+			let self = this
+			loadCity(longitude, latitude).then(ret => {
+				self.cityData = ret.regeocode.addressComponent
+				self.address.startCity = self.cityData.city
+				self.address.startCityCode = self.cityData.cityCode
+				self.sendLocation()
+			})
+		},
 		checkCompInfo(compId){
 			uni.navigateTo({
 				url: `../../redictUrl/company/company?compId=${compId}`
@@ -397,11 +477,12 @@ export default {
 		}
 		.searchLineWrap{
 			background: #fff;
-			width: 96%;
+			width: 100%;
 			border-radius:20upx;
 			padding: 20upx 0;
 			box-sizing: border-box;
-			margin: 10upx auto;
+			margin: 0 auto;
+			margin-top: 10upx;
 			.chooseWrap{
 				display: flex;
 				flex-wrap: nowrap;

@@ -171,8 +171,9 @@
 						phoneNumber: userRes.phoneNumber,
 						token: userRes.token
 					})
-					let url = '../../tabbar/index/index'
-					uni.reLaunch({url:url})
+					uni.navigateBack()
+					// let url = '../../tabbar/index/index'
+					// uni.reLaunch({url:url})
 				})
 			}
         }

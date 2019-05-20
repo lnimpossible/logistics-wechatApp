@@ -292,11 +292,7 @@
 		width: 100%;
 		.map_container{
 			width: 100%;
-			height: 100%;
-			// position: relative;
-			// top:0;
-			// left: 0;
-			// z-index: 0;
+			height: calc(100vh - 250upx);
 			map{
 				width: 100%;
 				height: 100%;
@@ -305,12 +301,11 @@
 		.message {
 			width: 99%;
 			margin: 0 auto;
-			height: 270upx;
+			// height: 300upx;
 			margin-top:5upx;
 			background-color: #fff;
 			border-radius: 20upx;
-			padding: 30upx 10upx;
-			box-sizing: border-box;
+			padding: 25upx 0;
 			border: 1upx solid #0faeff;
 			.searchBtn{
 				width: 90%;

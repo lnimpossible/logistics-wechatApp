@@ -97,7 +97,7 @@
 		<div class="cargo">
 			<van-row>
 				<van-col :span="12">*货物名称</van-col>
-				<van-col :span="12"><input type="text" placeholder="必填货物名称" :value="cargoName" @change="chooseCargoName"></van-col>
+				<van-col :span="12"><input type="text" placeholder="必填货物名称" @change="chooseCargoName"></van-col>
 			</van-row>
 		</div>
 		<div class="baseInfor">装卸信息</div>
@@ -256,27 +256,6 @@
 				let lastdischargeDate=`${self.dischargeDate} ${self.dischargeTime}:00`
 				self.lastdischargeDate=lastdischargeDate
 				let tempRuleObject = {
-					cargoName: self.cargoName,
-					cargoWeight: self.cargoWeight,
-					cargoVolume: self.cargoVolume
-				}
-				let rule = [
-					{ name: "cargoName", checkType: "notnull" , errorMsg: "货源名称不能为空" },
-					{ name: "cargoWeight", checkType: "notnull", errorMsg: "货源重量不能为空" },
-				    { name: "cargoVolume", checkType: "notnull", errorMsg: "货源体积不能为空" }
-				]
-				let isPass = Checker.check(tempRuleObject, rule)
-				if(Checker.error){
-					uni.showToast({
-						title: Checker.error,
-						icon: 'none'
-					})
-					return false
-				}
-				
-				let p=self.$request.post({
-					url:'/logistics/shipperGoodsReleased/add',
-					data:{
 						cargoName:self.cargoName,
 						cargoVolume:self.cargoVolume,
 						cargoWeight:self.cargoWeight,
@@ -303,10 +282,73 @@
 						startProvinceCode:self.startProvinceCode,
 						vehicleType:self.vehicleType
 					}
+				let rule = [
+					{ name: "cargoName", checkType: "notnull" , errorMsg: "货物名称不能为空" },
+					{ name: "cargoWeight", checkType: "notnull", errorMsg: "货物重量不能为空" },
+				    { name: "cargoVolume", checkType: "notnull", errorMsg: "货物体积不能为空" },
+					{ name: "startAddr", checkType: "notnull", errorMsg: "装货地址不能为空" },
+					{ name: "endAddr", checkType: "notnull", errorMsg: "卸货地址不能为空" },
+					{ name: "dischargeDate", checkType: "notnull", errorMsg: "卸货时间不能为空" },
+					{ name: "payMode", checkType: "notnull", errorMsg: "支付方式不能为空" },
+					{ name: "loadNumAndDischargeNum", checkType: "notnull", errorMsg: "装卸方式不能为空" },
+					{ name: "loadDate", checkType: "notnull", errorMsg: "装货时间不能为空" },
+					{ name: "startLongitude", checkType: "notnull", errorMsg: "始发精度不能为空" },
+					{ name: "startLatitude", checkType: "notnull", errorMsg: "始发纬度不能为空" },
+					{ name: "endLongitude", checkType: "notnull", errorMsg: "目的精度不能为空" },
+					{ name: "endLatitude", checkType: "notnull", errorMsg: "目的纬度不能为空" }
+				]
+				let isPass = Checker.check(tempRuleObject, rule)
+				if(Checker.error){
+					uni.showToast({
+						title: Checker.error,
+						icon: 'none'
+					})
+					return false
+				}
+				
+				
+				let p=self.$request.post({
+					url:'/logistics/shipperGoodsReleased/add',
+					data:tempRuleObject
 				})
 				p.then(res=>{
-					uni.redirectTo({
-						url:'../personalCenter/personalCenter'
+					uni.showModal({
+						title: '发布成功',
+						content: '货源发布成功，是否跳转个人中心-常发货源中查看',
+						success(res) {
+							if (res.confirm) {
+								uni.switchTab({
+									url:'../../tabbar/personalCenter/personalCenter'
+								})
+							} else if (res.cancel) {
+								slef.cargoName = ''
+								self.cargoVolume = ''
+								self.cargoWeight = ''
+								self.lastdis = ''
+								self.chargeDate = ''
+								self.endAddr = ''
+								self.endAreaCode = ''
+								self.endCityCode = ''
+								self.endProvinceCode = ''
+								self.endLatitude = ''
+								self.endLongitude = ''
+								self.expectFreightRate = ''
+								self.isOverspeedOver = ''
+								self.manTransfinite = ''
+								self.isRegularCargoOrigin = ''
+								self.lastLoadDate = ''
+								self.loadNumAndDis = ''
+								self.chargeNumpayMode = ''
+								self.receiptremark = ''
+								self.startAddr = ''
+								self.startAreaCodes = ''
+								self.tartCityCode = ''
+								self.startLatitude = ''
+								self.startLongitude = ''
+								self.startProvinceCode = ''
+								self.vehicleType = ''
+							}
+						}
 					})
 				})
 			},

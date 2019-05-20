@@ -3,30 +3,38 @@
 		{"path": "pages/tabbar/index/index","style":{
 				"navigationBarTitleText": "首页"
 			}},
+		{"path": "pages/redictUrl/ordergoods/ordergoods","style":{
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": true
+			}},
+		{"path": "pages/tabbar/news/news","style":{
+				"navigationBarTitleText": "热点"
+			}},
+		
+			{"path": "pages/redictUrl/dailySOD/dailySOD","style":{
+				"navigationBarTitleText": "常发货源",
+				"enablePullDownRefresh": true
+			}},
 		{"path": "pages/redictUrl/company/company","style":{
 				"navigationBarTitleText": "公司信息"
 			}},
-			
+			{"path": "pages/redictUrl/newsDetail/newsDetail","style":{
+				"navigationBarTitleText": "详情"
+			}},
 			
 			{"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution","style":{
 				"navigationBarTitleText": "智能供配"
 			}},
 			
-			{"path": "pages/redictUrl/dailySOD/dailySOD","style":{
-				"navigationBarTitleText": "常发货源"
-			}},
+			
 			{"path": "pages/tabbar/personalCenter/personalCenter","style":{
 				"navigationBarTitleText": "个人中心"
 			}},
 			{"path": "pages/tabbar/issue/issue","style":{
 				"navigationBarTitleText": "发布货源"
 			}},
-			{"path": "pages/tabbar/news/news","style":{
-				"navigationBarTitleText": "最新资讯"
-			}},
-			{"path": "pages/redictUrl/ordergoods/ordergoods","style":{
-				"navigationBarTitleText": "我的订单"
-			}},
+			
+			
 			{"path": "pages/redictUrl/search/search","style":{
 				"navigationBarTitleText": "专线查询"
 			}},
@@ -59,7 +67,7 @@
 				"pagePath": "pages/tabbar/news/news",
 				"iconPath": "static/img/tabbar/news.png",
 				"selectedIconPath": "static/img/tabbar/newsactive.png",
-				"text": "资讯"
+				"text": "热点"
 			},
 			{
 				"pagePath": "pages/tabbar/personalCenter/personalCenter",
@@ -73,18 +81,23 @@
         "navigationBarTextStyle": "white",
         "navigationBarBackgroundColor": "#0faeff",
         "backgroundColor": "#fbf9fe",
-		"usingComponents": {
-			"van-card": "/wxcomponents/vant/card/index",
-			"van-row": "/wxcomponents/vant/row/index",
-			"van-col": "/wxcomponents/vant/col/index",
-			"van-icon": "/wxcomponents/vant/icon/index",
-			"van-button": "/wxcomponents/vant/button/index",
-			"van-notice-bar": "/wxcomponents/vant/notice-bar/index",
-			"van-radio": "/wxcomponents/vant/radio/index",
-			"van-radio-group": "/wxcomponents/vant/radio-group/index",
-			"van-field": "/wxcomponents/vant/field/index",
-			"van-tabs": "/wxcomponents/vant/tabs/index",
-			"van-tab": "/wxcomponents/vant/tab/index"
-		}
-    }
+				"usingComponents": {
+					"van-card": "/wxcomponents/vant/card/index",
+					"van-row": "/wxcomponents/vant/row/index",
+					"van-col": "/wxcomponents/vant/col/index",
+					"van-icon": "/wxcomponents/vant/icon/index",
+					"van-button": "/wxcomponents/vant/button/index",
+					"van-notice-bar": "/wxcomponents/vant/notice-bar/index",
+					"van-radio": "/wxcomponents/vant/radio/index",
+					"van-radio-group": "/wxcomponents/vant/radio-group/index",
+					"van-field": "/wxcomponents/vant/field/index",
+					"van-tabs": "/wxcomponents/vant/tabs/index",
+					"van-tab": "/wxcomponents/vant/tab/index"
+				}
+    },
+	"permission": {
+			 "scope.userLocation": {
+				 "desc": "你的位置信息将用于小程序位置接口的效果展示"
+			 }
+	 }
 }

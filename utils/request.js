@@ -111,7 +111,11 @@ function _showToast(msg){
 function get (obj) {
   return request(obj.url, 'GET', obj.data)
 }
- 
+
+function Delete (obj) {
+  return request(obj.url, 'Delete', obj.data)
+}
+
 function post (obj) {
   return request(obj.url, 'POST', obj.data)
 }
@@ -120,6 +124,7 @@ export default {
   request,
   get,
   post,
+  Delete,
   host,
   uploadFileUrl
 }

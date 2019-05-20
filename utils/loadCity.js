@@ -1,5 +1,4 @@
 function loadCity(longitude, latitude) {
-    let _self = this;
 		return new Promise((resolve, reject) => {
 			uni.request({
 				url: 'https://restapi.amap.com/v3/geocode/regeo',
@@ -13,12 +12,16 @@ function loadCity(longitude, latitude) {
 				},
 				success: function (res) {
 					uni.hideLoading()
-					if( res.statusCode == 200 ){
-						resolve(res.data)
-					}
+					resolve(res.data)
+					// if( res.statusCode == 200 ){
+					// 	resolve(res.data)
+					// }else{
+					// 	reject()
+					// }
 				},
 				fail: function (res) {
 					uni.hideLoading()
+					console.error('loadCity fail')
 				},
 				complete: function () {
 					uni.hideLoading()

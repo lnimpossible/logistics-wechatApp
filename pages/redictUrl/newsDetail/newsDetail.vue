@@ -2,9 +2,9 @@
   <div class="content">
 		<PageTitle :title="currentTile"></PageTitle>
 		<ul class="newsList">
-			<li class="newWrap" v-for="(item,index) in newsList" :key="index" @click="checkDetail(item)">
+			<li class="newWrap">
 				<div class="newsTitle"><van-icon name="fire" /> <span>{{item.title}}</span> <span class="newsTime">{{item.publishTime}}</span></div>
-				<div class="newsIntro">{{item.intro}}...</div>
+				<div class="newsIntro" v-html="item.content"></div>
 			</li>
 		</ul>
   </div>
@@ -13,31 +13,29 @@
 export default {
   mounted(){
 		let self = this
-		self.$request.post({
-			url: '/getNewsBriefList',
+		const pages = getCurrentPages()
+		const currentPage = pages[pages.length - 1]
+		const options = currentPage.options
+		console.log(options)
+		self.$request.get({
+			url: '/getNews/'+ options.id,
 			data: {
 				"newsType": 1
 			}
 		}).then(res => {
-			self.newsList = res.newsBriefList
+			self.item = res.news
 		})
   },
 
   data () {
     return {
-		currentTile:'',
-		newsList:[
+		item:[
 			{title: '',time:'',content:''}
 		],
     }
   },
   methods: {
-		checkDetail(item){
-			let detail = ''
-			uni.navigateTo({
-				url: `../../redictUrl/newsDetail/newsDetail?id=${item.id}`
-			})
-		}
+		
   }
 }
 </script>

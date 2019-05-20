@@ -1,13 +1,16 @@
 <template>
 	<view class="content">
 		<ul class="tabs">
-			<li class="tabsLi" v-for="(statusList,index) in statusList" :key="index" @click="toggleTabs(index)" 
-			:class="{active:index!=nowIndex}">
+			<li class="tabsLi" 
+				:class="{'active': current == index ? true : false}" 
+				v-for="(statusList,index) in statusList" 
+				:key="index" @click="toggleTabs(index)">
 				{{statusList}}
 			</li>
 		</ul>
 		<div class="tabson" v-show="current===0">
-			<div class="matter"   v-for="(order,index) in orderList" :key="index">
+			<div class="matter" v-for="(order,index) in orderList" :key="index">
+				<div class="orderStatus">{{orderStatusZH(order)}}</div>
 				<van-row>
 					<van-col :span="10">{{order.startCity}}</van-col>
 					<van-col :span="4">
@@ -27,7 +30,8 @@
 			</div>
 		</div>
 		<div class="tabson" v-show="current===1">
-			<div class="matter"   v-for="(order,index) in orderList" :key="index">
+			<div class="matter" v-for="(order,index) in orderList" :key="index">
+				<div class="cancelOrder" @click="cancelOrder(order.orderNumber)">取消订单</div>
 				<van-row>
 					<van-col :span="10">{{order.startCity}}</van-col>
 					<van-col :span="4">
@@ -246,24 +250,52 @@
 					</van-row>
 				</div>
 			</view>
+			<uni-load-more :status="loading.status"></uni-load-more>
 		</view>
 	</view>
 </template>
 
 <script>
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more'
 	export default {
+		components:{
+			uniLoadMore
+		},
+		onPullDownRefresh: function() {
+			//下拉刷新的时候请求一次数据
+			console.log('刷新数据')
+			this.currPage = 1
+			this.getCurrentReleased()
+			uni.stopPullDownRefresh()
+		},
+		onReachBottom: function() {
+			//触底的时候请求数据，即为上拉加载更多
+			this.getMore()
+		},
 		mounted() {
 			//订单状态( orderStatus ：-1 全部 0 待接单 1 已接单 2 运输中 3 运输完成 4 已完成 )
 			let self = this
-			self.$request.get({
-				url: '/orderLogistics/shipperOrderList/-2',
+			self.$request.post({
+				url: '/orderLogistics/shipperOrderList',
+				data: {
+				  "currPage": 1,
+				  "orderStatus": -2,
+				  "pageSize": self.pageSize
+				}
 			}).then(res => {
-				console.log(res)
-				self.orderList=res.orderList
+				if(res.orderList.list.length < self.pageSize){
+					self.loading.status = "noMore"
+				}
+				self.orderList=res.orderList.list
 			})
 		},
 		data() {
 			return {
+				loading:{
+					status: 'more'
+				},
+				currPage: 1,
+				pageSize: 10,
 				// 货物
 				orderList:[],
 				goods: {
@@ -277,33 +309,88 @@
 				},
 				statusList:['全部', '待接单', '已接单', '运输中', '运输完成', '已完成'],
 				current:0,
-				orderStatus:'',
+				orderStatus:''
 			}
 		},
 		methods: {
+			getMore(){
+				let self = this
+				self.loading.status = 'loading'
+				this.getCurrentReleased()
+			},
+			getCurrentReleased(){
+				let self = this
+				let orderStatus = self.orderStatus
+				self.$request.post({
+					url: '/logistics/shipperGoodsReleased/cargoQuery',
+					data:{
+					  "currPage": self.currPage,
+					  "orderStatus": orderStatus,
+					  "pageSize": self.pageSize
+					}
+				}).then(res => {
+					if(self.currPage === 1){
+						self.orderList=res.orderList.list
+					}else{
+						self.orderList = [...self.orderList,...res.orderList.list]
+					}
+					self.currPage++
+					if(res.orderList.list.length < self.pageSize){
+						self.loading.status = "noMore"
+					}else{
+						console.log('more')
+						self.loading.status = "more"
+					}
+				})
+			},
+			//取消订单
+			cancelOrder(orderNumber){
+				this.$request.Delete({
+					url: `/orderLogistics/shipperCancelOrder/${orderNumber}`
+				}).then(res => {
+					this.toggleTabs(1)
+				})
+			},
 			toggleTabs(index){
 				let self=this
-				console.log(index)
-				self.orderStatus=index
 				self.current=index
 				let sourceIndex = index === 0 ? '-2' : index - 1
+				self.orderStatus=sourceIndex
 				self.getOrderList(sourceIndex)
 			},
-			//订单状态( orderStatus ：null 全部 0 待接单 1 已接单 2 运输中 3 运输完成 4 已完成 )
-			chooseStatus(index) {
-				let self = this
-				self.status.orderStatus = index
-				self.status.current = index
-				let sourceIndex = index === 0 ? '-2' : index - 1
-				self.getOrderList(sourceIndex)
+			
+			orderStatusZH(order){
+				switch(order.orderStatus){
+					case '-1':
+						return '已取消';
+						break;
+					case '0':
+						return '待接单';
+						break;
+					case '1':
+						return '已接单';
+						break;
+					case '2':
+						return '运输中';
+						break;
+					case '3':
+						return '运输完成';
+						break;
+					case '4':return '已完成';
+						break;
+				}
 			},
 			getOrderList(orderStatus) {
 				let self=this
-				self.$request.get({
-					url: '/orderLogistics/shipperOrderList/' + orderStatus,
+				self.$request.post({
+					url: '/orderLogistics/shipperOrderList',
+					data: {
+					  "currPage": 1,
+					  "orderStatus": orderStatus,
+					  "pageSize": 10
+					}
 				}).then(res => {
-					console.log(res)
-					self.orderList=res.orderList
+					self.orderList=res.orderList.list
 				})
 			}
 		}
@@ -324,19 +411,43 @@
 				color: #333;
 				font-size: 26upx;
 			}
+			.tabsLi.active{
+				color: red;
+			}
 		}
 		.tabson{
-			background: #fff;
 			margin: 6upx 0;
 			.matter{
 				padding:20upx 30upx;
 				border-radius: 20upx;
+				background: #fff;
 				margin-bottom: 10upx;
+				position: relative;
+				.orderStatus{
+					position: absolute;
+					top: 20upx;
+					right: 20upx;
+					background: #fff;
+					color: orangered;
+					border: 1upx solid orangered;
+					font-size: 30upx;
+					padding: 5upx 10upx;
+				}
+				.cancelOrder{
+					position: absolute;
+					bottom: 15upx;
+					right: 20upx;
+					background: #fff;
+					color: orangered;
+					border: 1upx solid orangered;
+					font-size: 30upx;
+					padding: 5upx 10upx;
+				},
 				van-row{
 					color: #333;
 					font-size: 24upx;
 					display: block;
-					padding:10upx 0;
+					// padding:10upx 0;
 					image{
 						width: 34upx;
 						height: 34upx;

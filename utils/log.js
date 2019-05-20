@@ -16,7 +16,7 @@
 		try {
 			uni.setStorageSync(key, data)
 		} catch (e) {
-				console.log('set storage error!')
+			console.log('set storage error!')
 		}
   }
   export default Log

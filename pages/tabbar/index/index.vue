@@ -278,23 +278,10 @@ export default {
 									padding: 15,
 									display: 'BYCLICK'
 								}
-								// iconPath: `../../..ss/static/img/map/bigCar${_.random(1,5)}.png`
 							})
 						}
-						// points.push({latitude:driber.driverLatitude, longitude:driber.driverLongitude})
 					}
-					// self.amapInstance.includePoints({
-					// 	points: points
-					// })
 				}
-				// let delta = 0.004
-				// var animationDelta = 0.0005
-				// let longitude = self.map.longitude+_.random(-delta,delta)
-				// let latitude = self.map.latitude+_.random(-delta,delta)
-				// 
-				// _.delay(()=>{
-				// 	self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
-				// },2000)
 			})
 		},
 		getNews(){

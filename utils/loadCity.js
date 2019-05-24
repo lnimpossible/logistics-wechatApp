@@ -27,7 +27,6 @@ function loadCity(longitude, latitude) {
 					uni.hideLoading()
 				}
 			})
-  })
+		})
   }
-	
-	export default loadCity
+export default loadCity

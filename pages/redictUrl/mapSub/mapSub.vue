@@ -62,7 +62,15 @@
 		methods:{
 			init(){
 				this.getNearbyCar()
+				this.showPageTips()
 				this.amapInstance = uni.createMapContext("map")
+			},
+			showPageTips(){
+				uni.showToast({
+					title: '点击车辆，联系车主',
+					icon: 'none',
+					duration: 4000
+				})
 			},
 			controltap(e){
 				this.amapInstance.moveToLocation()
@@ -200,12 +208,12 @@
 					imageUrl5:''
 				}},
 				map:{
-				title: 'map',
-				latitude: 31.29579,
-				longitude: 120.57186,
-				covers: [],
-				points:[],
-				controls: [{
+					title: 'map',
+					latitude: 31.29579,
+					longitude: 120.57186,
+					covers: [],
+					points:[],
+					controls: [{
 						id: 0,
 						iconPath: '../../../static/img/map/location.png',
 						clickable: true,

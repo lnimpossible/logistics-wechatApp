@@ -61,6 +61,7 @@
             "scope.userLocation" : {
                 "desc" : "展示您的位置"
             }
-        }
+        },
+		"navigateToMiniProgramAppIdList": ["wx7cda276ba4927930"]
     }
 }

@@ -19,7 +19,8 @@
 	page {
 		min-height: 100%;
 		display: flex;
-		background: #eef2fb;
+		/* background: #eef2fb; */
+		background: #f3f6fa;
 		-webkit-font-smoothing: antialiased;
 		font-family: 'PingFang SC', Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, Arial, sans-serif;
 	}

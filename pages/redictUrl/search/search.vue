@@ -1,13 +1,14 @@
 <template>
-	<view>
+	<view class="content">
+		<!-- // 搜索框 -->
 		<view class="searchLineWrap">
 			<view class="chooseWrap">
 				<picker class="pickerWrap" mode="region" @change="chooseStartAddress">
-					<input type="text" :value="address.startCity" disabled placeholder="始发市" >		
+					<input type="text" style="font-size: 25upx;" :value="address.startCity" disabled placeholder="始发市" >		
 				</picker>
-				<image class="exchange-icon" src='../../../static/img/icon/chongzhi.png' mode="aspectFit" @click="exchangeAddressOrigin"></image>
+				<image class="exchange-icon" src='../../../static/img/icon/fangxiang.png' mode="aspectFit" @click="exchangeAddressOrigin"></image>
 				<picker class="pickerWrap" mode="region" @change="chooseEndAddress">
-					<input type="text" :value="address.endCity" disabled placeholder="目的市" >	
+					<input type="text" style="font-size: 28upx;"  :value="address.endCity" disabled placeholder="目的市" >	
 				</picker>
 			</view>
 			<button type="primary" class='searchBtn' @click="submitForSearchLines">查询</button>
@@ -150,7 +151,7 @@
 	background: #fff;
 	width: 96%;
 	border-radius:20upx;
-	padding: 40upx 0;
+	padding: 20upx 0;
 	box-sizing: border-box;
 	margin: 20upx auto;
 	.chooseWrap{
@@ -170,10 +171,13 @@
 		}
 	}
 	.searchBtn{
-		width: 90%;
-		height: 70upx;
-		line-height: 70upx;
+		width: 80%;
+		height: 60upx;
+		line-height: 60upx;
 		border-radius: 80upx;
+		background: #4a74ff;
+		color: #fff;
+		font-size: 26upx;
 	}
 }
 </style>

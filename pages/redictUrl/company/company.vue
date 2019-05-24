@@ -42,7 +42,7 @@
 				<li>
 					<div class="top"><van-icon name="stop" color="#387ec3" />相册</div>
 					<div class="under">
-						<image mode="aspectFill" :src="companyInfor.licencePicture" alt=""></image>
+						<image style="margin: 15upx auto;" mode="aspectFill" v-for="(picture,index) in companyInfor.compPictureList" :key="index" :src="picture.pictureUrl" alt=""></image>
 					</div>
 				</li>
 			</ul>

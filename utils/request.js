@@ -2,9 +2,9 @@ const host = 'https://api.ky7777t.com/api'
 const uploadFileUrl = 'https://api.ky7777t.com/api/uploadFile/upload'
 
 function request (url, method, data, header = {}) {
-  uni.showLoading({
-    title: '加载中' // 数据请求前loading
-  })
+  // uni.showLoading({
+  //   title: '加载中' // 数据请求前loading
+  // })
   try {
     const token = uni.getStorageSync('userInfo').token
     if (token) {
@@ -29,31 +29,31 @@ function request (url, method, data, header = {}) {
       data: data,
       header: header,
       success: function (res) {
-        console.log(res.data)
-        uni.hideLoading()
-				if( res.data.code === 0 ){
-					resolve(res.data)
+        // console.log(res.data)
+        // uni.hideLoading()
+		if( res.data.code === 0 ){
+			resolve(res.data)
+		}
+		else if( res.data.code === 1001 ){
+			_showModel(
+				'提示','您未登录，请先登录',
+				()=>{
+					uni.reLaunch({
+						url: "../../redictUrl/landing/landing",
+					})
+				},
+				()=>{
+					uni.reLaunch({
+						url: '../../tabbar/index/index'
+					})
 				}
-				else if( res.data.code === 1001 ){
-					_showModel(
-						'提示','您未登录，请先登录',
-						()=>{
-							uni.navigateTo({
-								url: "../../redictUrl/landing/landing",
-							})
-						},
-						()=>{
-							uni.reLaunch({
-								url: '../../tabbar/index/index'
-							})
-						}
-					)
-				}
+			)
+		}
         else if( res.data.code === 1000 ){
 					_showModel(
 						'提示','认证信息失效，请重新登录',
 						()=>{
-							uni.navigateTo({
+							uni.reLaunch({
 								url: "../../redictUrl/landing/landing",
 							})
 						},

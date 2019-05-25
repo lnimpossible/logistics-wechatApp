@@ -78,7 +78,7 @@
 		<view style="width:100%;background: #fff;">
 			<view class="dongtai">
 				<image src="../../../static/img/icon/huoyuanzhuangtai.png"></image>
-				货源动态
+				最新专线
 			</view>
 			<div class="cardList">
 			<div class="cardItem" v-for="(item,index) in itmes" :key="index">

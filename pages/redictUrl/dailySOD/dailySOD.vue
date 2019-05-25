@@ -71,7 +71,8 @@
 					  "latitude": location.latitude,
 					  "longitude": location.longitude,
 					  "pageSize": self.pageSize,
-					  "status": "0"
+					  "status": "0",
+					  "isRegularCargoOrigin":"1"
 					}
 				}).then(res => {
 					if(self.currPage === 1){

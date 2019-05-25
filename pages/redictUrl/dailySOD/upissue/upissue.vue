@@ -563,6 +563,7 @@
 		background-color: #f2f2f2;
 		width: 100%;
 		overflow: hidden;
+		margin-bottom: 100upx;
 		.address{
 			background-color: #fff;
 			width: 100%;
@@ -636,6 +637,7 @@
 			position: fixed;
 			bottom: 0;
 			left: 0;
+			z-index:999;
 		}
 		.updelete button{
 			margin: 0;

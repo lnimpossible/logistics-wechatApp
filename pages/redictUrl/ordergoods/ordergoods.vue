@@ -10,9 +10,9 @@
 		</ul>
 		<div class="tabson">
 			<div class="matter" v-for="(order,index) in orderList" :key="index">
-				<div class="orderStatus" v-if='order.orderStatus != 0 &&order.orderStatus != 4'>{{orderStatusZH(order)}}</div>
-				<div class="orderStatus" v-if='order.orderStatus == 0' @tap='cancelOrder(order.orderNumber)'>取消订单</div>
-				<div class="orderStatus" v-if='order.orderStatus == 4' @tap='deleteorder(order.orderNumber)'>删除订单</div>
+				<div class="orderStatus" v-if='current == 0'>{{orderStatusZH(order)}}</div>
+				<div class="orderStatus" v-if='current == 1' @tap='cancelOrder(order.orderNumber)'>取消订单</div>
+				<div class="orderStatus" v-if='current == 5' @tap='deleteorder(order.orderNumber)'>删除订单</div>
 				<van-row>
 					<van-col :span="10">{{order.startCity}}</van-col>
 					<van-col :span="4">
@@ -140,6 +140,11 @@
 			},
 			toggleTabs(index){
 				let self=this
+				self.orderList = []
+				uni.showLoading({
+					title: '正在加载中',
+					mask: false
+				});
 				self.current=index
 				let sourceIndex = index === 0 ? '-2' : index - 1
 				self.orderStatus=sourceIndex
@@ -179,6 +184,7 @@
 				}).then(res => {
 					self.orderList=res.orderList.list
 				})
+				uni.hideLoading()
 			}
 		}
 	}

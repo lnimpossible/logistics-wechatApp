@@ -403,44 +403,9 @@
 					data:tempRuleObject
 				})
 				p.then(res=>{
-					uni.showModal({
-						title: '发布成功',
-						content: '货源发布成功，是否跳转个人中心-常发货源中查看',
-						success(res) {
-							if (res.confirm) {
-								uni.switchTab({
-									url:'../../tabbar/personalCenter/personalCenter'
-								})
-							} else if (res.cancel) {
-								slef.cargoName = ''
-								self.cargoVolume = ''
-								self.cargoWeight = ''
-								self.lastdis = ''
-								self.chargeDate = ''
-								self.endAddr = ''
-								self.endAreaCode = ''
-								self.endCityCode = ''
-								self.endProvinceCode = ''
-								self.endLatitude = ''
-								self.endLongitude = ''
-								self.expectFreightRate = ''
-								self.isOverspeedOver = ''
-								self.manTransfinite = ''
-								self.isRegularCargoOrigin = ''
-								self.lastLoadDate = ''
-								self.loadNumAndDis = ''
-								self.chargeNumpayMode = ''
-								self.receiptremark = ''
-								self.startAddr = ''
-								self.startAreaCodes = ''
-								self.tartCityCode = ''
-								self.startLatitude = ''
-								self.startLongitude = ''
-								self.startProvinceCode = ''
-								self.vehicleType = ''
-							}
-						}
-					})
+					uni.navigateBack({
+						delta: 1
+					});
 				})
 			},
 			// 是否常发货源

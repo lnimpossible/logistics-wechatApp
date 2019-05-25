@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="content">
 		<view class="header" v-bind:class="{'status':isH5Plus}">
 			<view class="userinfo">
 				<view class="face">
@@ -14,7 +14,7 @@
 					<view class="integral">积分:{{userinfo.integral || 0}}</view>
 				</view>
 			</view>
-			<view class="setting"><image src="../../../static/HM-PersonalCenter/setting.png"></image></view>
+			<!-- <view class="setting"><image src="../../../static/HM-PersonalCenter/setting.png"></image></view> -->
 		</view>
 		<view class="orders">
 			<view class="box">
@@ -51,10 +51,10 @@
 				orderTypeLise:[
 					//name-标题 icon-图标 badge-角标
 					{name:'我的订单',icon:'l1.png',badge:0},
-					{name:'常发货源',icon:'l2.png',badge:0},
-					{name:'运输中',icon:'l3.png',badge:0},
-					{name:'待评价',icon:'l4.png',badge:0},
-					{name:'意见反馈',icon:'l5.png',badge:0}
+					{name:'常发货源',icon:'l2.png',badge:0}
+					// {name:'运输中',icon:'l3.png',badge:0},
+					// {name:'待评价',icon:'l4.png',badge:0},
+					// {name:'意见反馈',icon:'l5.png',badge:0}
 				],
 				severList:[
 					[
@@ -150,6 +150,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.content{
+		width: 100%;
+	}
 .header{
 	&.status{padding-top:var(--status-bar-height);}
 	// background-color:#ff6364;

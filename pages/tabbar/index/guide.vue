@@ -116,8 +116,8 @@
 		z-index: 999;
 	}
 	.jump-over{
-		right: 25upx;
-		top: 32upx;
+		right: 30upx;
+		top: 45upx;
 	}
 	.experience{
 		right: 50%;

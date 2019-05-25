@@ -9,22 +9,25 @@
 				>
 					<view slot="tags">
 						<van-row style="margin: 5px 0 10px 0;">
-							<van-col :span="7"><div style="text-align:left;font-size: 14px;">{{item.startCity || ''}} </div></van-col>
-							<van-col :span="3"><div style="text-align:center;font-size: 14px;"><van-icon custom-style="padding-top:0x;" name="exchange" /> </div></van-col>
+							<van-col :span="7"><div style="text-align:center;font-size: 14px;">{{item.startCity || ''}} </div></van-col>
+							<van-col :span="5">
+								<image style="width: 100%;height: 20upx;" mode="aspectFit" src="../../../static/img/icon/jiantou3x.png"></image>
+							</van-col>
 							<van-col :span="7"><div style="text-align:right;font-size: 14px;">{{item.endCity || ''}}  </div></van-col>
 						</van-row>
 					</view>
 					<view slot="tags">
 						<van-row>
-							<van-col :span="16"><div class="price">重量 {{item.cargoWeight || 0}} 千克 </div></van-col>
+							<van-col :span="8" style="text-align:center;"> {{item.vehicleType || '暂无车型信息'}} 千克 </van-col>
+							<van-col :span="8" style="text-align:center;"> {{item.cargoWeight || 0}} 千克 </van-col>
+							<van-col :span="8" style="text-align:center;"> {{item.vargoVolume || 0}} m³ </van-col>
 						</van-row>
 					</view>
-					<view slot="tags">
+					<!-- <view slot="tags">
 						<van-row>
 							<van-col :span="16"><div class="price">体积 {{item.vargoVolume || 0}} m³ </div></van-col>
-							<!-- <van-col :span="8"><van-button size="mini" type="info" @click="makePhoneCall(item.compTelephone)"><van-icon name="phone" color="#fff" size="18px" /></van-button></van-col> -->
 						</van-row>
-					</view>
+					</view> -->
 				</van-card>
 			</div>
 			<uni-load-more :status="loading.status"></uni-load-more>
@@ -114,11 +117,14 @@
 
 <style lang="scss" scoped>
 .content{
+	background: #fff;
 	.cardList{
 		width: 96%;
 		margin: 0 auto;
 		.cardItem{
-			margin: 10upx 0;
+			margin: 15upx 0;
+			border-radius: 22upx;
+			overflow: hidden;
 			position: relative;
 		}
 	}

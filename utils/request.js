@@ -43,9 +43,9 @@ function request (url, method, data, header = {}) {
 					})
 				},
 				()=>{
-					uni.reLaunch({
-						url: '../../tabbar/index/index'
-					})
+					// uni.reLaunch({
+					// 	url: '../../tabbar/index/index'
+					// })
 				}
 			)
 		}
@@ -58,9 +58,9 @@ function request (url, method, data, header = {}) {
 							})
 						},
 						()=>{
-							uni.reLaunch({
-									url: '../../tabbar/index/index'
-								})
+							// uni.reLaunch({
+							// 	url: '../../tabbar/index/index'
+							// })
 						}
 					)
         } else if( res.data.code === 2000 ){
@@ -77,11 +77,11 @@ function request (url, method, data, header = {}) {
         }
       },
       fail: function (res) {
-        uni.hideLoading()
+        // uni.hideLoading()
         // reject(false)
       },
       complete: function () {
-        uni.hideLoading()
+        // uni.hideLoading()
       }
     })
   })

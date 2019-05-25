@@ -1,21 +1,29 @@
 <template>
 	<view id="app">
 		<div class="message">
-			<div class="top">
-				<image src="../../../static/img/icon/weizhi.png"></image>
-				<view class="picker" @click="chooseStartNode">{{address.start || '请输入起始地'}}</view>
-				<image class="replace" src="../../../static/img/icon/chongzhi.png"></image>
-				<image src="../../../static/img/icon/weizhi.png"></image>
-				<view class="picker" @click="chooseEndNode">{{address.end ||'请输入目的地'}}</view>
-			</div>
-			<div class="con">
-				<input type="text" :value="goodsDescriptionData" placeholder="货物名称" placeholder-style="color:#afafaf" @change="goodsDescription" />
-				<input type="number" :value="goodsWeightData" placeholder="kg" placeholder-style="color:#afafaf" @change="goodsWeight" />
-				<input type="number" :value="goodsBulkData" placeholder="m3" placeholder-style="color:#afafaf" @change="goodsBulk" />
-				<input type="text" :value="goodsCommentData" placeholder="备注" placeholder-style="color:#afafaf" @change="goodsComment" />
-			</div>
-			
-			<button type="primary" class="searchBtn" @click="submitMessage">确定</button>
+			<view v-show="!display">
+				<div class="top">
+					<image src="../../../static/img/icon/weizhi.png"></image>
+					<view class="picker" @click="chooseStartNode">{{address.start || '请输入起始地'}}</view>
+					<image class="replace" src="../../../static/img/icon/fangxiang.png"></image>
+					<image src="../../../static/img/icon/weizhi.png"></image>
+					<view class="picker" @click="chooseEndNode">{{address.end ||'请输入目的地'}}</view>
+				</div>
+				<div class="con">
+					<input type="text" :value="goodsDescriptionData" placeholder="货物名称" placeholder-style="color:#afafaf" @change="goodsDescription" />
+					<input type="number" :value="goodsWeightData" placeholder="kg" placeholder-style="color:#afafaf" @change="goodsWeight" />
+					<input type="number" :value="goodsBulkData" placeholder="m3" placeholder-style="color:#afafaf" @change="goodsBulk" />
+					<input type="text" :value="goodsCommentData" placeholder="备注" placeholder-style="color:#afafaf" @change="goodsComment" />
+				</div>
+				<button type="primary" class="searchBtn" @click="submitMessage">快速匹配车辆</button>
+			</view>
+			<view style="width:100%;height: 210upx;" v-show="display">
+				<div class="wait">
+					<h1>正在拼命匹配中 ...</h1>
+					<cmd-progress percent="100" status="active" :show-info="false" stroke-width="15"></cmd-progress>
+					<button type="default" @click="cancellation">取消订单</button>
+				</div>
+			</view>
 		</div>
 		<!-- // map 地图 -->
 		<view class="map_container" >
@@ -32,11 +40,6 @@
 			<button type="primary" @click="nosatisfaction">取消</button>
 			<button type="primary" @click="satisfaction">邀请</button>
 		</uni-popup>
-		<div class="wait" :style="styles">
-			<h1>正在拼命匹配中 ...</h1>
-			<cmd-progress percent="100" status="active" :show-info="false" stroke-width="15"></cmd-progress>
-			<button type="default" @click="cancellation">取消订单</button>
-		</div>
 	</view>
 </template>
 
@@ -52,47 +55,21 @@
 		},
 		mounted() {
 			let self = this
-			uni.getLocation({
-				type: 'gcj02',
-				success: function (res) {
-					self.map.longitude = res.longitude
-					self.map.latitude = res.latitude
-						
-					self.$log.set('location',{
-						longitude: self.map.longitude,
-						latitude: self.map.longitude
-					})
-					
-					for(let i=0; i< 10; i++){
-						let delta = 0.004
-						var animationDelta = 0.0005
-						let longitude = self.map.longitude+_.random(-delta,delta)
-						let latitude = self.map.latitude+_.random(-delta,delta)
-						self.map.covers.push({
-							id: i,
-							width : 40,
-							height: 40,
-							latitude: latitude,
-							longitude: longitude,
-							iconPath: `../../../static/img/map/bigCar${_.random(1,5)}.png`
-						})
-						_.delay(()=>{
-							self.mapMarkersAnimation(i,longitude,latitude,0,animationDelta)
-						},2000)
-					}
-					// 获取城市信息
-					loadCity(res.longitude, res.latitude).then(res => {
-						self.$emit('showCityInfo',res)
-					})
-				}
-			})
+			self.getNearbyCar()
+			setInterval(()=>{
+				self.getNearbyCar()
+			},2000)
+			self.amapInstance = uni.createMapContext("map")
+			let location = self.$log.get('location')
+			self.map.longitude = location.longitude
+			self.map.latitude = location.latitude
 			self.amapInstance = uni.createMapContext("mapInstance")
 		},
 		data() {
 			return {
 				orderNumber: '',
 				show: false,
-				styles: 'display:none',
+				display: false,
 				schedule: '80',
 				poputs: false,
 				nowTime: '',
@@ -108,15 +85,16 @@
 					latitude: 31.29579,
 					longitude: 120.57186,
 					covers: [],
+					points:[],
 					controls: [{
 						id: 0,
 						iconPath: '../../../static/img/map/location.png',
 						clickable: true,
 						position: {
-							left: 10,
-							top: 10,
-							width: 20,
-							height: 20
+							left: 13,
+							top: 13,
+							width: 30,
+							height: 30
 						}
 					}]
 				},
@@ -132,6 +110,48 @@
 			};
 		},
 		methods: {
+			getNearbyCar(){
+				let self = this
+				let nearDistance = 1000
+				this.$request.get({
+					url: `/logistics/queryRoundVehicle/${nearDistance}`
+				}).then(res => {
+					let driberList = res.driberList
+					if(res.driberList.length > 0){
+						let points = []
+						for(let i=0;i<driberList.length;i++){
+							let driber = driberList[i]
+							let index = _.findIndex(self.map.covers, function(o) { return o.id == driber.id; });
+							// console.log(driber)
+							if(index !== -1){
+								// console.log(index)
+								// console.log(`已经存在id为${index}的地图marker!`)
+								self.map.covers[index].longitude = driber.driverLongitude
+								self.map.covers[index].latitude = driber.driverLatitude
+							}else{
+								// console.log('不存在')
+								self.map.covers.push({
+									id: driber.id,
+									extData: driber,
+									width : 40,
+									height: 40,
+									latitude: driber.driverLatitude,
+									longitude: driber.driverLongitude,
+									iconPath: driber.vehicleMapIcon,
+									callout: {
+										content: `${driber.vehicleTypeName}\n${driber.licencePlate}`,
+										fontSize: 10,
+										color:"#fff",
+										bgColor:"#4a74ff",
+										padding: 5,
+										display: 'ALWAYS'
+									}
+								})
+							}
+						}
+					}
+				})
+			},
 			controltap(e){
 				this.amapInstance.moveToLocation()
 			},
@@ -198,10 +218,12 @@
 			},
 			// 货主点击取消订单
 			cancellation(e) {
-				this.styles = "display:none"
+				let self = this
 				let ordernumber=self.orderNumber
-				this.$request.get({
+				self.$request.get({
 					url: `/orderLogistics/cancelorder/${ordernumber}`
+				}).then(res =>{
+					self.display = false
 				})
 			},
 			// 货主单击弹出层邀请
@@ -253,8 +275,13 @@
 					}
 				})
 				p.then(res => {
+					uni.showToast({
+						title: '正在持续为您匹配车辆。。。',
+						icon: 'loading',
+						duration: 6000
+					})
 					self.orderNumber = res.matchOrderBean.orderNumber
-					self.styles = "display:block"
+					self.display = true
 				})
 			},
 			goodsComment(e) {
@@ -308,11 +335,14 @@
 			padding: 25upx 0;
 			border: 1upx solid #0faeff;
 			.searchBtn{
-				width: 90%;
-				height: 60upx;
-				line-height: 60upx;
-				border-radius: 80upx;
-				background: #0faeff;
+				width:80%;
+				height:60upx;
+				line-height:60upx;
+				border-radius:80upx;
+				background:#4a74ff;
+				color:#fff;
+				font-size:26rpx;
+
 			}
 			.top {
 				display: flex;
@@ -341,25 +371,18 @@
 					border-bottom: #afafaf 1upx solid;
 				}
 			}
-			button {
-				width: 320upx;
-				height: 70upx;
-				line-height: 70upx;
-				border-radius: 50upx;
-			}
+			// button {
+			// 	width: 320upx;
+			// 	height: 70upx;
+			// 	line-height: 70upx;
+			// 	border-radius: 50upx;
+			// }
 		}
 		.wait {
-			width: 690upx;
-			height: 300upx;
-			back: #fff;
-			position: fixed;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin: auto;
-			z-index: 22;
-			box-shadow: 0 0 6upx .2upx #666;
+			width: 100%;
+			height: 210upx;
 			padding: 30upx 40upx 0;
+			box-sizing: border-box;
 			h1 {
 				font-size: 34upx;
 				color: #333;
@@ -367,11 +390,14 @@
 				margin-bottom: 10upx;
 			}
 			button {
-				height: 120upx;
-				width: 100%;
-				position: fixed;
-				bottom: 0;
-				left: 0;
+				width:80%;
+				height:60upx;
+				margin-top: 30upx;
+				line-height:60upx;
+				border-radius:80upx;
+				background:#4a74ff;
+				color:#fff;
+				font-size:26upx;
 			}
 		}
 	}

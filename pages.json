@@ -1,15 +1,18 @@
 {
     "pages": [
+		{"path": "pages/index/index","style":{
+				"navigationBarTitleText": ""
+		}},
+		{"path": "pages/tabbar/index/guide","style":{
+				"navigationBarTitleText": ""
+		}},
 		{"path": "pages/tabbar/index/index","style":{
 				"navigationBarTitleText": "首页"
-			}},
+		}},
 		{
             "path" : "pages/redictUrl/mapSub/mapSub",
-            "style" : {}
+            "style" : {"navigationBarTitleText": "附近车源"}
         },
-		
-		
-		
 		{"path": "pages/redictUrl/ordergoods/ordergoods","style":{
 				"navigationBarTitleText": "我的订单",
 				"enablePullDownRefresh": true
@@ -28,31 +31,21 @@
 			{"path": "pages/redictUrl/newsDetail/newsDetail","style":{
 				"navigationBarTitleText": "详情"
 			}},
-			
 			{"path": "pages/gridTabs/intelligentDistribution/intelligentDistribution","style":{
 				"navigationBarTitleText": "智能供配"
 			}},
-			
-			
 			{"path": "pages/tabbar/personalCenter/personalCenter","style":{
 				"navigationBarTitleText": "个人中心"
 			}},
 			{"path": "pages/tabbar/issue/issue","style":{
 				"navigationBarTitleText": "发布货源"
 			}},
-			
-			
 			{"path": "pages/redictUrl/search/search","style":{
 				"navigationBarTitleText": "专线查询"
 			}},
 			{"path": "pages/redictUrl/landing/landing","style":{
 				"navigationBarTitleText": "登录"
-			}},
-			
-			{"path": "pages/tabbar/tabbar-3/tabbar-3","style":{
-				"navigationBarTitleText": "tabbar-3"
 			}}
-        
     ],
     "tabBar": {
 		"borderStyle": "black",

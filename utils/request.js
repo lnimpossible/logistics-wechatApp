@@ -43,9 +43,9 @@ function request (url, method, data, header = {}) {
 					})
 				},
 				()=>{
-					uni.reLaunch({
-						url: '../../tabbar/index/index'
-					})
+					// uni.reLaunch({
+					// 	url: '../../tabbar/index/index'
+					// })
 				}
 			)
 		}

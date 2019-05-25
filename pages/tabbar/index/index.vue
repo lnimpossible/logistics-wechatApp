@@ -126,10 +126,6 @@ export default {
 	components:{
 		uniGrid
 	},
-	onLoad() {
-		let self = this
-		
-	},
 	mounted(){
 		this.init()
 	},

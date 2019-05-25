@@ -83,15 +83,15 @@
 					 </van-radio-group>
 				</van-col>
 			</van-row>
-			<van-row>
+			<!-- <van-row>
 				<van-col :span="12">*是否常发货源</van-col>
 				<van-col :span="12">
 					<van-radio-group :value="isRegularCargoOrigin" @change="chooseIsRegularCargoOrigin">
-						<van-radio custom-class="vantRadioType" name="1" >是</van-radio>
-						<van-radio custom-class="vantRadioType" name="0" >否</van-radio>
+						<van-radio custom-class="vantRadioType" name="0" >是</van-radio>
+						<van-radio custom-class="vantRadioType" name="1" >否</van-radio>
 					</van-radio-group>
 				</van-col>
-			</van-row>
+			</van-row> -->
 		</div>
 		<div class="baseInfor">货物信息</div>
 		<div class="cargo">
@@ -142,14 +142,72 @@
 				<van-col :span="12"><input type="text" placeholder="请输入其他要求" :value="remark" @change="chooseRemark"> </van-col>
 			</van-row>
 		</div>
-		<button type="primary" @click="issueList">发布</button>
+		<view class="updelete">
+			<button type="primary" @tap="deletes(id)">删除</button>
+			<button type="primary" @click="issueList">发布</button>
+			
+		</view>
+		
 		
 	</view>
 </template>
 
 <script>
 	import Checker from '@/common/graceChecker.js'
+	import loadcity from '@/utils/loadCity.js'
 	export default {
+		onLoad(options) {
+			let self = this;
+			self.id = options.id;
+			self.$request.get({
+				url:'/logistics/shipperGoodsReleased/get/' + self.id,
+			}).then((res)=>{
+				console.log(res)
+				self.startAddr = res.shipperGoodsReleased.startAddr
+				self.endAddr = res.shipperGoodsReleased.endAddr
+				self.startLongitude = res.shipperGoodsReleased.startLongitude
+				self.startLatitude = res.shipperGoodsReleased.startLatitude
+				self.endLongitude = res.shipperGoodsReleased.endLongitude
+				self.endLatitude = res.shipperGoodsReleased.endLatitude
+				self.vehicleType = res.shipperGoodsReleased.vehicleType
+				
+						self.cargoName = res.shipperGoodsReleased.cargoName,
+						self.cargoVolume = res.shipperGoodsReleased.cargoVolume,
+						self.cargoWeight = res.shipperGoodsReleased.cargoWeight,
+						// self.dischargeDate = res.shipperGoodsReleased.lastdischargeDate,
+						self.endAreaCode = res.shipperGoodsReleased.endAreaCode,
+						self.endCityCode = res.shipperGoodsReleased.endCityCode,
+						self.endProvinceCode = res.shipperGoodsReleased.endProvinceCode,
+						self.expectFreightRate = res.shipperGoodsReleased.expectFreightRate,
+						self.isOverspeedOvermanTransfinite = res.shipperGoodsReleased.isOverspeedOvermanTransfinite,
+						// self.isRegularCargoOrigin = 0,
+						// self.loadDate = res.shipperGoodsReleased.lastLoadDate,
+						self.loadNumAndDischargeNum = res.shipperGoodsReleased.loadNumAndDischargeNum,
+						self.payMode = res.shipperGoodsReleased.payMode,
+						self.receipt = res.shipperGoodsReleased.receipt,
+						self.remark = res.shipperGoodsReleased.remark,
+						self.startAreaCode = res.shipperGoodsReleased.startAreaCode,
+						self.startCityCode = res.shipperGoodsReleased.startCityCode,
+						self.startProvinceCode = res.shipperGoodsReleased.startProvinceCode,
+					
+				loadcity(res.shipperGoodsReleased.startLongitude,res.shipperGoodsReleased.startLatitude).then((res)=>{
+					console.log(res)
+					for(var i=0;i<1 ;i++){
+						self.startname = res.regeocode.aois[i].name
+					}
+					// self.startname = .name
+				})
+				loadcity(res.shipperGoodsReleased.endLongitude,res.shipperGoodsReleased.endLatitude).then((res)=>{
+					console.log(res)
+					for(var i=0;i<1 ;i++){
+						self.endname = res.regeocode.aois[i].name
+					}
+					// self.startname = .name
+				})
+				console.log()
+				
+			})
+		},
 		mounted(){
 			let self=this
 			// 车型
@@ -221,10 +279,43 @@
 				startLongitude: "",
 				startProvinceCode: "",
 				vehicleSize: "124",
-				vehicleType: ""
+				vehicleType: "",
+				id:""//货源id
 			}
 		},
 		methods: {
+			deletes(id){
+				let self = this;
+				uni.showModal({
+					title: '',
+					content: '确定要删除吗',
+					showCancel: true,
+					cancelText: '取消',
+					confirmText: '确定',
+					success: res => {
+						console.log(res)
+							
+						if(res.confirm){
+							self.$request.Delete({
+								url:'/logistics/shipperGoodsReleased/delete/' + id
+							}).then((res)=>{
+								
+									uni.showToast({
+										title: '删除成功',
+										icon:"none"
+									});
+									setTimeout(()=>{
+										uni.navigateBack({
+											delta: 1
+										});
+									},1000)
+								})
+						}
+					},
+					fail: () => {},
+					complete: () => {}
+				});
+			},
 			// 卸货地
 			chooseEndNode(e){
 				let self=this
@@ -472,6 +563,7 @@
 		background-color: #f2f2f2;
 		width: 100%;
 		overflow: hidden;
+		margin-bottom: 100upx;
 		.address{
 			background-color: #fff;
 			width: 100%;
@@ -523,10 +615,34 @@
 				font-size: 20upx;
 			}
 		}
-		button{
-			width: 70%;
-			margin: 30upx auto;
-			border-radius: 50upx;
+		.updelete button:nth-child(2){
+			width: 50%;
+			// margin: 30upx auto;
+			border-radius: 0;
+			background: #F5222D;
+			color: #FFFFFF;
+		}
+		.updelete button:nth-child(1){
+			width: 50%;
+			// margin: 30upx auto;
+			border-radius: 0;
+			background: #FEFEFE;
+			color: #F5222D;
+		}
+		.updelete{
+			width: 100vw;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			z-index:999;
+		}
+		.updelete button{
+			margin: 0;
+			padding: 0;
+			
 		}
 	}
 </style>

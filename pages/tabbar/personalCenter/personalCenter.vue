@@ -31,6 +31,13 @@
 				<image class="to" src="../../../static/HM-PersonalCenter/to.png"></image>
 			</view>
 		</view>
+		<button class="listbutton" open-type="contact">
+			<view class="li">
+				<view class="icon"><image src="../../../static/HM-PersonalCenter/sever/kefu.png"></image></view>
+				<view class="text">在线客服</view>
+				<image class="to" src="../../../static/HM-PersonalCenter/to.png"></image>
+			</view>
+		</button>
 	</view>
 </template>
 <script>
@@ -53,7 +60,7 @@
 					[
 						// {name:'我的货源',icon:'point.png'},
 						// {name:'意见反馈',icon:'kefu.png'},
-						{name:'在线客服',icon:'kefu.png'}
+						// {name:'在线客服',icon:'kefu.png'}
 						// {name:'设置',icon:'addr.png'}
 						// {name:'优惠券',icon:'quan.png'},
 						// {name:'红包',icon:'momey.png'}
@@ -183,10 +190,42 @@
 		}
 	}
 }
+.listbutton{
+	width:96%;
+	margin: 0 auto;
+	background: #fff;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0;
+	font-size: 34upx;
+	text-align: left;
+	padding-left: 50upx;
+	box-sizing: border-box;
+	.li{
+		width:92%;height:100upx;padding:0 4%;border-bottom:solid 1upx #e7e7e7;display:flex;align-items:center;
+	&.noborder{border-bottom:0}
+		.icon{
+			flex-shrink:0;width:50upx;height:50upx;
+			height: 100upx;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100upx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			image{width:50upx;height:50upx}
+		}
+		.text{padding-left:20upx;width:100%;color:#666}
+		.to{flex-shrink:0;width:40upx;height:40upx}
+	}
+}
 .list{
 	width:96%;
 	margin: 0 auto;
 	background: #fff;
+	font-size: 34upx;
 	.li{
 		width:92%;height:100upx;padding:0 4%;border-bottom:solid 1upx #e7e7e7;display:flex;align-items:center;
 	&.noborder{border-bottom:0}

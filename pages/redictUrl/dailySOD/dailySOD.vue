@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 专线列表 -->
 		<div class="cardList">
-			<div class="cardItem" v-for="(item,index) in cagoList" :key="index">
+			<div class="cardItem" v-for="(item,index) in cagoList" :key="index" @tap='upload(item.id)' >
 				<van-card
 					:desc="item.intro || ''"
 					:title="item.compName|| ''"
@@ -39,6 +39,10 @@
 		components:{
 			uniLoadMore
 		},
+		onShow() {
+			this.currPage = 1
+			this.getShipperGoodsReleased()
+		},
 		onPullDownRefresh: function() {
 			//下拉刷新的时候请求一次数据
 			console.log('刷新数据')
@@ -66,7 +70,9 @@
 					  "currPage": self.currPage,
 					  "latitude": location.latitude,
 					  "longitude": location.longitude,
-					  "pageSize": self.pageSize
+					  "pageSize": self.pageSize,
+					  "status": "0",
+					  "isRegularCargoOrigin":"1"
 					}
 				}).then(res => {
 					if(self.currPage === 1){
@@ -82,10 +88,15 @@
 						self.loading.status = "more"
 					}
 				})
+			},
+			upload(id){
+				uni.navigateTo({
+					url: '/pages/redictUrl/dailySOD/upissue/upissue?id=' + id,
+					success: res => {},
+					fail: () => {},
+					complete: () => {}
+				});
 			}
-		},
-		mounted(){
-			this.getShipperGoodsReleased()
 		},
 		data() {
 			return {
@@ -108,6 +119,7 @@
 		margin: 0 auto;
 		.cardItem{
 			margin: 10upx 0;
+			position: relative;
 		}
 	}
 }

@@ -8,9 +8,11 @@
 				{{statusList}}
 			</li>
 		</ul>
-		<div class="tabson" v-show="current===0">
+		<div class="tabson">
 			<div class="matter" v-for="(order,index) in orderList" :key="index">
-				<div class="orderStatus">{{orderStatusZH(order)}}</div>
+				<div class="orderStatus" v-if='current == 0'>{{orderStatusZH(order)}}</div>
+				<div class="orderStatus" v-if='current == 1' @tap='cancelOrder(order.orderNumber)'>取消订单</div>
+				<div class="orderStatus" v-if='current == 5' @tap='deleteorder(order.orderNumber)'>删除订单</div>
 				<van-row>
 					<van-col :span="10">{{order.startCity}}</van-col>
 					<van-col :span="4">
@@ -29,228 +31,6 @@
 				</van-row>
 			</div>
 		</div>
-		<div class="tabson" v-show="current===1">
-			<div class="matter" v-for="(order,index) in orderList" :key="index">
-				<div class="cancelOrder" @click="cancelOrder(order.orderNumber)">取消订单</div>
-				<van-row>
-					<van-col :span="10">{{order.startCity}}</van-col>
-					<van-col :span="4">
-						<image src="../../../static/img/icon/chongzhi.png"></image>
-					</van-col>
-					<van-col :span="10">{{order.endCity}}</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="6">货物重量:</van-col>
-					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-					<van-col :span="6">货物体积: </van-col>
-					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-				</van-row>
-			</div>
-		</div>
-		<div class="tabson" v-show="current===2">
-			<div class="matter"   v-for="(order,index) in orderList" :key="index">
-				<van-row>
-					<van-col :span="10">{{order.startCity}}</van-col>
-					<van-col :span="4">
-						<image src="../../../static/img/icon/chongzhi.png"></image>
-					</van-col>
-					<van-col :span="10">{{order.endCity}}</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="6">货物重量:</van-col>
-					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-					<van-col :span="6">货物体积: </van-col>
-					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-				</van-row>
-			</div>
-		</div>
-		<div class="tabson" v-show="current===3">
-			<div class="matter"   v-for="(order,index) in orderList" :key="index">
-				<van-row>
-					<van-col :span="10">{{order.startCity}}</van-col>
-					<van-col :span="4">
-						<image src="../../../static/img/icon/chongzhi.png"></image>
-					</van-col>
-					<van-col :span="10">{{order.endCity}}</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="6">货物重量:</van-col>
-					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-					<van-col :span="6">货物体积: </van-col>
-					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-				</van-row>
-			</div>
-		</div>
-		<div class="tabson" v-show="current===4">
-			<div class="matter"   v-for="(order,index) in orderList" :key="index">
-				<van-row>
-					<van-col :span="10">{{order.startCity}}</van-col>
-					<van-col :span="4">
-						<image src="../../../static/img/icon/chongzhi.png"></image>
-					</van-col>
-					<van-col :span="10">{{order.endCity}}</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="6">货物重量:</van-col>
-					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-					<van-col :span="6">货物体积: </van-col>
-					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-				</van-row>
-			</div>
-		</div>
-		<div class="tabson" v-show="current===5">
-			<div class="matter"   v-for="(order,index) in orderList" :key="index">
-				<van-row>
-					<van-col :span="10">{{order.startCity}}</van-col>
-					<van-col :span="4">
-						<image src="../../../static/img/icon/chongzhi.png"></image>
-					</van-col>
-					<van-col :span="10">{{order.endCity}}</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="6">货物重量:</van-col>
-					<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-					<van-col :span="6">货物体积: </van-col>
-					<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-				</van-row>
-				<van-row>
-					<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-				</van-row>
-			</div>
-		</div>
-			<view class="chooseBotton" v-show="status.current === 0">
-				<div class="matter"   v-for="(order,index) in orderList" :key="index">
-					<van-row>
-						<van-col :span="10">{{order.startCity}}</van-col>
-						<van-col :span="4">
-							<image src="../../../static/img/icon/chongzhi.png"></image>
-						</van-col>
-						<van-col :span="10">{{order.endCity}}</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="6">货物重量:</van-col>
-						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-						<van-col :span="6">货物体积: </van-col>
-						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-					</van-row>
-				</div>
-			</view>
-			<view class="chooseBotton" v-show="status.current === 1">
-				<div class="matter"   v-for="(order,index) in orderList" :key="index">
-					<van-row>
-						<van-col :span="10">{{order.startCity}}</van-col>
-						<van-col :span="4">
-							<image src="../../../static/img/icon/chongzhi.png"></image>
-						</van-col>
-						<van-col :span="10">{{order.endCity}}</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="6">货物重量:</van-col>
-						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-						<van-col :span="6">货物体积: </van-col>
-						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-					</van-row>
-				</div>
-			</view>
-			<view class="chooseBotton" v-show="status.current === 2">
-				<div class="matter"   v-for="(order,index) in orderList" :key="index">
-					<van-row>
-						<van-col :span="10">{{order.startCity}}</van-col>
-						<van-col :span="4">
-							<image src="../../../static/img/icon/chongzhi.png"></image>
-						</van-col>
-						<van-col :span="10">{{order.endCity}}</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="6">货物重量:</van-col>
-						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-						<van-col :span="6">货物体积: </van-col>
-						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-					</van-row>
-				</div>
-			</view>
-			<view class="chooseBotton" v-show="status.current ===3">
-				<div class="matter"   v-for="(order,index) in orderList" :key="index">
-					<van-row>
-						<van-col :span="10">{{order.startCity}}</van-col>
-						<van-col :span="4">
-							<image src="../../../static/img/icon/chongzhi.png"></image>
-						</van-col>
-						<van-col :span="10">{{order.endCity}}</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="6">货物重量:</van-col>
-						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-						<van-col :span="6">货物体积: </van-col>
-						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-					</van-row>
-				</div>
-			</view>
-			<view class="chooseBotton" v-show="status.current ===4">
-				<div class="matter"   v-for="(order,index) in orderList" :key="index">
-					<van-row>
-						<van-col :span="10">{{order.startCity}}</van-col>
-						<van-col :span="4">
-							<image src="../../../static/img/icon/chongzhi.png"></image>
-						</van-col>
-						<van-col :span="10">{{order.endCity}}</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="6">货物重量:</van-col>
-						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-						<van-col :span="6">货物体积: </van-col>
-						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-					</van-row>
-				</div>
-			</view>
-			<view class="chooseBotton" v-show="status.current ===5">
-				<div class="matter"   v-for="(order,index) in orderList" :key="index">
-					<van-row>
-						<van-col :span="10">{{order.startCity}}</van-col>
-						<van-col :span="4">
-							<image src="../../../static/img/icon/chongzhi.png"></image>
-						</van-col>
-						<van-col :span="10">{{order.endCity}}</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="6">货物重量:</van-col>
-						<van-col :span="6">{{order.cargoWeight}}kg</van-col>
-						<van-col :span="6">货物体积: </van-col>
-						<van-col :span="6">{{order.cargoVolume}}m3</van-col>
-					</van-row>
-					<van-row>
-						<van-col :span="24">订单号:{{order.orderNumber}}</van-col>
-					</van-row>
-				</div>
-			</view>
-			<uni-load-more :status="loading.status"></uni-load-more>
 		</view>
 	</view>
 </template>
@@ -351,8 +131,20 @@
 					this.toggleTabs(1)
 				})
 			},
+			deleteorder(orderNumber){
+				this.$request.Delete({
+					url: `/orderLogistics/shipperDelectOrder/${orderNumber}`
+				}).then(res => {
+					this.toggleTabs(1)
+				})
+			},
 			toggleTabs(index){
 				let self=this
+				self.orderList = []
+				uni.showLoading({
+					title: '正在加载中',
+					mask: false
+				});
 				self.current=index
 				let sourceIndex = index === 0 ? '-2' : index - 1
 				self.orderStatus=sourceIndex
@@ -392,6 +184,7 @@
 				}).then(res => {
 					self.orderList=res.orderList.list
 				})
+				uni.hideLoading()
 			}
 		}
 	}

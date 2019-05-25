@@ -45,6 +45,9 @@
 			}},
 			{"path": "pages/redictUrl/landing/landing","style":{
 				"navigationBarTitleText": "登录"
+			}},
+			{"path": "pages/redictUrl/dailySOD/upissue/upissue","style":{
+				"navigationBarTitleText": "发布货源"
 			}}
     ],
     "tabBar": {

@@ -104,7 +104,7 @@
     },
 	"permission": {
 			 "scope.userLocation": {
-				 "desc": "你的位置信息将用于小程序位置接口的效果展示"
+				 "desc": "为了更好的为你提供服务，请你授权"
 			 }
 	 }
 }

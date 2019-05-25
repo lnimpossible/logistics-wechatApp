@@ -49,6 +49,7 @@
 		onPullDownRefresh: function() {
 			//下拉刷新的时候请求一次数据
 			console.log('刷新数据')
+			this.cagoList = []
 			this.currPage = 1
 			this.getShipperGoodsReleased()
 			uni.stopPullDownRefresh()
@@ -109,7 +110,7 @@
 				cagoList:[1,2],
 				currentTitle: '常发货源',
 				currPage: 1,
-				pageSize: 10
+				pageSize: 15
 			};
 		}
 	}

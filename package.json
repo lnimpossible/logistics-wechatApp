@@ -1,0 +1,24 @@
+{
+  "name": "logistics-app",
+  "version": "1.0.0",
+  "description": "快远物流app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lnimpossible/logistics-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/lnimpossible/logistics-app/issues"
+  },
+  "homepage": "https://gitlab.com/lnimpossible/logistics-app#readme",
+  "dependencies": {
+    "@dcloudio/uni-ui": "^0.0.8",
+    "lodash": "^4.17.11"
+  }
+}
